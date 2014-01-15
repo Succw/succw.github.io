@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>从vCenter Server中删除不必要的插件 | Succw Blog :)</title>
+  <meta name="author" content="獨菰、瑉">
+  
+  <meta name="description" content="运成功者的谦词，命失败者的借口">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="从vCenter Server中删除不必要的插件"/>
+  <meta property="og:site_name" content="Succw Blog :)"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Succw Blog :)</a></h1>
+  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-08-07T10:25:55.000Z"><a href="/removing-unwanted-plug-ins-from-vcenter-server/">8月 7 2013</a></time>
+      
+      
+  
+    <h1 class="title">从vCenter Server中删除不必要的插件</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>做完</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>实验后，直接把</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>虚拟机删除掉了，在</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>vCenter Server</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>的插件中显示以下错误：</span></span></span></p>
+<p><span style="color: #333333;">“<span style="font-family: 'DejaVu Serif', serif;"><span>从</span></span><span style="font-family: 'DejaVu Serif', serif;"><span><a href="https://192.168.3.185:6501/vmw/rbd/-extension.xml" target="_blank">https://192.168.3.185:6501/vmw/rbd/-extension.xml</a></span></span><span style="font-family: 'DejaVu Serif', serif;"><span>下载脚本插件时出现了以下错误</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>:</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>由于连接故障，请求失败。</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>(</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>无法连接到远程服务器</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>)”</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>这也导致不能注册新的</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy (</span></span></span><span style="color: #222222;">“<span style="font-family: Tahoma, 'Century gothic', Arial, Tahoma, sans-serif;">已经向指定</span><span style="font-family: inherit;"><span style="font-size: medium;">center Server</span></span><span style="font-family: Tahoma, 'Century gothic', Arial, Tahoma, sans-serif;">注册了服务”</span></span><span><span style="font-family: 'DejaVu Serif', serif;">)</span></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>解决办法如下：</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>1</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、在浏览器中，输入</span></span><span style="font-family: 'DejaVu Serif', serif;"><span><a href="http://vcenter" target="_blank">http://vcenter</a> server name or IP/mob</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>2</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Content.</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>3</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>ExtensionManager.</span></span></span><span><span style="font-family: 'DejaVu Serif', serif;">会显示</span><span style="font-family: 'DejaVu Serif', serif;">extensionList</span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>extensionList[&quot;com.vmware.rbd&quot;] </span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>这是</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>&quot;Auto Deploy&quot;</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>扩展，</span></span></span><span><span style="font-family: 'DejaVu Serif', serif;">可点击查看</span><span style="font-family: 'DejaVu Serif', serif;">description</span></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>4</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>UnregisterExtension. </span></span><span style="font-family: 'DejaVu Serif', serif;"><span>会出现一个新窗口</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>在窗口中输入</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>com.vmware.rbd</span></span></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>其他插件卸载见官方</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>kb</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>：</span></span></span></p>
+<h3 id="-span-style-color-333333-span-style-font-family-dejavu-serif-serif-span-removing-unwanted-plug-ins-from-vcenter-server-1025360-http-kb-vmware-com-selfservice-microsites-search-do-language-en_us-amp-cmd-displaykc-amp-externalid-1025360-span-span-span-"><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1025360" target="_blank">Removing unwanted plug-ins from vCenter Server (1025360)</a></span></span></span></h3>
+<h3 id="-"> </h3>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"> </span></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/VMware/">VMware</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/VMware/">VMware</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:www.succw.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Life/">Life</a><small>2</small></li>
+  
+    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/运维/">运维</a><small>10</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
+      </li>
+    
+      <li>
+        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
+      </li>
+    
+      <li>
+        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
+      </li>
+    
+      <li>
+        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
+      </li>
+    
+      <li>
+        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 獨菰、瑉
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

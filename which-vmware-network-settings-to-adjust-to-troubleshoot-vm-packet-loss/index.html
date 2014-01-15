@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Which VMware network settings to adjust to troubleshoot VM packet loss | Succw Blog :)</title>
+  <meta name="author" content="獨菰、瑉">
+  
+  <meta name="description" content="运成功者的谦词，命失败者的借口">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Which VMware network settings to adjust to troubleshoot VM packet loss"/>
+  <meta property="og:site_name" content="Succw Blog :)"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Succw Blog :)</a></h1>
+  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-04-26T03:03:10.000Z"><a href="/which-vmware-network-settings-to-adjust-to-troubleshoot-vm-packet-loss/">4月 26 2013</a></time>
+      
+      
+  
+    <h1 class="title">Which VMware network settings to adjust to troubleshoot VM packet loss</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Even well-designed <a href="http://searchnetworking.techtarget.com/tip/vSphere-networking-tools-Gaining-control-of-virtualization" target="_blank">VMware networking</a> will encounter virtualization-specific problems, like high packet loss in a virtual machine. Appropriate tweaks to the VMware network settings can resolve high packet loss without troubleshooting the guest operating system.</p>
+<p>A normal <a href="http://searchnetworking.techtarget.com/definition/Ethernet" target="_blank">Ethernet network connector</a> should rarely let numerous packets drop ?there should be no more than a few dropped packets for every 100,000 packets received or transmitted successfully (Figure 1). On a Linux virtual machine (<a href="http://searchservervirtualization.techtarget.com/definition/virtual-machine" target="_blank">VM</a>), this statistic is easily monitored with the ifconfig command.</p>
+<p><div><a href="http://cdn.ttgtmedia.com/rms/onlineImages/0413_svm_packetloss-1.png" target="_blank"><img src="http://cdn.ttgtmedia.com/rms/onlineImages/0413_svm_packetloss-1.png" alt=""></a></p>
+<div>
+
+<p>Figure 1. Normally, hardly any packets should drop on an Ethernet network card.</p>
+<p></div>
+</div>
+On a VM with a <a href="http://searchnetworking.techtarget.com/definition/burst" target="_blank">bursty network</a> traffic pattern, significant packet loss may occur, requiring a fix within the VM&#39;s network settings. First, verify that the VM uses the VMXNET3 driver for the virtual network card. If this is the case, on a Linux host, high packet loss occurs when large data files are sent over high-bandwidth networks, and in certain other situations. Remediate the situation by disabling receive and transmit checksums. You&#39;ll add risk, as these checksums normally close out erroneous packets. Since errors on a typical Ethernet network card are below one on a million, the risk level is low.</p>
+<p>Use the <a href="http://searchenterpriselinux.techtarget.com/Linux-tools" target="_blank">Linux ethtool utility</a> to switch off receive and transmit checksums in the VMware network settings, starting with ethtool as root from the command line. To switch these checksum features off for the network card eth0, for example, the command would readethtool --offload eth0 rx off tx off. If this works, open the configuration file for your network card -- /etc/sysconfig/network/ifcfg-eth0 on SUSE or /etc/sysconfig/network-scripts/ifcfg-eth0 on Red Hat -- and change the ETHTOOL_OPTIONS parameter to ETHTOOL_OPTIONS=&#39;--offload eth0 rx off tx off&#39;.</p>
+<p>If you&#39;re still troubleshooting packet loss, try increasing the receive ring buffer size via the ethtool utility. By default, this buffer is set to 256, but the maximum you can use is 4096. Reset the ring buffer size to 512, using ethtool -G eth0 512. If this doesn&#39;t give you the required result, try a higher value.</p>
+<p>High packet loss on a Windows VM calls for a change to network settings on the VMXNET3 driver. From Device Manager, right click the VMXNET3 driver and select Properties. The Advanced tab has two parameters: Small RX Buffers and RX Ring #1 Size. Increase the value of these parameters a bit and test whether this yields any improvement. Incrementally increase the value until you resolve the loss.</p>
+<p>In most cases, these fixes will decrease the number of packets dropped in virtual machines. If adjusting the network settings fails, you&#39;re probably facing another problem caused by other performance-related factors in the VM, not the VMware network settings between the VM and ESXi platform. Consult an expert in the guest operating system, as there are many parameters that you can tune for performance. Beware of tuning the wrong parameters, which could have a strong negative impact on the VM.</p>
+<p>摘自：<a href="http://searchvmware.techtarget.com/" target="_blank"><a href="http://searchvmware.techtarget.com">http://searchvmware.techtarget.com</a></a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/VMware/">VMware</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/VMware/">VMware</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:www.succw.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Life/">Life</a><small>2</small></li>
+  
+    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/运维/">运维</a><small>10</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
+      </li>
+    
+      <li>
+        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
+      </li>
+    
+      <li>
+        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
+      </li>
+    
+      <li>
+        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
+      </li>
+    
+      <li>
+        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 獨菰、瑉
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>linux下cdrecord刻录光盘 | Succw Blog :)</title>
+  <meta name="author" content="獨菰、瑉">
+  
+  <meta name="description" content="运成功者的谦词，命失败者的借口">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="linux下cdrecord刻录光盘"/>
+  <meta property="og:site_name" content="Succw Blog :)"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Succw Blog :)</a></h1>
+  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-06-14T09:29:58.000Z"><a href="/linux下cdrecord刻录光盘/">6月 14 2013</a></time>
+      
+      
+  
+    <h1 class="title">linux下cdrecord刻录光盘</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux下一般都带有cdrecord软件，可以用来刻录光盘</p>
+<p>cdrecord -scanbus 查看系统所有 CD-R(W) 设备。</p>
+<p>[root@localhost Material]# cdrecord -scanbus
+Cdrecord-Clone 2.01 (cpu-pc-linux-gnu) Copyright (C) 1995-2004 JSchilling
+Note: This version is an unofficial (modified) version with DVD support
+Note: and therefore may have bugs that are not present in the original.
+Note: Please send bug reports or support requests to <a href="http://bugzilla.redhat.com/bugzilla" target="_blank">http://bugzilla.redhat.com/bugzilla</a>
+Note: The author of cdrecord should not be bothered with problems in this version.
+Linux sg driver version: 3.5.27
+Using libscg version &#39;schily-0.8&#39;.
+cdrecord: Warning: using inofficial libscg transport code version (schily - Red Hat-scsi-linux-sg.c-1.83-RH &#39;@(#)scsi-linux-sg.c 1.83 04/05/20 Copyright 1997 J. Schilling&#39;).
+scsibus4:
+4,0,0 400) &#39;TEAC &#39; &#39;DVD-ROM DV-28SW &#39; &#39;R.2A&#39; Removable CD-ROM
+4,1,0 401) <em>
+4,2,0 402) </em>
+4,3,0 403) <em>
+4,4,0 404) </em>
+4,5,0 405) <em>
+4,6,0 406) </em>
+4,7,0 407) *</p>
+<p>刻录iso文件</p>
+<p>cdrecord -v -eject speed=4 dev=4,0,0 backup.iso</p>
+<p>-v verbose</p>
+<p>-eject 刻完自动弹出光盘</p>
+<p>speed=4 dev=4,0,0 :四速刻录到dev=4,0,0上</p>
+<p>cdrecord --dev=4,0,0 --blank=fast   擦写光驱</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/other/">other</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Linux/">Linux</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:www.succw.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Life/">Life</a><small>2</small></li>
+  
+    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/运维/">运维</a><small>10</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
+      </li>
+    
+      <li>
+        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
+      </li>
+    
+      <li>
+        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
+      </li>
+    
+      <li>
+        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
+      </li>
+    
+      <li>
+        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 獨菰、瑉
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

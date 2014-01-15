@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Monitor VMware ESXi with your existing Nagios application | Succw Blog :)</title>
+  <meta name="author" content="獨菰、瑉">
+  
+  <meta name="description" content="运成功者的谦词，命失败者的借口">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Monitor VMware ESXi with your existing Nagios application"/>
+  <meta property="og:site_name" content="Succw Blog :)"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Succw Blog :)</a></h1>
+  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-05-22T02:07:10.000Z"><a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">5月 22 2013</a></time>
+      
+      
+  
+    <h1 class="title">Monitor VMware ESXi with your existing Nagios application</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>摘自:  <a href="http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766" target="_blank"><a href="http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766)_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920">http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766)_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920</a></a>_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920)</p>
+<p>Nagios is plug-in-oriented management software typically installed on a Linux server. Many corporate system administrators use Nagios to keep track of the current state of their servers and other vital devices in the network. This makes Nagios a good choice if you&#39;re looking for VMware monitoring tools. Here&#39;s a look at how to integrate VMware ESXi monitoring in an existing <a href="http://searchenterpriselinux.techtarget.com/tutorial/Nagios-Configuration-and-integration-advice" target="_blank">Nagios environment</a>.</p>
+<p>Any device with a <a href="http://searchenterpriselinux.techtarget.com/answer/Using-Nagios-with-custom-plugins" target="_blank">plug-in</a> -- even the software in your department&#39;s coffeemaker -- can be<a href="http://searchdatacenter.techtarget.com/tip/Is-Nagios-right-for-your-data-center" target="_blank">managed through Nagios</a>, which makes the open source network monitoring system popular and well-known. If you already <a href="http://searchdatacenter.techtarget.com/tip/Nagios-setup-Installing-and-configuring-the-network-monitoring-tool" target="_blank">have a Nagios monitoring environment</a> in place, you can use it to monitor VMware infrastructures by installing the VMware plug-in on the Linux server.</p>
+<p>The open source development company OP5 offers the most common <a href="http://searchvmware.techtarget.com/tip/Honing-your-VMware-monitoring-techniques" target="_blank">VMware monitoring</a>software plug-in: <a href="http://www.op5.org/community/plugin-inventory/op5-projects/check-esx-plugin" target="_blank">the OP5 Check ESX Plug-in</a>. Since it is written in Perl scripting language, you&#39;ll need Perl support on your Linux server and the free VMware vSphere Perl SDK software.</p>
+<p><a href="http://communities.vmware.com/community/vmtn/developer/forums/vsphere_sdk_perl" target="_blank">Download</a> the VMware vSphere Perl SDK to the Linux server that hosts Nagios and then extract it using <code>tar zxvf VMware-vSphere-Perl-SDK-&amp;lt;version-number&amp;gt;.tar.gz</code>. This will create the subdirectory called<code>vmware-vsphere-cli-distrib</code>. In this subdirectory, you&#39;ll find the installer script <code>vmware-install.pl</code>. Before running this script, use <code>yum install perl-Pod-Perldoc perl-CPAN openssl-devel</code> to ensure that all software requirements are met on your server.</p>
+<p>After installing the prerequisites, use the <code>./vmware-install.pl</code> command and follow the script&#39;s directions. Now, you can download the Nagios plug-in from OP5 or do an Internet search for <code>download check_esx3.pl</code> to find the plug-in script in text format. Download this script, save it to the directory <code>/usr/lib64/nagios/plugins and use chmod +x check_esx3.pl</code> to make it executable. Nagios can now begin monitoring ESXi.</p>
+<p>You can now define the commands for Nagios to use to monitor VMware ESXi hypervisors. Add the monitoring commands to the Nagios <code>/etc/nagios/objects/command.cfg</code> file. Put a user name and password in variables in the <code>/etc/nagios/resource.cfg</code> file. In this example, a variable ESXUSER is defined, as well as the user&#39;s password. Nagios can use these credentials to access the ESXi host. The file could have the following contents:</p>
+<p><code># cat /etc/nagios/resource.cfg $ESXUSER$=username $ESXPASSWORD$=password</code></p>
+<p>Based on this, you can add the ESXi monitoring commands to the<code>/etc/nagios/objects/command.cfg</code> file.</p>
+<p>If you want to monitor ESXi CPU usage, use this command:
+<code># check vmware ESXi CPU</code>define command
+<code>{    command_name   check_esx_cpu      command_line        $ESXUSER$/check_esx -H $HOSTADDRESS$ -u $ESXUSER$ -p $ESXPASSWORD$ -l cpu -s usage -w $ARG1$ -c $ARG2$ }</code></p>
+<p>Once you&#39;ve defined commands, create a configuration file for your ESXi host. If the ESXi host is called esxi01, you could put its configuration in a <code>/etc/nagios/hosts/esxi01.cfg</code>file containing the following:</p>
+<p><code># Host esx01</code></p>
+<p>define host
+<code>{   use   Linux-server   host_name   esxi01 address 192.168.1.10   }</code></p>
+<p>define service
+<code>{   use   generic-service   host_name   esxi01 service_description   ESXi CPU Load check_command   check_esx_cpu!80!90   }</code></p>
+<p>This is just a taste of what you can do with the ESXi monitoring plug-in for Nagios. Depending on what functions the plug-in defines, you can monitor other aspects of the ESXi host. Work with your Nagios administrator to define more commands for monitoring VMware.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/VMware/">VMware</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/VMware/">VMware</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:www.succw.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Life/">Life</a><small>2</small></li>
+  
+    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/运维/">运维</a><small>10</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
+      </li>
+    
+      <li>
+        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
+      </li>
+    
+      <li>
+        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
+      </li>
+    
+      <li>
+        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
+      </li>
+    
+      <li>
+        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 獨菰、瑉
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 7 页 | Succw Blog :)</title>
+  <meta name="author" content="獨菰、瑉">
+  
+  <meta name="description" content="运成功者的谦词，命失败者的借口">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Succw Blog :)"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Succw Blog :)</a></h1>
+  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-09-08T00:28:41.000Z"><a href="/user-parameters/">9月 8 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/user-parameters/">User Parameters</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Functionality of Zabbix agents can be enhanced by defining user parameters (<strong>UserParameter</strong> configuration parameter) in agent&#39;s configuration file. Once user parameters are defined, they can be accessed in the same way as any other agent items by using the key, specified in the parameter definition.</p>
+<p>User parameters are commands executed by Zabbix agent. <strong>/bin/sh</strong> is used as a command line interpreter under UNIX operating systems.</p>
+<p>See a <a href="http://www.zabbix.com/documentation/1.8/manual/tutorials/extending_agent" title="1.8:manual:tutorials:extending_agent" target="_blank">step-by-step tutorial</a> on making use of user parameters.</p>
+<h4 id="-a-id-simple_user_parameters-name-simple_user_parameters-a-1-simple-user-parameters"><a id="simple_user_parameters" name="simple_user_parameters"></a>1 Simple user parameters</h4>
+<div>
+
+In order to define a new parameter for monitoring, one line has to be added to configuration file of Zabbix agent and the agent must be restarted.
+
+User parameter has the following syntax:
+<pre>UserParameter=key,command</pre><div><table><tbody><tr><th>Parameter</th><th>Description</th></tr><tr><td><strong>Key</strong></td><td>Unique item key.</td></tr><tr><td><strong>Command</strong></td><td>Command to be executed to evaluate value of the Key.</td></tr></tbody></table></div></div>
+
+<h5 id="-a-id-example_1-name-example_1-a-example-1"><a id="example_1" name="example_1"></a>Example 1</h5>
+<div>
+
+Simple command
+<pre>UserParameter=ping,echo 1</pre>
+
+The agent will always return &#39;1&#39; for item with key &#39;ping&#39;.
+</div>
+
+<h5 id="-a-id-example_2-name-example_2-a-example-2"><a id="example_2" name="example_2"></a>Example 2</h5>
+<div>
+
+More complex example
+<pre>UserParameter=mysql.ping,mysqladmin -uroot ping | grep -c alive</pre>
+
+The agent will return &#39;1&#39;, if MySQL server is alive, &#39;0&#39; - otherwise.
+</div>
+
+<h4 id="-a-id-flexible_user_parameters-name-flexible_user_parameters-a-2-flexible-user-parameters"><a id="flexible_user_parameters" name="flexible_user_parameters"></a>2 Flexible user parameters</h4>
+<div>
+
+Flexible user parameters can be used for more control and flexibility.
+
+For flexible user parameters,
+<pre>UserParameter=key[<em>],command</pre><div><table><tbody><tr><th>Parameter</th><th>Description</th></tr><tr><td><strong>Key</strong></td><td>Unique item key. The [</em>] defines that this key accepts parameters.</td></tr><tr><td><strong>Command</strong></td><td>
+
+Command to be executed to evaluate value of the Key.
+Zabbix parses content of [] and substitutes $1,…,$9 in the command.
+$0 will be substituted by the original command (prior to expansion of $0,…,$9) to be run.
+</td></tr></tbody></table></div><div> </div><div>To use positional references unaltered, specify double dollar sign - for example, awk &#39;{print $$2}&#39;.</div><div> </div><div>Unless <a href="http://www.zabbix.com/documentation/1.8/manual/processes/zabbix_agentd" title="1.8:manual:processes:zabbix_agentd" target="_blank">UnsafeUserParameters</a> agent daemon configuration option is enabled, it is not allowed to pass flexible parameters containing these symbols:  &#39; ” ` * ? [ ] { } ~ $ ! &amp; ; ( ) &lt; &gt; | # @</div><div> </div><div>Command used should always return a value that is not empty (and not a newline). If non-valid value is returned, ZBX_NOTSUPPORTED will be sent back by the agent.</div></div>
+
+<h5 id="-a-id-example_11-name-example_11-a-example-1"><a id="example_11" name="example_11"></a>Example 1</h5>
+<div>
+
+Something very simple
+<pre>UserParameter=ping[<em>],echo $1</pre>
+
+We may define unlimited number of items for monitoring all having format ping[something].
+
+</em>   <div>ping[0] - will always return &#39;0&#39;</div>
+*   <div>ping[aaa] - will always return &#39;aaa&#39;</div></div>
+
+<h5 id="-a-id-example_21-name-example_21-a-example-2"><a id="example_21" name="example_21"></a>Example 2</h5>
+<div>
+
+Let&#39;s add more sense!
+<pre>UserParameter=mysql.ping[*],mysqladmin -u$1 -p$2 ping | grep -c alive</pre>
+
+This parameter can be used for monitoring availability of MySQL database. We can pass user name and password:
+<pre>mysql.ping[zabbix,our_password]</pre></div>
+
+<h5 id="-a-id-example_3-name-example_3-a-example-3"><a id="example_3" name="example_3"></a>Example 3</h5>
+<div>
+
+How many lines matching a regular expression in a file?
+<pre>UserParameter=wc[<em>],grep -c &quot;$2&quot; $1</pre>
+
+This parameter can be used to calculate number of lines in a file.
+<pre>wc[/etc/passwd,root]
+wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/documentation/1.8/manual/processes/zabbix_agentd" title="1.8:manual:processes:zabbix_agentd" target="_blank">Zabbix agent daemon</a> does not support user parameters with <strong>-t</strong> or <em>*-p</em></em> agent switches (used to test single item or print out a list of all supported items) until version 1.8.3. See <a href="http://www.zabbix.com/documentation/1.8/manpages/zabbix_agentd" title="1.8:manpages:zabbix_agentd" target="_blank">manpage</a> in earlier versions for more information.</div><div> </div><div><span style="text-decoration:underline;"><a href="http://www.youtube.com/watch?v=vfMQVOh0TQo&amp;feature=player_detailpage" target="_blank">http://www.youtube.com/watch?v=vfMQVOh0TQo&amp;feature=player_detailpage</a></span></div></div>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-09-06T05:56:50.000Z"><a href="/ssh信任关系/">9月 6 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/ssh信任关系/">ssh信任关系</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>三步走：
+ <span style="color:#808080;">ssh-keygen -t rsa</span></p>
+<p><span style="color:#808080;">scp id_rsa.pub user@hostip：/root/.ssh/</span>
+<span style="color:#808080;"> mv id_rsa.pub authorized_keys</span></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-24T00:17:05.000Z"><a href="/setfacl-getfacl/">8月 24 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/setfacl-getfacl/">setfacl &amp; getfacl</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><span style="color:#ff9900;">getfacl -R /etc &gt; perm.bak</span></p>
+<p>得到/etc下的所有文件和目录的权限表文件</p>
+<p><span style="color:#ff9900;"> setfacl --restore=perm.bak</span></p>
+<p>恢复/etc下的所有文件和目录的权限</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/6/" class="alignleft prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:www.succw.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Life/">Life</a><small>2</small></li>
+  
+    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
+  
+    <li><a href="/categories/other/">other</a><small>2</small></li>
+  
+    <li><a href="/categories/运维/">运维</a><small>10</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
+      </li>
+    
+      <li>
+        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
+      </li>
+    
+      <li>
+        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
+      </li>
+    
+      <li>
+        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
+      </li>
+    
+      <li>
+        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 獨菰、瑉
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
