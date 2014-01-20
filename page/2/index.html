@@ -67,6 +67,76 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2013-06-14T09:29:58.000Z"><a href="/linux下cdrecord刻录光盘/">6月 14 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux下一般都带有cdrecord软件，可以用来刻录光盘</p>
+<p>cdrecord -scanbus 查看系统所有 CD-R(W) 设备。</p>
+<p>[root@localhost Material]# cdrecord -scanbus
+Cdrecord-Clone 2.01 (cpu-pc-linux-gnu) Copyright (C) 1995-2004 JSchilling
+Note: This version is an unofficial (modified) version with DVD support
+Note: and therefore may have bugs that are not present in the original.
+Note: Please send bug reports or support requests to <a href="http://bugzilla.redhat.com/bugzilla" target="_blank">http://bugzilla.redhat.com/bugzilla</a>
+Note: The author of cdrecord should not be bothered with problems in this version.
+Linux sg driver version: 3.5.27
+Using libscg version &#39;schily-0.8&#39;.
+cdrecord: Warning: using inofficial libscg transport code version (schily - Red Hat-scsi-linux-sg.c-1.83-RH &#39;@(#)scsi-linux-sg.c 1.83 04/05/20 Copyright 1997 J. Schilling&#39;).
+scsibus4:
+4,0,0 400) &#39;TEAC &#39; &#39;DVD-ROM DV-28SW &#39; &#39;R.2A&#39; Removable CD-ROM
+4,1,0 401) <em>
+4,2,0 402) </em>
+4,3,0 403) <em>
+4,4,0 404) </em>
+4,5,0 405) <em>
+4,6,0 406) </em>
+4,7,0 407) *</p>
+<p>刻录iso文件</p>
+<p>cdrecord -v -eject speed=4 dev=4,0,0 backup.iso</p>
+<p>-v verbose</p>
+<p>-eject 刻完自动弹出光盘</p>
+<p>speed=4 dev=4,0,0 :四速刻录到dev=4,0,0上</p>
+<p>cdrecord --dev=4,0,0 --blank=fast   擦写光驱</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2013-06-04T03:19:47.000Z"><a href="/配置-windows-ntp-客户端以实现网络时钟同步/">6月 4 2013</a></time>
       
       
@@ -189,264 +259,6 @@ pClient，</p>
 
 
 
-  <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      <img src="">
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2013-04-26T03:10:58.000Z"><a href="/ethtool/">4月 26 2013</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/ethtool/">ethtool</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="-span-style-font-size-13px-ethtool-is-the-standard-linux-utility-for-controlling-network-drivers-and-hardware-particularly-for-wired-ethernet-devices-span-"><span style="font-size: 13px;">ethtool is the standard Linux utility for controlling network drivers and hardware, particularly for wired Ethernet devices. </span></h1>
-<h1 id="-span-style-font-size-13px-it-can-be-used-to-span-"><span style="font-size: 13px;">It can be used to:</span></h1>
-<ul>
-<li>Get identification and diagnostic information</li>
-<li>Get extended device statistics</li>
-<li>Control speed, duplex, autonegotiation and flow control for Ethernet devices</li>
-<li>Control checksum offload and other hardware offload features</li>
-<li>Control DMA ring sizes and interrupt moderation</li>
-<li>Control receive queue selection for multiqueue devices</li>
-<li>Upgrade firmware in flash memory
-Most features are dependent on support in the specific driver. See the manual page for full information.</li>
-</ul>
-<h1 id="-"> </h1>
-<h1 id="-usage-"><strong>Usage：</strong></h1>
-<p>&nbsp;</p>
-<h2 id="name">NAME</h2>
-<pre>       ethtool - Display or change ethernet card settings</pre>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<pre>       **ethtool** _ethX_
-
-       **ethtool** **-h**
-
-       **ethtool** **-a** _ethX_
-
-       **ethtool** **-A** _ethX_ [**autoneg** **on**|**off**] [**rx** **on**|**off**] [**tx** **on**|**off**]
-
-       **ethtool** **-c** _ethX_
-
-       **ethtool**  **-C** _ethX_ [**adaptive-rx** **on**|**off**] [**adaptive-tx** **on**|**off**] [**rx-usecs** _N_]
-       [**rx-frames** _N_] [**rx-usecs-irq** _N_]  [**rx-frames-irq**  _N_]  [**tx-usecs**  _N_]  [**tx-**
-       **frames**  _N_]  [**tx-usecs-irq**  _N_]  [**tx-frames-irq**  _N_] [**stats-block-usecs** _N_]
-       [**pkt-rate-low** _N_] [**rx-usecs-low** _N_] [**rx-frames-low**  _N_]  [**tx-usecs-low**  _N_]
-       [**tx-frames-low**  _N_]  [**pkt-rate-high** _N_] [**rx-usecs-high** _N_] [**rx-frames-high**
-       _N_] [**tx-usecs-high** _N_] [**tx-frames-high** _N_] [**sample-interval** _N_]
-
-       **ethtool** **-g** _ethX_
-
-       **ethtool** **-G** _ethX_ [**rx** _N_] [**rx-mini** _N_] [**rx-jumbo** _N_] [**tx** _N_]
-
-       **ethtool** **-i** _ethX_
-
-       **ethtool** **-d** _ethX_ [**raw** **on**|**off**]
-
-       **ethtool** **-e** _ethX_ [**raw** **on**|**off**] [**offset** _N_] [**length** _N_]
-
-       **ethtool** **-E** _ethX_ [**magic** _N_] [**offset** _N_] [**value** _N_]
-
-       **ethtool** **-k** _ethX_
-
-       **ethtool** **-K** _ethX_ [**rx** **on**|**off**] [**tx** **on**|**off**] [**sg** **on**|**off**] [**tso** **on**|**off**]
-
-       **ethtool** **-p** _ethX_ _[_N_]_
-
-       **ethtool** **-r** _ethX_
-
-       **ethtool** **-S** _ethX_
-
-       **ethtool** **-t** _ethX_ [**offline**|**online**]
-
-       **ethtool**     **-s**     _ethX_     [**speed** **10**|**100**|**1000**]      [**duplex** **half**|**full**]
-       [**port** **tp**|**aui**|**bnc**|**mii**]  [**autoneg** **on**|**off**] [**phyad** _N_] [**xcvr** **internal**|**exter-**
-       **nal**] [**wol** **p**|**u**|**m**|**b**|**a**|**g**|**s**|**d**...]  [**sopass** _xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_] [**msglvl** _N_]</pre>
-
-<h2 id="description">DESCRIPTION</h2>
-<pre>       **ethtool** is used for querying settings of an ethernet device and  chang-
-       ing them.
-
-       _ethX_ is the name of the ethernet device to work on.</pre>
-
-<h2 id="options">OPTIONS</h2>
-<p><pre>       <strong>ethtool</strong>  with  a single argument specifying the device name prints cur-
-       rent setting of the specified device.</p>
-<pre><code>   **-h**     shows a short help message.
-
-   **-a**     queries the specified ethernet device for pause parameter infor-
-          mation.
-
-   **-A**     change the pause parameters of the specified ethernet device.
-
-   **autoneg** **on**|**off**
-          Specify if pause autonegotiation is enabled.
-
-   **rx** **on**|**off**
-          Specify if RX pause is enabled.
-
-   **tx** **on**|**off**
-          Specify if TX pause is enabled.
-
-   **-c**     queries  the  specified  ethernet device for coalescing informa-
-          tion.
-
-   **-C**     change the coalescing settings of the specified ethernet device.
-
-   **-g**     queries  the  specified ethernet device for rx/tx ring parameter
-          information.
-
-   **-G**     change the rx/tx  ring  parameters  of  the  specified  ethernet
-          device.
-
-   **rx** _N_   Change number of ring entries for the Rx ring.
-
-   **rx-mini** _N_
-          Change number of ring entries for the Rx Mini ring.
-
-   **rx-jumbo** _N_
-          Change number of ring entries for the Rx Jumbo ring.
-
-   **tx** _N_   Change number of ring entries for the Tx ring.
-
-   **-i**     queries  the  specified  ethernet  device  for associated driver
-          information.
-
-   **-d**     retrieves and prints a register dump for the specified  ethernet
-          device.   When  raw  is  enabled, then it dumps the raw register
-          data to stdout.
-
-   **-e**     retrieves and prints an EEPROM dump for the  specified  ethernet
-          device.   When raw is enabled, then it dumps the raw EEPROM data
-          to stdout. The length and offset parameters allow  dumping  cer-
-          tain portions of the EEPROM.  Default is to dump the entire EEP-
-          ROM.
-
-   **-E**     Changes EEPROM byte for the specified ethernet  device.   offset
-          and value specify which byte and it’s new value.  Because of the
-          persistent nature of writing to the  EEPROM,  a  device-specific
-          magic key must be specified to prevent the accidental writing to
-          the EEPROM.
-
-   **-k**     queries the specified ethernet device for offload information.
-
-   **-K**     change the offload parameters of the specified ethernet  device.
-
-   **rx** **on**|**off**
-          Specify if RX checksumming is enabled.
-
-   **tx** **on**|**off**
-          Specify if TX checksumming is enabled.
-
-   **sg** **on**|**off**
-          Specify if scatter-gather is enabled.
-
-   **tso** **on**|**off**
-          Specify if tcp segmentation offload is enabled.
-
-   **-p**     initiates adapter-specific action intended to enable an operator
-          to  easily  identify  the  adapter  by  sight.   typically  this
-          involves  blinking  one  or  more  LEDs on the specific ethernet
-          port.
-
-   **N**      Length of time to perform phys-id, in seconds.
-
-   **-r**     restarts auto-negotiation on the specified ethernet  device,  if
-          auto-negotiation is enabled.
-
-   **-S**     queries  the  specified ethernet device for NIC- and driver-spe-
-          cific statistics.
-
-   **-t**     executes adapter selftest on the specified ethernet device. Pos-
-          sible test modes are:
-
-   **offline**|**online**
-          defines  test  type: **offline** (default) means to perform full set
-          of tests possibly causing normal operation  interruption  during
-          the  tests,  **online** means to perform limited set of tests do not
-          interrupting normal adapter operation.
-
-   **-s**     option allows changing some or all  settings  of  the  specified
-          ethernet  device.   All  following  options only apply if **-s** was
-          specified.
-
-   **speed** **10**|**100**|**1000**
-          Set speed in Mb/s.  **ethtool** with single argument will  show  you
-          the supported device speeds.
-
-   **duplex** **half**|**full**
-          Set full or half duplex mode.
-
-   **port** **tp**|**aui**|**bnc**|**mii**
-          Select device port.
-
-   **autoneg** **on**|**off**
-          Specify  if autonegotiation is enabled. In the usual case it is,
-          but might cause some problems with some network devices, so  you
-          can turn it off.
-
-   **phyad** _N_
-          PHY address.
-
-   **xcvr** **internal**|**external**
-          Select  transceiver  type.  Currently only internal and external
-          can be specified, in the future further types might be added.
-
-   **wol** **p**|**u**|**m**|**b**|**a**|**g**|**s**|**d**...
-          Set Wake-on-LAN options.  Not all  devices  support  this.   The
-          argument  to  this  option  is a string of characters specifying
-          which options to enable.
-          **p**  Wake on phy activity
-          **u**  Wake on unicast messages
-          **m**  Wake on multicast messages
-          **b**  Wake on broadcast messages
-          **a**  Wake on ARP
-          **g**  Wake on MagicPacket(tm)
-          **s**  Enable SecureOn(tm) password for MagicPacket(tm)
-          **d**  Disable (wake on nothing).  This option clears  all  previous
-             options.
-
-   **sopass** _xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_
-          Set the SecureOn(tm) password.  The argument to this option must
-          be 6 bytes in ethernet MAC hex format (_xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_).
-
-   **msglvl** _N_
-          Set the driver message level. Meanings differ per driver.&lt;/pre&gt;
-</code></pre><p>&nbsp;</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -488,6 +300,10 @@ Most features are dependent on support in the specific driver. See the manual pa
   <ul class="entry">
     
       <li>
+        <a href="/vcap510/">VCAP510</a>
+      </li>
+    
+      <li>
         <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
       </li>
     
@@ -503,10 +319,6 @@ Most features are dependent on support in the specific driver. See the manual pa
         <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
       </li>
     
-      <li>
-        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
-      </li>
-    
   </ul>
 </div>
 
@@ -518,7 +330,7 @@ Most features are dependent on support in the specific driver. See the manual pa
   
     <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
   
-    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>关于 | Succw Blog :)</title>
+  <title>VCAP510 | Succw Blog :)</title>
   <meta name="author" content="獨菰、瑉">
   
   <meta name="description" content="运成功者的谦词，命失败者的借口">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="关于"/>
+  <meta property="og:title" content="VCAP510"/>
   <meta property="og:site_name" content="Succw Blog :)"/>
 
   
@@ -48,38 +48,86 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="page">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
   
   <div class="post-content">
     <header>
       
+        <div class="icon"></div>
+        <time datetime="2014-01-20T09:25:41.000Z"><a href="/vcap510/">1月 20 2014</a></time>
+      
       
   
-    <h1 class="title">关于</h1>
+    <h1 class="title">VCAP510</h1>
   
 
     </header>
     <div class="entry">
       
-        <pre>**仰望星空** 
-
-我仰望星空，
-它是那样辽阔而深邃；
-那无穷的真理，
-让我苦苦地求索追随。
-我仰望星空，
-它是那样庄严而圣洁；
-那凛然的正义，
-让我充满热爱、感到敬畏。
-我仰望星空，
-它是那样自由而宁静；
-那博大的胸怀，
-让我的心灵栖息依偎。
-我仰望星空，
-它是那样壮丽而光辉；
-那永恒的炽热，
-让我心中燃起希望的烈焰、响起春雷。
-——  温总理</pre>
+        <p>VDCA510考试</p>
+<pre><code>未知总是很可怕的，特此记录下来。
+</code></pre><blockquote>
+<p>关于VDCA510考试， 总的来说题目很简答，全部来自<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>。 只是改改题型而已。要求是必须熟练，熟练，因为考试时间有限
+这里记录我考试相关的一些题目相关。</p>
+</blockquote>
+<p>服务方面，</p>
+<blockquote>
+<ol>
+<li>创建用户和组（ESXi和vMA）。创建多个用户和组，对用户赋予shell访问权限。将用户加到相应的组，其二就是角色控制。其中一个赋予普通用户，另一个则赋予管理原权限。</li>
+<li>配置syslog日志服务器，查看相应的文件中是否生成相应的文件。</li>
+<li>FT配置，要求某磁盘能开启FT，网络配置，开启FT  logging。</li>
+<li>应用主机配置文件，对配置文件做修改以达到兼容主机配置。比如配置SNMP。   </li>
+<li>集群方面的题目，要么是让某些虚拟机在重启的时候不启动、要么是不应有DRS规则、要么是确保某个特定的虚拟机都不应有相应的规则等，还有其他，如，存储swapfile配置、接入访问控制等。</li>
+<li>排错题，要求将StorageVM存储中的ISO文件拷贝到NFS中，但NFS却连不上。</li>
+<li>开启Update Manager插件，配置更新计划调度。   </li>
+<li>AutoDeploy有3-5道题目，创建image配置文件，导出ISO文件，基于配置文件的自动部署等 </li>
+<li>基于模板创建VM进行排错。</li>
+<li>根据性能分析，将Chart结果保存到配置中，或对相应的虚拟机进行调整，如资源池。 </li>
+<li>证书相关，将证书拷贝到主机。</li>
+</ol>
+</blockquote>
+<p>安全方面，</p>
+<blockquote>
+<p>配置防火墙，比如将某端口对外开放或者对内的，如3000端口。</p>
+</blockquote>
+<p>存储方面，</p>
+<blockquote>
+<ol>
+<li>添加存储集群，配置存储DRS，将特定存储进行维护，检查配置是否正确。</li>
+<li>当然存储配置文件就不说了，很简单。</li>
+<li>添加SATP、PSA相应的规则，并激活。</li>
+</ol>
+</blockquote>
+<p>脚本方面，</p>
+<blockquote>
+<ol>
+<li>powershell的改编题。要求你对ps1脚本进行排错。记得是查看所有VM光驱状态的脚本。</li>
+<li>在AutoDeploy中有体现。</li>
+</ol>
+</blockquote>
+<p>网络方面，</p>
+<blockquote>
+<ol>
+<li>配置分布式交换机，将特定的标准交换机迁移至DVS中，创建相应的端口组，对端口组做负载均衡相关配置。</li>
+<li>配置NetFlow对特定端口组进行监控。</li>
+<li>配置Pvlan，要求VLAN20中的机器能访问Internet却不能互访。但是VLAN100中的机器不光可以上Internet也可以访问VLAN20</li>
+<li>标准交换机上的配置，为交换机添加上行链路，此交换机专门用来配置FT，然后检查虚拟机开始FT是否正常。</li>
+</ol>
+</blockquote>
+<hr>
+<p>将<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>的实验完全掌握、熟练之后，VDCA510的考试就一点都不难了。</p>
 
       
     </div>
@@ -87,6 +135,11 @@
       
         
         
+  
+  <div class="tags">
+    <a href="/tags/VMware/">VMware</a>
+  </div>
+
         
       
       <div class="clearfix"></div>

@@ -67,6 +67,65 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2013-03-06T11:10:47.000Z"><a href="/insufficient-system-resources-exchange-2010/">3月 6 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/insufficient-system-resources-exchange-2010/">Insufficient system resources (Exchange 2010)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>said: 452 4.3.1 Insufficient system resources (in reply to MAIL FROM command)</p>
+<p>这个提示是说，Exchange服务器资源不够。</p>
+<p>进入exchange服务器后，发现硬盘空间不到4G.</p>
+<p>exchange之前不是我弄得，发现数据库及数据库日志放在c盘的，当时就无语了...</p>
+<p>赶紧迁移数据库....</p>
+<p>&nbsp;</p>
+<p>Troubleshooting MSExchangeTransport Service Events</p>
+<p><a href="http://technet.microsoft.com/en-us/library/bb397220.aspx" target="_blank"><a href="http://technet.microsoft.com/en-us/library/bb397220.aspx">http://technet.microsoft.com/en-us/library/bb397220.aspx</a></a></p>
+<p>可采用以下方法临时解决</p>
+<p>进入Exchange 2010的安装文件夹%Program Files\Microsoft\Exchange Server\v14\Bin,打开EdgeTransport.exe.config文件,找到</p>
+<p>&lt;add key=&quot;EnableResourceMonitoring&quot; value=&quot;True&quot;/&gt;</p>
+<p>将其更改为</p>
+<p>&lt;add key=&quot;EnableResourceMonitoring&quot; value=&quot;False&quot;/&gt;</p>
+<p>然后重新启动Transport Service</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2013-01-23T10:16:25.000Z"><a href="/wordpress固定链接/">1月 23 2013</a></time>
       
       
@@ -197,54 +256,6 @@ location / {</p>
 
 
 
-  <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      <img src="">
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-11-21T09:44:25.000Z"><a href="/《红楼梦》音乐/">11月 21 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/《红楼梦》音乐/">《红楼梦》中的音乐</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>标记于此：</p>
-<embed src="http://www.xiami.com/widget/6255775_1770579228,1770579229,1770579230,1770579231,1770579232,1770579233,1770579234,1770579235,1770579236,1770579237,1770579238,_235_360_008080_c0c0c0_1/multiPlayer.swf" type="application/x-shockwave-flash" width="235" height="360" wmode="opaque"></embed>
-
-<p>红楼梦中的音乐，真是极好听...</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -286,6 +297,10 @@ location / {</p>
   <ul class="entry">
     
       <li>
+        <a href="/vcap510/">VCAP510</a>
+      </li>
+    
+      <li>
         <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
       </li>
     
@@ -301,10 +316,6 @@ location / {</p>
         <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
       </li>
     
-      <li>
-        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
-      </li>
-    
   </ul>
 </div>
 
@@ -316,7 +327,7 @@ location / {</p>
   
     <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
   
-    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   

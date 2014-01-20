@@ -67,6 +67,71 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2012-09-25T06:01:35.000Z"><a href="/设置core-dump文件/">9月 25 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/设置core-dump文件/">设置core dump文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux可以在程序出现段错误后将进程的内存空间保存在一个core格式的文件中，开发人员可用gdb读取这个文件，以了解程序挂掉时的进程空间状态</p>
+<p>linux默认配置生成core文件大小是0，也就是不生成。ulimit命令可以设置core的大小</p>
+<p>ulimit -c  1024 //core大小为1024字节</p>
+<p>ulimit -c unlimited //大小无限</p>
+<p>由于linux默认是不生成core文件，在命令行这样打了之后，只对本身的终端有效，也就是只能在该终端运行的程序挂掉了才生成core</p>
+<hr>
+<p>如果要系统启动就启动这个功能，运行下面的命令</p>
+<p>echo &quot;ulimit -S -c unlimited &gt; /dev/null 2&gt;&amp;1&quot;&gt;&gt;/etc/profile</p>
+<p>sysctl -p
+如果要统一设定core的路径和文件名格式，可在/etc/sysctl.conf</p>
+<p>kernel.core_pattern=/var/core/%h-%e-%t.core</p>
+<p>生成的/var/core/下</p>
+<p>%%　　%字符本身</p>
+<p>%p　　生成core文件的进程号</p>
+<p>%u　　生成core文件的用户id</p>
+<p>%g　　组ID号</p>
+<p>%s　　触发core文件的信号编号，也就是程序收到什么型号死的</p>
+<p>%t　　core文件生成的时刻</p>
+<p>%h　　主机名</p>
+<p>%e　　可执行程序名字</p>
+<p>%c　　core大小上线</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2012-09-08T00:28:41.000Z"><a href="/user-parameters/">9月 8 2012</a></time>
       
       
@@ -212,59 +277,13 @@ wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/docu
 
 
 
-  <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      <img src="">
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-08-24T00:17:05.000Z"><a href="/setfacl-getfacl/">8月 24 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/setfacl-getfacl/">setfacl &amp; getfacl</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><span style="color:#ff9900;">getfacl -R /etc &gt; perm.bak</span></p>
-<p>得到/etc下的所有文件和目录的权限表文件</p>
-<p><span style="color:#ff9900;"> setfacl --restore=perm.bak</span></p>
-<p>恢复/etc下的所有文件和目录的权限</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
     <a href="/page/6/" class="alignleft prev">上一页</a>
   
+  
+    <a href="/page/8/" class="alignright next">下一页</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -299,6 +318,10 @@ wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/docu
   <ul class="entry">
     
       <li>
+        <a href="/vcap510/">VCAP510</a>
+      </li>
+    
+      <li>
         <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
       </li>
     
@@ -314,10 +337,6 @@ wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/docu
         <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
       </li>
     
-      <li>
-        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
-      </li>
-    
   </ul>
 </div>
 
@@ -329,7 +348,7 @@ wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/docu
   
     <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
   
-    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   

@@ -67,6 +67,102 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-01-20T09:25:41.000Z"><a href="/vcap510/">1月 20 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/vcap510/">VCAP510</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>VDCA510考试</p>
+<pre><code>未知总是很可怕的，特此记录下来。
+</code></pre><blockquote>
+<p>关于VDCA510考试， 总的来说题目很简答，全部来自<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>。 只是改改题型而已。要求是必须熟练，熟练，因为考试时间有限
+这里记录我考试相关的一些题目相关。</p>
+</blockquote>
+<p>服务方面，</p>
+<blockquote>
+<ol>
+<li>创建用户和组（ESXi和vMA）。创建多个用户和组，对用户赋予shell访问权限。将用户加到相应的组，其二就是角色控制。其中一个赋予普通用户，另一个则赋予管理原权限。</li>
+<li>配置syslog日志服务器，查看相应的文件中是否生成相应的文件。</li>
+<li>FT配置，要求某磁盘能开启FT，网络配置，开启FT  logging。</li>
+<li>应用主机配置文件，对配置文件做修改以达到兼容主机配置。比如配置SNMP。   </li>
+<li>集群方面的题目，要么是让某些虚拟机在重启的时候不启动、要么是不应有DRS规则、要么是确保某个特定的虚拟机都不应有相应的规则等，还有其他，如，存储swapfile配置、接入访问控制等。</li>
+<li>排错题，要求将StorageVM存储中的ISO文件拷贝到NFS中，但NFS却连不上。</li>
+<li>开启Update Manager插件，配置更新计划调度。   </li>
+<li>AutoDeploy有3-5道题目，创建image配置文件，导出ISO文件，基于配置文件的自动部署等 </li>
+<li>基于模板创建VM进行排错。</li>
+<li>根据性能分析，将Chart结果保存到配置中，或对相应的虚拟机进行调整，如资源池。 </li>
+<li>证书相关，将证书拷贝到主机。</li>
+</ol>
+</blockquote>
+<p>安全方面，</p>
+<blockquote>
+<p>配置防火墙，比如将某端口对外开放或者对内的，如3000端口。</p>
+</blockquote>
+<p>存储方面，</p>
+<blockquote>
+<ol>
+<li>添加存储集群，配置存储DRS，将特定存储进行维护，检查配置是否正确。</li>
+<li>当然存储配置文件就不说了，很简单。</li>
+<li>添加SATP、PSA相应的规则，并激活。</li>
+</ol>
+</blockquote>
+<p>脚本方面，</p>
+<blockquote>
+<ol>
+<li>powershell的改编题。要求你对ps1脚本进行排错。记得是查看所有VM光驱状态的脚本。</li>
+<li>在AutoDeploy中有体现。</li>
+</ol>
+</blockquote>
+<p>网络方面，</p>
+<blockquote>
+<ol>
+<li>配置分布式交换机，将特定的标准交换机迁移至DVS中，创建相应的端口组，对端口组做负载均衡相关配置。</li>
+<li>配置NetFlow对特定端口组进行监控。</li>
+<li>配置Pvlan，要求VLAN20中的机器能访问Internet却不能互访。但是VLAN100中的机器不光可以上Internet也可以访问VLAN20</li>
+<li>标准交换机上的配置，为交换机添加上行链路，此交换机专门用来配置FT，然后检查虚拟机开始FT是否正常。</li>
+</ol>
+</blockquote>
+<hr>
+<p>将<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>的实验完全掌握、熟练之后，VDCA510的考试就一点都不难了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2013-08-14T08:53:06.000Z"><a href="/installing-update-manager-fails-with-error-error-1406/">8月 14 2013</a></time>
       
       
@@ -168,76 +264,6 @@
 
 
 
-  <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      <img src="">
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2013-06-14T09:29:58.000Z"><a href="/linux下cdrecord刻录光盘/">6月 14 2013</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>linux下一般都带有cdrecord软件，可以用来刻录光盘</p>
-<p>cdrecord -scanbus 查看系统所有 CD-R(W) 设备。</p>
-<p>[root@localhost Material]# cdrecord -scanbus
-Cdrecord-Clone 2.01 (cpu-pc-linux-gnu) Copyright (C) 1995-2004 JSchilling
-Note: This version is an unofficial (modified) version with DVD support
-Note: and therefore may have bugs that are not present in the original.
-Note: Please send bug reports or support requests to <a href="http://bugzilla.redhat.com/bugzilla" target="_blank">http://bugzilla.redhat.com/bugzilla</a>
-Note: The author of cdrecord should not be bothered with problems in this version.
-Linux sg driver version: 3.5.27
-Using libscg version &#39;schily-0.8&#39;.
-cdrecord: Warning: using inofficial libscg transport code version (schily - Red Hat-scsi-linux-sg.c-1.83-RH &#39;@(#)scsi-linux-sg.c 1.83 04/05/20 Copyright 1997 J. Schilling&#39;).
-scsibus4:
-4,0,0 400) &#39;TEAC &#39; &#39;DVD-ROM DV-28SW &#39; &#39;R.2A&#39; Removable CD-ROM
-4,1,0 401) <em>
-4,2,0 402) </em>
-4,3,0 403) <em>
-4,4,0 404) </em>
-4,5,0 405) <em>
-4,6,0 406) </em>
-4,7,0 407) *</p>
-<p>刻录iso文件</p>
-<p>cdrecord -v -eject speed=4 dev=4,0,0 backup.iso</p>
-<p>-v verbose</p>
-<p>-eject 刻完自动弹出光盘</p>
-<p>speed=4 dev=4,0,0 :四速刻录到dev=4,0,0上</p>
-<p>cdrecord --dev=4,0,0 --blank=fast   擦写光驱</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -277,6 +303,10 @@ scsibus4:
   <ul class="entry">
     
       <li>
+        <a href="/vcap510/">VCAP510</a>
+      </li>
+    
+      <li>
         <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
       </li>
     
@@ -292,10 +322,6 @@ scsibus4:
         <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
       </li>
     
-      <li>
-        <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/">Monitor VMware ESXi with your existing Nagios application</a>
-      </li>
-    
   </ul>
 </div>
 
@@ -307,7 +333,7 @@ scsibus4:
   
     <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
   
-    <li><a href="/tags/VMware/">VMware</a><small>8</small></li>
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
