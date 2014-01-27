@@ -18,65 +18,146 @@
     <meta property="og:image" content="undefined"/>
   
 
-  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link href="/favicon.png" rel="icon">
+
   <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/print.css" media="print" type="text/css">
+
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
+  <script src="/js/scripts.js"></script>
+
+  
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config(
+    {
+      tex2jax: {inlineMath: [['$','$'], ['\(','\)']]},
+      TeX: {equationNumbers: {autoNumber: ["AMS"], useLabelIds: true}},
+    }
+  );
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
   
 </head>
 
 
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Succw Blog :)</a></h1>
-  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
-</div>
-<nav id="main-nav" class="alignright">
-  <ul>
+    <div class="container">
+      <div class="left-col">
+        <div class="intrude-less">
+          <header id="header" class="inner">
+            <div class="profilepic">
+  <script src="/js/md5.js"></script>
+  <script type="text/javascript">
+    $(function(){
+	$('.profilepic').append(
+          "<img src='http://www.gravatar.com/avatar/"
+          + MD5("tivon.su@gmail.com")
+          + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+    });
+  </script>
+</div><!-- profilepic -->
+<h1><a href="/">獨菰、瑉</a></h1>
+<nav id="main-nav">
+  <ul class="main">
     
-      <li><a href="/">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-      <li><a href="/about">About</a></li>
-    
-      <li><a href="/atom.xml">RSS</a></li>
+      <li>
+      <a href="/about">About</a>
+      </li>
     
   </ul>
-  <div class="clearfix"></div>
-</nav>
-<div class="clearfix"></div>
-</header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
-    <div class="gallery">
-  <div class="photoset">
+  <section class="aboutme">
+    <p>
+      运成功者的谦词，命失败者的借口
+    </p>
+  </section>
+  
+</nav><!-- main-nav -->
+<nav id="sub-nav">
+  <div class="social">
     
-      <img src="">
+      <a class="google" href="http://plus.google.com/"
+         title="Google+">Google+</a>
+    
+    
+      <a class="twitter" href="http://twitter.com/"
+         title="Twitter">Twitter</a>
+    
+    
+      <a class="github" href="http://github.com/"
+         title="Github">Github</a>
+    
+    
+        <a class="rss" href="/atom.xml" title="RSS">RSS</a>
     
   </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
+</nav><!-- sub-nav -->
+<nav id="widget-nav">
+  <div class="widgets">
+    
+      
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/svn/">svn</a><small>1</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
 </div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-11-22T02:16:21.000Z"><a href="/linux-系统运维及工具/">11月 22 2012</a></time>
-      
-      
-  
-    <h1 class="title"> Linux 系统运维及工具</h1>
-  
 
-    </header>
-    <div class="entry">
+
+    
+  </div>
+</nav><!-- widget-nav -->
+
+          <header>
+        </div><!-- intrude-less -->
+      </div><!-- left-col -->
+      <div class="mid-col">
+        <div class="mid-col-container">
+	    <div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-11-22T02:16:21.000Z"
       
-        <blockquote>
+      data-updated="true"
+       itemprop="datePublished">
+  11月 22 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+          
+<div class="print">打印</div>
+
+          
+	</div>
+        <h1 class="title" itemprop="name"> Linux 系统运维及工具</h1>
+      	<div class="entry-content" itemprop="articleBody"><blockquote>
 <div>许多实用程序可以对事项进行报告。例如，who、finger、ls、ps 以及其它实用程序可以生成简单的最终用户报告。在某些情况下，这些报告有助于系统管理。本节介绍的实用程序可以产生更多的详细报告，可以为系统管理任务提供更多的帮助。Linux 还有许多其它报告实用程序，比如 sysstat 包中的 sar（系统活动报告）、iostat（输入 / 输出和 CPU 统计）和 mpstat（处理器统计），netstat（网络报告，位于 net-tools 包）和 nfsstat（NFS 统计，位于 nfs-utils 包）。</div>
 <div></div>
 <div><strong>使用 vmstat 掌握虚拟内存统计信息</strong></div>
@@ -127,114 +208,46 @@
 <div>W  编写名为 ~/.toprc的启动文件，以便在下一次启动 top，它使用与当前相同的参数。</div>
 <div></div>
 </blockquote>
+</div>
 
-      
-    </div>
-    <footer>
-      
-        
-  
-  <div class="categories">
-    <a href="/categories/运维/">运维</a>
-  </div>
 
-        
-  
-  <div class="tags">
-    <a href="/tags/Linux/">Linux</a>
-  </div>
-
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
 </article>
 
-
-</div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="搜索">
-    <input type="hidden" name="q" value="site:www.succw.com">
-  </form>
-</div>
-
+  <div class="share">
+  <div class="addthis_toolbox addthis_default_style ">
   
-<div class="widget tag">
-  <h3 class="title">分类</h3>
-  <ul class="entry">
   
-    <li><a href="/categories/Life/">Life</a><small>2</small></li>
+  <a class="addthis_button_tweet"></a>
   
-    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
   
-    <li><a href="/categories/other/">other</a><small>2</small></li>
+  <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
   
-    <li><a href="/categories/运维/">运维</a><small>10</small></li>
   
-  </ul>
-</div>
-
-
-  
-<div class="widget tag">
-  <h3 class="title">最新文章</h3>
-  <ul class="entry">
-    
-      <li>
-        <a href="/vcap510/">VCAP510</a>
-      </li>
-    
-      <li>
-        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
-      </li>
-    
-      <li>
-        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
-      </li>
-    
-      <li>
-        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
-      </li>
-    
-      <li>
-        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
-      </li>
-    
-  </ul>
-</div>
-
-
-  
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
-  
-    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
-  
-    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
-  
-    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
-  
-  </ul>
-</div>
-
-</aside>
-    <div class="clearfix"></div>
   </div>
-  <footer id="footer" class="inner"><div class="alignleft">
-  
-  &copy; 2014 獨菰、瑉
-  
+  <script type="text/javascript">
+    var addthis_config = {"data_track_addressbar":true};
+  </script>
+  <script type="text/javascript"
+          src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=null">
+  </script>
 </div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+</div>
+	</div>
+        <footer id="footer" class="inner">
+          Copyright © 2013 - 獨菰、瑉 - Powered by <a href="https://github.com/tommy351/hexo">Hexo</a><br>
+- Ported theme <a href="https://github.com/nuklly/hexo-theme-greyshade">GreyShade</a> -
+        </footer>
+        
+<script src="/js/slash.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
+
+
+
 
 
 
@@ -247,5 +260,10 @@
 })(jQuery);
 </script>
 
+
+
+
+      </div><!-- mid-col -->
+    </div><!-- container -->
 </body>
 </html>

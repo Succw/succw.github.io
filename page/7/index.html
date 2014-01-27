@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>第 7 页 | Succw Blog :)</title>
+  <title>第 7 頁 | Succw Blog :)</title>
   <meta name="author" content="獨菰、瑉">
   
   <meta name="description" content="运成功者的谦词，命失败者的借口">
@@ -18,66 +18,312 @@
     <meta property="og:image" content="undefined"/>
   
 
-  <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  <link href="/favicon.png" rel="icon">
+
   <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/print.css" media="print" type="text/css">
+
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
+  <script src="/js/scripts.js"></script>
+
+  
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config(
+    {
+      tex2jax: {inlineMath: [['$','$'], ['\(','\)']]},
+      TeX: {equationNumbers: {autoNumber: ["AMS"], useLabelIds: true}},
+    }
+  );
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
   
 </head>
 
 
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Succw Blog :)</a></h1>
-  <h2 class="subtitle">运成功者的谦词，命失败者的借口。</h2>
-</div>
-<nav id="main-nav" class="alignright">
-  <ul>
+    <div class="container">
+      <div class="left-col">
+        <div class="intrude-less">
+          <header id="header" class="inner">
+            <div class="profilepic">
+  <script src="/js/md5.js"></script>
+  <script type="text/javascript">
+    $(function(){
+	$('.profilepic').append(
+          "<img src='http://www.gravatar.com/avatar/"
+          + MD5("tivon.su@gmail.com")
+          + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+    });
+  </script>
+</div><!-- profilepic -->
+<h1><a href="/">獨菰、瑉</a></h1>
+<nav id="main-nav">
+  <ul class="main">
     
-      <li><a href="/">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-      <li><a href="/about">About</a></li>
-    
-      <li><a href="/atom.xml">RSS</a></li>
+      <li>
+      <a href="/about">About</a>
+      </li>
     
   </ul>
-  <div class="clearfix"></div>
-</nav>
-<div class="clearfix"></div>
-</header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
   
-    <div class="gallery">
-  <div class="photoset">
+  <section class="aboutme">
+    <p>
+      运成功者的谦词，命失败者的借口
+    </p>
+  </section>
+  
+</nav><!-- main-nav -->
+<nav id="sub-nav">
+  <div class="social">
     
-      <img src="">
+      <a class="google" href="http://plus.google.com/"
+         title="Google+">Google+</a>
+    
+    
+      <a class="twitter" href="http://twitter.com/"
+         title="Twitter">Twitter</a>
+    
+    
+      <a class="github" href="http://github.com/"
+         title="Github">Github</a>
+    
+    
+        <a class="rss" href="/atom.xml" title="RSS">RSS</a>
     
   </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
+</nav><!-- sub-nav -->
+<nav id="widget-nav">
+  <div class="widgets">
+    
+      
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/svn/">svn</a><small>1</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
 </div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-09-25T06:01:35.000Z"><a href="/设置core-dump文件/">9月 25 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/设置core-dump文件/">设置core dump文件</a></h1>
-  
 
-    </header>
-    <div class="entry">
+
+    
+  </div>
+</nav><!-- widget-nav -->
+
+          <header>
+        </div><!-- intrude-less -->
+      </div><!-- left-col -->
+      <div class="mid-col">
+        <div class="mid-col-container">
+	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-11-20T15:17:53.000Z"
       
-        <p>linux可以在程序出现段错误后将进程的内存空间保存在一个core格式的文件中，开发人员可用gdb读取这个文件，以了解程序挂掉时的进程空间状态</p>
+      data-updated="true"
+       itemprop="datePublished">
+  11月 20 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/音乐/">音乐</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/葬花吟/" itemprop="url">
+            葬花吟</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p><object width="257" height="33" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="http://www.xiami.com/widget/6255775_1770579238/singlePlayer.swf" /><param name="wmode" value="transparent" /><embed width="257" height="33" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/6255775_1770579238/singlePlayer.swf" wmode="transparent" /></object></p>
+<blockquote>
+<p>花谢花飞花满天，红消香断有谁怜？
+游丝软系飘春榭，落絮轻沾扑绣帘。
+闺中女儿惜春暮，愁绪满怀无释处、
+手把花锄出绣闺，忍踏落花来复去。
+柳丝榆荚自芳菲，不管桃飘与李飞；
+桃李明年能再发，明年闺中知有谁？
+三月香巢已垒成，梁间燕子太无情！
+明年花发虽可啄，却不道人去梁空巢也倾。
+一年三百六十日，风刀霜剑严相逼；
+明媚鲜妍能几时，一朝漂泊难寻觅。
+花开易见落难寻，阶前愁杀葬花人，
+独倚花锄泪暗洒，洒上空枝见血痕。
+杜鹃无语正黄昏，荷（hè）锄归去掩重门；
+青灯照壁人初睡，冷雨敲窗被未温。
+怪奴底事倍伤神？半为怜春半恼春。
+怜春忽至恼忽去，至又无言去不闻。
+昨宵庭外悲歌发，知是花魂与鸟魂？
+花魂鸟魂总难留，鸟自无言花自羞；
+愿奴胁下生双翼，随花飞到天尽头。
+天尽头，何处有香丘？ 黛玉葬花
+未若锦囊收艳骨，一抔净土掩风流。
+质本洁来还洁去，强于污淖陷渠沟。
+尔今死去侬收葬，未卜侬身何日丧？
+侬今葬花人笑痴，他年葬侬知是谁？
+试看春残花渐落，便是红颜老死时；
+一朝春尽红颜老，花落人亡两不知</p>
+</blockquote>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-10-12T06:58:36.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  10月 12 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Linux/">Linux</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/jboss-web-installing-jboss-web/" itemprop="url">
+            Installing JBoss Web</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <h2 id="installation-on-linux-and-unix-based-systems">Installation on Linux and Unix based systems</h2>
+<h1 id="downloading-jboss-web">Downloading JBoss Web</h1>
+<p>JBoss Web is distributed as a standalone webserver. The distribution can be downloaded directly from the <a href="http://www.jboss.org/jbossweb/downloads/jboss-web.html" target="_blank">JBossWeb downloads page</a>. JBoss Web is not pure Java. It contains native code, compiled and optimized for each operating operating system. Download the package appropriate for your platform, paying particular attention to whether or not you are running on the 64-bit system.</p>
+<p>Uncompress the distribution wherever you would like JBoss Web installed.</p>
+<p>Then download the native part from the <a href="http://www.jboss.org/jbossweb/downloads/jboss-native-2-0-8.html" target="_blank">JBossNative downloads page</a>. And uncompress it in the JBossWeb direction (named like jboss-web-2.1.0.GA/). The files will be installed in the bin subdirectory.</p>
+<h1 id="adjusting-setenv-sh">Adjusting setenv.sh</h1>
+<p>On some system you may have to do an extra step. Edit/Create the $CATALINA_HOME/bin/setenv.sh (CATALINA_HOME should be something like jbossweb-1.0.0.GA) add the LD_LIBRARY_PATH variable and modify/add:</p>
+<p><em>LD_LIBRARY_PATH=LD_LIBRARY_PATH:$CATALINA_HOME/bin/native
+export LD_LIBRARY_PATH</em></p>
+<p>Note that since JBoss Native 2.0.4 the location of the files has changed and they are located in something like: bin/META-INF/lib/&lt;os.name/&amp;gtlt;os.arch /&gt; For example:
+<strong>bin/META-INF/lib/linux2/x64/libtcnative-1.so</strong> so the setenv.sh should be something like the following:</p>
+<p><em>LD_LIBRARY_PATH=LD_LIBRARY_PATH:$CATALINA_HOME/bin/META-INF/lib/linux2/x64/
+export LD_LIBRARY_PATH</em></p>
+<h1 id="runnning-jboss-web">Runnning JBoss Web</h1>
+<p>Before starting, make sure that your JAVA_HOME environment variable is set to your Java install directory. From the bin directory, run the startup.bat or startup.sh script, as is appropriate for your platform. If you run this from a shell, you will see the JBoss Web console log scroll by. If JBoss Web started correctly, the last few lines of output should contain something like the following:</p>
+<p><strong>Feb 15, 2008 10:45:10 AM org.apache.coyote.http11.Http11AprProtocol start INFO: Starting Coyote HTTP/1.1 on http-8080
+Feb 15, 2008 10:45:10 AM org.apache.coyote.ajp.AjpAprProtocol start INFO: Starting Coyote AJP/1.3 on ajp-8009
+Feb 15, 2008 10:45:10 AM org.apache.catalina.startup.Catalina start INFO: Server startup in 888 ms</strong></p>
+<p>The last line is the message JBoss Web sends when all services are up and running, letting you know that everything is good. However, the two lines before it are important for JBoss Web. They tell you that JBoss Web is listening on two ports, 8080 and 8009. More importantly, you can see from the output that JBoss Web is using the APR(Apache portable runtime) libraries. This means that you are using the optimized native libraries. Without the APR libraries, you would see output more like the following, with no reference to the APR code.</p>
+<p><strong>INFO: Starting Servlet Engine: JBoss Web/2.1.0.0
+Feb 15, 2008 9:31:10 AM org.apache.coyote.http11.Http11Protocol start INFO: Starting Coyote HTTP/1.1 on http-8080
+Feb 15, 2008 9:31:10 AM org.apache.coyote.ajp.AjpProtocol start INFO: Starting Coyote AJP/1.3 on ajp-8009
+Feb 15, 2008 9:31:10 AM org.apache.catalina.startup.Catalina start INFO: Server startup in 1192 ms</strong></p>
+<p>In worse cases, like using the wrong version of the libraries for your platform, JBoss Web may completely fail to start. If there is an error, check the console log (the output in your terminal window) or the server log in logs/catalina.out for more information about the problem.</p>
+<p>Setting trace in the AprLifecycleListener may help to find what goes wrong. To do this add in conf/logging.properties the following:<strong>org.apache.catalina.core.AprLifecycleListener.level=FINE</strong></p>
+<p>To access your JBoss Web instance, go to <a href="http://localhost:8080/" target="_blank"><a href="http://localhost:8080/">http://localhost:8080/</a></a> in your web browser. If everything went well, you will see the JBoss Web start welcome screen. Congratulations, your JBoss Web instance is ready to go.</p>
+<h1 id="deploying-web-applications">Deploying Web Applications</h1>
+<p>Developing web applications on JBoss Web is easy. To deploy a web application, copy the WAR file to the webapps directory. After a few seconds, JBoss Web will deploy the web application automatically. The following output shows the log messages after deploying an application named myapp.war.</p>
+<p><strong>Feb 15, 2008 10:56:11 AM org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive myapp.war</strong></p>
+<p>The ctxPath value is /myapp, which means the application would immediately be accessible at <a href="http://localhost:8080/myapp" target="_blank">http://localhost:8080/myapp</a>.</p>
+<p>Changes to the application can be made by copying a newer version of the WAR file into the deploy directory. If you need to remove an application, remove the WAR file from the deploy directory. JBoss Web will undeploy the application, noting the fact in the log.</p>
+<p><strong>Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig checkResources INFO: Undeploying context [/myapp]
+Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive myapp.war</strong></p>
+<h1 id="more-information">More Information</h1>
+<p>We&#39;ve only shown the bare minimum to get you going with JBoss Web. Further Configuration of JBoss Web is discussed in the rest of the JBoss Web documentation.</p>
+<p><a href="http://www.jboss.org/jbossweb/install.html" target="_blank"><a href="http://www.jboss.org/jbossweb/install.html">http://www.jboss.org/jbossweb/install.html</a></a></p>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-09-25T06:01:35.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  9月 25 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Linux/">Linux</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/设置core-dump文件/" itemprop="url">
+            设置core dump文件</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>linux可以在程序出现段错误后将进程的内存空间保存在一个core格式的文件中，开发人员可用gdb读取这个文件，以了解程序挂掉时的进程空间状态</p>
 <p>linux默认配置生成core文件大小是0，也就是不生成。ulimit命令可以设置core的大小</p>
 <p>ulimit -c  1024 //core大小为1024字节</p>
 <p>ulimit -c unlimited //大小无限</p>
@@ -99,276 +345,45 @@
 <p>%e　　可执行程序名字</p>
 <p>%c　　core大小上线</p>
 
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
+          
+        </div>
+
+
 </article>
 
 
 
 
-  <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
+</div>
+
+<nav id="pagenavi">
     
-      <img src="">
+        <a href="/page/6/" class="prev">
+          上一頁
+        </a>
     
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-09-08T00:28:41.000Z"><a href="/user-parameters/">9月 8 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/user-parameters/">User Parameters</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Functionality of Zabbix agents can be enhanced by defining user parameters (<strong>UserParameter</strong> configuration parameter) in agent&#39;s configuration file. Once user parameters are defined, they can be accessed in the same way as any other agent items by using the key, specified in the parameter definition.</p>
-<p>User parameters are commands executed by Zabbix agent. <strong>/bin/sh</strong> is used as a command line interpreter under UNIX operating systems.</p>
-<p>See a <a href="http://www.zabbix.com/documentation/1.8/manual/tutorials/extending_agent" title="1.8:manual:tutorials:extending_agent" target="_blank">step-by-step tutorial</a> on making use of user parameters.</p>
-<h4 id="-a-id-simple_user_parameters-name-simple_user_parameters-a-1-simple-user-parameters"><a id="simple_user_parameters" name="simple_user_parameters"></a>1 Simple user parameters</h4>
-<div>
-
-In order to define a new parameter for monitoring, one line has to be added to configuration file of Zabbix agent and the agent must be restarted.
-
-User parameter has the following syntax:
-<pre>UserParameter=key,command</pre><div><table><tbody><tr><th>Parameter</th><th>Description</th></tr><tr><td><strong>Key</strong></td><td>Unique item key.</td></tr><tr><td><strong>Command</strong></td><td>Command to be executed to evaluate value of the Key.</td></tr></tbody></table></div></div>
-
-<h5 id="-a-id-example_1-name-example_1-a-example-1"><a id="example_1" name="example_1"></a>Example 1</h5>
-<div>
-
-Simple command
-<pre>UserParameter=ping,echo 1</pre>
-
-The agent will always return &#39;1&#39; for item with key &#39;ping&#39;.
-</div>
-
-<h5 id="-a-id-example_2-name-example_2-a-example-2"><a id="example_2" name="example_2"></a>Example 2</h5>
-<div>
-
-More complex example
-<pre>UserParameter=mysql.ping,mysqladmin -uroot ping | grep -c alive</pre>
-
-The agent will return &#39;1&#39;, if MySQL server is alive, &#39;0&#39; - otherwise.
-</div>
-
-<h4 id="-a-id-flexible_user_parameters-name-flexible_user_parameters-a-2-flexible-user-parameters"><a id="flexible_user_parameters" name="flexible_user_parameters"></a>2 Flexible user parameters</h4>
-<div>
-
-Flexible user parameters can be used for more control and flexibility.
-
-For flexible user parameters,
-<pre>UserParameter=key[<em>],command</pre><div><table><tbody><tr><th>Parameter</th><th>Description</th></tr><tr><td><strong>Key</strong></td><td>Unique item key. The [</em>] defines that this key accepts parameters.</td></tr><tr><td><strong>Command</strong></td><td>
-
-Command to be executed to evaluate value of the Key.
-Zabbix parses content of [] and substitutes $1,…,$9 in the command.
-$0 will be substituted by the original command (prior to expansion of $0,…,$9) to be run.
-</td></tr></tbody></table></div><div> </div><div>To use positional references unaltered, specify double dollar sign - for example, awk &#39;{print $$2}&#39;.</div><div> </div><div>Unless <a href="http://www.zabbix.com/documentation/1.8/manual/processes/zabbix_agentd" title="1.8:manual:processes:zabbix_agentd" target="_blank">UnsafeUserParameters</a> agent daemon configuration option is enabled, it is not allowed to pass flexible parameters containing these symbols:  &#39; ” ` * ? [ ] { } ~ $ ! &amp; ; ( ) &lt; &gt; | # @</div><div> </div><div>Command used should always return a value that is not empty (and not a newline). If non-valid value is returned, ZBX_NOTSUPPORTED will be sent back by the agent.</div></div>
-
-<h5 id="-a-id-example_11-name-example_11-a-example-1"><a id="example_11" name="example_11"></a>Example 1</h5>
-<div>
-
-Something very simple
-<pre>UserParameter=ping[<em>],echo $1</pre>
-
-We may define unlimited number of items for monitoring all having format ping[something].
-
-</em>   <div>ping[0] - will always return &#39;0&#39;</div>
-*   <div>ping[aaa] - will always return &#39;aaa&#39;</div></div>
-
-<h5 id="-a-id-example_21-name-example_21-a-example-2"><a id="example_21" name="example_21"></a>Example 2</h5>
-<div>
-
-Let&#39;s add more sense!
-<pre>UserParameter=mysql.ping[*],mysqladmin -u$1 -p$2 ping | grep -c alive</pre>
-
-This parameter can be used for monitoring availability of MySQL database. We can pass user name and password:
-<pre>mysql.ping[zabbix,our_password]</pre></div>
-
-<h5 id="-a-id-example_3-name-example_3-a-example-3"><a id="example_3" name="example_3"></a>Example 3</h5>
-<div>
-
-How many lines matching a regular expression in a file?
-<pre>UserParameter=wc[<em>],grep -c &quot;$2&quot; $1</pre>
-
-This parameter can be used to calculate number of lines in a file.
-<pre>wc[/etc/passwd,root]
-wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/documentation/1.8/manual/processes/zabbix_agentd" title="1.8:manual:processes:zabbix_agentd" target="_blank">Zabbix agent daemon</a> does not support user parameters with <strong>-t</strong> or <em>*-p</em></em> agent switches (used to test single item or print out a list of all supported items) until version 1.8.3. See <a href="http://www.zabbix.com/documentation/1.8/manpages/zabbix_agentd" title="1.8:manpages:zabbix_agentd" target="_blank">manpage</a> in earlier versions for more information.</div><div> </div><div><span style="text-decoration:underline;"><a href="http://www.youtube.com/watch?v=vfMQVOh0TQo&amp;feature=player_detailpage" target="_blank">http://www.youtube.com/watch?v=vfMQVOh0TQo&amp;feature=player_detailpage</a></span></div></div>
-
-      
+    
+        <a href="/page/8/" class="next">
+          下一頁
+        </a>
+    
+    <div class="center">
+      <a href="archives">Blog Archives</a>
     </div>
-    <footer>
-      
+</nav>
+</div>
+	</div>
+        <footer id="footer" class="inner">
+          Copyright © 2013 - 獨菰、瑉 - Powered by <a href="https://github.com/tommy351/hexo">Hexo</a><br>
+- Ported theme <a href="https://github.com/nuklly/hexo-theme-greyshade">GreyShade</a> -
+        </footer>
         
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      <img src="">
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-09-06T05:56:50.000Z"><a href="/ssh信任关系/">9月 6 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/ssh信任关系/">ssh信任关系</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>三步走：
- <span style="color:#808080;">ssh-keygen -t rsa</span></p>
-<p><span style="color:#808080;">scp id_rsa.pub user@hostip：/root/.ssh/</span>
-<span style="color:#808080;"> mv id_rsa.pub authorized_keys</span></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-<nav id="pagination">
-  
-    <a href="/page/6/" class="alignleft prev">上一页</a>
-  
-  
-    <a href="/page/8/" class="alignright next">下一页</a>
-  
-  <div class="clearfix"></div>
-</nav></div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="搜索">
-    <input type="hidden" name="q" value="site:www.succw.com">
-  </form>
-</div>
-
-  
-<div class="widget tag">
-  <h3 class="title">分类</h3>
-  <ul class="entry">
-  
-    <li><a href="/categories/Life/">Life</a><small>2</small></li>
-  
-    <li><a href="/categories/VMware/">VMware</a><small>7</small></li>
-  
-    <li><a href="/categories/other/">other</a><small>2</small></li>
-  
-    <li><a href="/categories/运维/">运维</a><small>10</small></li>
-  
-  </ul>
-</div>
-
-
-  
-<div class="widget tag">
-  <h3 class="title">最新文章</h3>
-  <ul class="entry">
-    
-      <li>
-        <a href="/vcap510/">VCAP510</a>
-      </li>
-    
-      <li>
-        <a href="/installing-update-manager-fails-with-error-error-1406/">Installing Update Manager fails with error: error 1406</a>
-      </li>
-    
-      <li>
-        <a href="/removing-unwanted-plug-ins-from-vcenter-server/">从vCenter Server中删除不必要的插件</a>
-      </li>
-    
-      <li>
-        <a href="/linux下cdrecord刻录光盘/">linux下cdrecord刻录光盘</a>
-      </li>
-    
-      <li>
-        <a href="/配置-windows-ntp-客户端以实现网络时钟同步/">配置 Windows NTP 客户端以实现网络时钟同步</a>
-      </li>
-    
-  </ul>
-</div>
-
-
-  
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
-  
-    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
-  
-    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
-  
-    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
-  
-  </ul>
-</div>
-
-</aside>
-    <div class="clearfix"></div>
-  </div>
-  <footer id="footer" class="inner"><div class="alignleft">
-  
-  &copy; 2014 獨菰、瑉
-  
-</div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/slash.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
+
+
+
 
 
 
@@ -381,5 +396,10 @@ wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/docu
 })(jQuery);
 </script>
 
+
+
+
+      </div><!-- mid-col -->
+    </div><!-- container -->
 </body>
 </html>
