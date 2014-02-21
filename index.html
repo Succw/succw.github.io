@@ -108,15 +108,15 @@
   <h3 class="title">標籤</h3>
   <ul class="entry">
   
+    <li><a href="/tags/KVM/">KVM</a><small>2</small></li>
+  
     <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/SVN/">SVN</a><small>1</small></li>
   
     <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
-  
-    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
-  
-    <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
   
@@ -158,7 +158,7 @@
 
  
  <div class="tags">
-   <a href="/tags/kvm/">kvm</a>
+   <a href="/tags/KVM/">KVM</a>
  </div>
 
 
@@ -328,7 +328,7 @@ echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</sp
 
  
  <div class="tags">
-   <a href="/tags/kvm/">kvm</a>
+   <a href="/tags/KVM/">KVM</a>
  </div>
 
 
@@ -401,7 +401,7 @@ libvirtd (libvirt) <span class="number">1.2</span>.<span class="number">1</span>
 
  
  <div class="tags">
-   <a href="/tags/svn/">svn</a>
+   <a href="/tags/SVN/">SVN</a>
  </div>
 
 
@@ -469,16 +469,18 @@ svn <span class="keyword">export</span>/home/testapp /home/testtools
 
 <p>3、<strong>添加新文件 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　<span class="built_in">add</span>　文件名
-</pre></td></tr></table></figure>
-
-<p><em>注：告诉SVN服务器要添加文件了，还要用svn commint -m真实的上传上去！
-例子：</em></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
 4
-</pre></td><td class="code"><pre>svn <span class="keyword">add</span> test<span class="preprocessor">.php</span> ＜－ 添加test<span class="preprocessor">.php</span> 
+5
+6
+7
+8
+</pre></td><td class="code"><pre>svn　<span class="keyword">add</span>　文件名
+*注：告诉SVN服务器要添加文件了，还要用svn commint -m真实的上传上去！
+
+例子：*
+svn <span class="keyword">add</span> test<span class="preprocessor">.php</span> ＜－ 添加test<span class="preprocessor">.php</span> 
 svn commit -m “添加我的测试用test<span class="preprocessor">.php</span>“ test<span class="preprocessor">.php</span>
 svn <span class="keyword">add</span> *<span class="preprocessor">.php</span> ＜－ 添加当前目录下所有的php文件
 svn commit -m “添加我的测试用全部php文件“ *<span class="preprocessor">.php</span>
@@ -487,40 +489,45 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 <p><strong>4、提交</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名
-svn　ci　-m　“提交备注信息文本“　</span><span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
-</pre></td></tr></table></figure>
-
-<p><code>必须带上-m参数，参数可以为空，但是必须写上-m</code></p>
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
 3
 4
 5
 6
-</pre></td><td class="code"><pre>svn commit <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
-svn ci <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>svn　<span class="operator"><span class="keyword">commit</span>　-m　“提交备注信息文本“　[-N]　[--<span class="keyword">no</span>-unlock]　文件名
+svn　ci　-m　“提交备注信息文本“　[-N]　[--<span class="keyword">no</span>-unlock]　文件名
+
+<span class="string">`必须带上-m参数，参数可以为空，但是必须写上-m`</span>
+
+例子：
+svn <span class="keyword">commit</span> -m “提交当前目录下的全部在版本控制下的文件“ * ＜－ 注意这个*表示全部文件
+svn <span class="keyword">commit</span> -m “提交我的测试用test.php“ test.php
+svn <span class="keyword">commit</span> -m “提交我的测试用test.php“ -N --<span class="keyword">no</span>-unlock test.php ＜－ 保持锁就用–<span class="keyword">no</span>-unlock开关
+svn ci -m “提交当前目录下的全部在版本控制下的文件“ * ＜－ 注意这个*表示全部文件
+svn ci -m “提交我的测试用test.php“ test.php
+svn ci -m “提交我的测试用test.php“ -N --<span class="keyword">no</span>-unlock test.php ＜－ 保持锁就用–<span class="keyword">no</span>-unlock开关</span>
 </pre></td></tr></table></figure>
 
 <p><strong>5、更新文件</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
+4
+5
+6
+7
+8
 </pre></td><td class="code"><pre>svn　<span class="operator"><span class="keyword">update</span>
 svn　<span class="keyword">update</span>　-r　修正版本　文件名
-svn　<span class="keyword">update</span>　文件名</span>
-</pre></td></tr></table></figure>
+svn　<span class="keyword">update</span>　文件名
 
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>svn <span class="operator"><span class="keyword">update</span> ＜－ 后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本
+例子：
+svn <span class="keyword">update</span> ＜－ 后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本
 svn <span class="keyword">update</span> -r <span class="number">200</span> test.cpp ＜－ 将版本库中的文件 test.cpp 还原到修正版本（revision）<span class="number">200</span>
 svn <span class="keyword">update</span> test.php ＜－ 更新与版本库同步。</span>
 </pre></td></tr></table></figure>
@@ -530,40 +537,43 @@ svn <span class="keyword">update</span> test.php ＜－ 更新与版本库同步
 然后清除svn resolved，最后再提交commit。</p>
 <p><strong>6、删除文件</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　<span class="keyword">delete</span>　svn:<span class="comment">//路径(目录或文件的全路径) -m “删除备注信息文本”</span>
-</pre></td></tr></table></figure>
-
-<p>推荐如下操作：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn　<span class="keyword">delete</span>　文件名 
-svn　ci　-m　“删除备注信息文本”
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
 4
 5
-</pre></td><td class="code"><pre>svn delete svn://<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>/testapp/test<span class="preprocessor">.php</span> -m “删除测试文件test<span class="preprocessor">.php</span>”
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>svn　<span class="keyword">delete</span>　svn:<span class="comment">//路径(目录或文件的全路径) -m “删除备注信息文本”</span>
 
 推荐如下操作：
-svn delete test<span class="preprocessor">.php</span> 
-svn ci -m “删除测试文件test<span class="preprocessor">.php</span>”
+svn　<span class="keyword">delete</span>　文件名 
+svn　ci　-m　“删除备注信息文本”
+
+例子：
+svn <span class="keyword">delete</span> svn:<span class="comment">//192.168.1.1/testapp/test.php -m “删除测试文件test.php”</span>
+
+推荐如下操作：
+svn <span class="keyword">delete</span> test.php 
+svn ci -m “删除测试文件test.php”
 </pre></td></tr></table></figure>
 
 <p><strong>７、加锁/解锁 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>svn　<span class="keyword">lock</span>　-m　“加锁备注信息文本“　[--force]　文件名 
+3
+4
+5
+6
+</pre></td><td class="code"><pre>svn　lock　-m　“加锁备注信息文本“　[--force]　文件名 
 svn　unlock　文件名
-</pre></td></tr></table></figure>
 
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn lock -m “锁信测试用test<span class="preprocessor">.php</span>文件“ test<span class="preprocessor">.php</span> 
+例子：
+svn lock -m “锁信测试用test<span class="preprocessor">.php</span>文件“ test<span class="preprocessor">.php</span> 
 svn unlock test<span class="preprocessor">.php</span>
 </pre></td></tr></table></figure>
 
@@ -590,31 +600,29 @@ svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>�
 svn status <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名＜－ 显示文件和子目录状态
 </pre></td></tr></table></figure>
 
-<p>　　　　　　　　　　　　　　</p>
 <p><em>
 注：svn status、svn diff和 svn revert这三条命令在没有网络的情况下也可以执行的，原因是svn在本地的.svn中保留了本地版本的原始拷贝
 </em></p>
 <p><strong>10、查看日志</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
 </pre></td><td class="code"><pre>svn　<span class="keyword">log</span>　文件名
-</pre></td></tr></table></figure>
 
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn <span class="keyword">log</span> test.php＜－ 显示这个文件的所有修改记录，及其版本号的变化
+例子：
+svn <span class="keyword">log</span> test.php＜－ 显示这个文件的所有修改记录，及其版本号的变化
 </pre></td></tr></table></figure>
 
 <p><strong>11、查看文件详细信息</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="title">svn</span>　<span class="built_in">info</span>　文件名
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-</pre></td><td class="code"><pre>例子：
+4
+</pre></td><td class="code"><pre><span class="title">svn</span>　<span class="built_in">info</span>　文件名
 
-svn info test<span class="preprocessor">.php</span>
+例子：
+svn <span class="built_in">info</span> test.php
 </pre></td></tr></table></figure>
 
 <p><strong>12、SVN 帮助</strong></p>
@@ -627,39 +635,19 @@ svn　<span class="built_in">help</span>　ci ＜－ 具体功能的说明
 <p><strong>13、查看版本库下的文件和目录列表 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
+3
+4
+5
+6
 </pre></td><td class="code"><pre>svn　<span class="keyword">list</span>　svn:<span class="comment">//路径(目录或文件的全路径)</span>
 svn　ls　svn:<span class="comment">//路径(目录或文件的全路径)</span>
-</pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>例子：
-svn list <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>
-svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span> ＜－ 显示<span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>目录下的所有属于版本库的文件和目录
+例子：
+svn <span class="keyword">list</span> svn:<span class="comment">//192.168.0.3/test</span>
+svn ls svn:<span class="comment">//192.168.0.3/test ＜－ 显示svn://192.168.0.3/test目录下的所有属于版本库的文件和目录</span>
 </pre></td></tr></table></figure>
 
 <p><strong>14、创建纳入版本控制下的新目录</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn　<span class="keyword">mkdir</span>　目录名
-svn　<span class="keyword">mkdir</span>　-<span class="keyword">m</span>　<span class="string">"新增目录备注文本"</span>　http:<span class="regexp">//</span>目录全路径
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn <span class="keyword">mkdir</span> newdir
-</pre></td></tr></table></figure>
-
-<p><a href="http://http://192.168.0.3/test/newdir" target="_blank">http://http://192.168.0.3/test/newdir</a></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>注：添加完子目录后，一定要回到根目录更新一下，不然在该目录下提交文件会提示“提交失败”
-
-svn <span class="operator"><span class="keyword">update</span></span>
-</pre></td></tr></table></figure>
-
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
@@ -675,20 +663,32 @@ svn <span class="operator"><span class="keyword">update</span></span>
 13
 14
 15
-</pre></td><td class="code"><pre>注：如果手工在checkout出来的目录里创建了一个新文件夹newsubdir，再用svn mkdir newsubdir命
-令后
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre>svn　mkdir　目录名
+svn　mkdir　-m　<span class="string">"新增目录备注文本"</span>　<span class="keyword">http</span>://目录全路径
 
-，SVN会提示：
+例子：
+svn mkdir newdir
+<span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/newdir
+
+注：添加完子目录后，一定要回到根目录更新一下，不然在该目录下提交文件会提示“提交失败”
+
+svn update
+注：如果手工在checkout出来的目录里创建了一个新文件夹newsubdir，再用svn mkdir newsubdir命
+令后，SVN会提示：
 svn: 尝试用 “svn <span class="built_in">add</span>”或 “svn <span class="built_in">add</span> <span class="comment">--non-recursive”代替？</span>
 svn: 无法创建目录“hello”: 文件已经存在此时，用如下命令解决：
+
 svn <span class="built_in">add</span> <span class="comment">--non-recursive newsubdir</span>
-
 在进入这个newsubdir文件夹，用ls -<span class="operator">a</span>查看它下面的全部目录与文件，会发现多了：.svn目录再用 svn
-
 mkdir -m <span class="string">"添hello功能模块文件"</span> svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/newdir/newsubdir 命令，
 
 SVN提示：
-
 svn: File already exists: filesystem <span class="string">'/data/svnroot/test/db'</span>, transaction <span class="string">'4541-1'</span>,path <span class="string">'/newdir/newsubdir '</span>
 </pre></td></tr></table></figure>
 
