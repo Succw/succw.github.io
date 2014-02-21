@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -132,6 +134,116 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-03-14T03:07:13.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  3月 14 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/VMware/">VMware</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/修改vmware-vsphere密码/" itemprop="url">
+            修改VMware vSphere密码</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>1、挂载Exsi分区
+2、找到state.tgz
+3、解压state.tgz
+4、密码文件存储在state.tgz/local.tgz/etc/shadow
+5、将密码删除，保存，并打包拷贝替换原state.tgz</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-03-06T11:10:47.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  3月 6 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Windows/">Windows</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/insufficient-system-resources-exchange-2010/" itemprop="url">
+            Insufficient system resources (Exchange 2010)</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>said: 452 4.3.1 Insufficient system resources (in reply to MAIL FROM command)</p>
+<p>这个提示是说，Exchange服务器资源不够。</p>
+<p>进入exchange服务器后，发现硬盘空间不到4G.</p>
+<p>exchange之前不是我弄得，发现数据库及数据库日志放在c盘的，当时就无语了...</p>
+<p>赶紧迁移数据库....</p>
+<p>&nbsp;</p>
+<p>Troubleshooting MSExchangeTransport Service Events</p>
+<p><a href="http://technet.microsoft.com/en-us/library/bb397220.aspx" target="_blank"><a href="http://technet.microsoft.com/en-us/library/bb397220.aspx">http://technet.microsoft.com/en-us/library/bb397220.aspx</a></a></p>
+<p>可采用以下方法临时解决</p>
+<p>进入Exchange 2010的安装文件夹%Program Files\Microsoft\Exchange Server\v14\Bin,打开EdgeTransport.exe.config文件,找到</p>
+<p>&lt;add key=&quot;EnableResourceMonitoring&quot; value=&quot;True&quot;/&gt;</p>
+<p>将其更改为</p>
+<p>&lt;add key=&quot;EnableResourceMonitoring&quot; value=&quot;False&quot;/&gt;</p>
+<p>然后重新启动Transport Service</p>
+<p>&nbsp;</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -172,151 +284,6 @@ location / {</p>
 <p>try_files $uri $uri/ /index.php?p=$request_uri;</p>
 <p>}</p>
 </blockquote>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2012-11-22T02:16:21.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  11月 22 2012
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/Linux/">Linux</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/linux-系统运维及工具/" itemprop="url">
-             Linux 系统运维及工具</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <blockquote>
-<div>许多实用程序可以对事项进行报告。例如，who、finger、ls、ps 以及其它实用程序可以生成简单的最终用户报告。在某些情况下，这些报告有助于系统管理。本节介绍的实用程序可以产生更多的详细报告，可以为系统管理任务提供更多的帮助。Linux 还有许多其它报告实用程序，比如 sysstat 包中的 sar（系统活动报告）、iostat（输入 / 输出和 CPU 统计）和 mpstat（处理器统计），netstat（网络报告，位于 net-tools 包）和 nfsstat（NFS 统计，位于 nfs-utils 包）。</div>
-<div></div>
-<div><strong>使用 vmstat 掌握虚拟内存统计信息</strong></div>
-<div>vmstat 实用程序（虚拟内存统计，位于 procps 包）生成包含磁盘和 CPU 活动数据的虚拟内存信息。以下示例显示了每隔 1 秒的 2个迭代（参数 1 2）的虚拟内存统计信息。第一行包括自系统启动以来的时间，后续每行包括自上一行以来的时间间隔。</div>
-<div>$ vmstat 1 2</div>
-<div>procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----</div>
-<div>r b swpd free buff cache si so bi bo in cs us sy id wa</div>
-<div>0 2 0 684328 33924 219916 0 0 430 105 1052 134 2 4 86 8</div>
-<div>0 2 0 654632 34160 248840 0 0 4897 7683 1142 237 0 5 0 95</div>
-<div></div>
-<div>以下列表解释了由 vmstat 显示的字段：</div>
-<div>procs 进程信息</div>
-<div>r 等待中可运行的进程数</div>
-<div>b 阻塞的进程数 ( 不间断睡眠中 )</div>
-<div>memory内存信息（以千字节为单位）</div>
-<div>swpd 使用的虚拟内存</div>
-<div>free 空闲内存</div>
-<div>buff 用作缓冲区的内存</div>
-<div>cache用作高速缓存的内存</div>
-<div>swap系统分页活动（每秒千字节）</div>
-<div>si 从磁盘交换到内存</div>
-<div>so 使内存换出到磁盘</div>
-<div>io 系统 I/O 活动（每秒块）</div>
-<div>bi 从块设备接收的块</div>
-<div>bo 发送到块设备的块</div>
-<div>system（单位是每秒）</div>
-<div>in 中断（包括时钟）</div>
-<div>cs 上下文开关</div>
-<div>cpu每个状态所耗费的总 CPU 时间的百分比</div>
-<div>us 用户 ( 非内核 )</div>
-<div>sy 系统（内核）</div>
-<div>id 空闲</div>
-<div>wa 等待 I/O</div>
-<div>st 从虚拟机提取（仅在虚拟机上）</div>
-<div></div>
-<div><strong>使用 top 列出使用资源最多的进程</strong></div>
-<div></div>
-<div>top 实用程序是 ps 的有益补充。最起码，top 显示的系统信息包括使用 CPU 密集的进程。 top 实用程序可以定期自我更新，输入 q 即可退出。虽然可以使用命令行选项，但使用交互式命令往往更有帮助。</div>
-<div>命令  功能</div>
-<div>hor ? 显示帮助画面。</div>
-<div>k (kill) 提示 PID 号和信号类型，并发送 signal.Defaults 进程到信号 15(SIGTERM)，只有当 15 不起作用时才指定 9 (SIGKILL)。</div>
-<div>F  显示一个页面，允许指定一个排序字段。</div>
-<div>f   显示一个页面，允许指定 top 显示的字段。</div>
-<div>o  显示一个页面，允许指定字段的显示顺序。</div>
-<div>q  退出 top。</div>
-<div>s  以秒为单位提示更新间隔时间。使用 0（零）表示持续更新。</div>
-<div>SPACE. 立即更新显示。</div>
-<div>W  编写名为 ~/.toprc的启动文件，以便在下一次启动 top，它使用与当前相同的参数。</div>
-<div></div>
-</blockquote>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2012-11-21T09:44:25.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  11月 21 2012
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/音乐/">音乐</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/《红楼梦》音乐/" itemprop="url">
-            《红楼梦》中的音乐</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>标记于此：</p>
-<embed src="http://www.xiami.com/widget/6255775_1770579228,1770579229,1770579230,1770579231,1770579232,1770579233,1770579234,1770579235,1770579236,1770579237,1770579238,_235_360_008080_c0c0c0_1/multiPlayer.swf" type="application/x-shockwave-flash" width="235" height="360" wmode="opaque"></embed>
-
-<p>红楼梦中的音乐，真是极好听...</p>
 
           
         </div>

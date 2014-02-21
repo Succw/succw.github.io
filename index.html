@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -132,6 +134,249 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2014-02-21T03:33:08.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  2月 21 2014
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/kvm/">kvm</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/kvm虚拟化技术笔记/" itemprop="url">
+            KVM虚拟化技术笔记</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <h5 id="kvm-">KVM虚拟化技术笔记</h5>
+<p>记录《KVM虚拟化技术：实战与原理解析》书中相关知识点。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>taskset
+cpu亲和力设置。
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>查看kvm是否开启内存硬件技术
+cat /sys/<span class="class"><span class="keyword">module</span>/<span class="title">kvm_intel</span>/<span class="title">parameters</span>/<span class="title">ept</span></span>
+cat /sys/<span class="class"><span class="keyword">module</span>/<span class="title">kvm_intel</span>/<span class="title">parameters</span>/<span class="title">vpid</span></span>
+
+modprobe kvm_intel ept=<span class="number">0</span>,vpid=<span class="number">0</span>
+rmmod kvm_intel
+modprobe kvm_inter ept=<span class="number">1</span>,vpid=<span class="number">1</span>
+不要关闭，否则内存访问性能会下降
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>内存HUGEPAGE配置
+getconf PAGESIZE
+cat /proc/meminfo<span class="subst">|</span>grep  Hugepagesize
+mount <span class="attribute">-t</span> hugetlbfs hugetlbfs /dev/hugepages
+sysctl vm<span class="built_in">.</span>nr_hugepages<span class="subst">=</span>num
+
+qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> <span class="attribute">-smp</span> <span class="number">2</span> fedora<span class="built_in">.</span>img <span class="attribute">-mem</span><span class="attribute">-path</span> /dev/hugepages
+
+对于内存密集性内存来说，使用hugepage会带来性能提升。
+hugepage缺点，内存不能被swap out，也不能使用ballooning。
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> fedora<span class="built_in">.</span>img <span class="attribute">-enable</span><span class="attribute">-kvm</span> <span class="attribute">-vnc</span> :<span class="number">1</span>,password <span class="attribute">-monitor</span> stdio
+修改vnc密码
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>vncviewer <span class="attribute">-listen</span> :<span class="number">2</span>
+qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> fedora<span class="built_in">.</span>img <span class="attribute">-enable</span><span class="attribute">-kvm</span> <span class="attribute">-vnc</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.2</span>:<span class="number">5500</span>,reverse
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>vnc鼠标偏移问题
+<span class="attribute">-usb</span> <span class="attribute">-usbdevice</span> tablet
+<span class="literal">or</span>
+<span class="attribute">-device</span> piix3<span class="attribute">-usb</span><span class="attribute">-uhci</span> <span class="attribute">-device</span> usb<span class="attribute">-tablet</span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>Redhat文档介绍，单纯使用virtio_net驱动得到的性能依然不佳，可以检查宿主机系统中对GSO和TSO特性的设置，关闭GSO和TSO可以使性能更加优化
+ethtool <span class="attribute">-K</span> em1 gso off
+ethtool <span class="attribute">-K</span> em1 tso off
+ethtool <span class="attribute">-k</span> em1
+</pre></td></tr></table></figure>
+
+<p>vhost_net后端处理程序（内核空间）</p>
+<p><code>-net tap,[,vnet_hdr=on|off][,vhost=on|off][,vhostfd=h][,vhostforce=on|off]</code></p>
+<p>查看硬盘UUID</p>
+<p><code>blkid /dev/vda1</code></p>
+<p>or</p>
+<p><code>tune2fs -l /dev/vda1</code></p>
+<p>在修改磁盘驱动时，可能会导致swap失效。</p>
+<p>kvm-clock : <code>-cpu host</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>IOMMU,如果内核默认没有打开。
+在kernel行，inter_iommu=<span class="command"><span class="keyword">on</span></span>
+</pre></td></tr></table></figure>
+
+
+
+<h6 id="-cgroup-">通过cgroup控制客户机的资源使用</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>yum install libcgroup*
+mkdir -p /cgroup/blkio
+mount -t cgroup -o blkio blkio /cgroup/blkio
+mkdir /cgroup/blkio/high_prio
+mkdir /cgroup/blkio/low_prio
+
+mount -t cgroup -o cpu,cpuset,memorycpu_mem /cgroup/cpu_mem
+
+echo <span class="variable">$pid</span> &gt;&gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/high_prio/tasks</span>
+echo <span class="variable">$pid</span> &gt;&gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/low_prio/tasks</span>
+
+echo <span class="number">1000</span> &gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/high_prio/blkio</span>.weight
+echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/low_prio/blkio</span>.weight
+</pre></td></tr></table></figure>
+
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2014-02-21T03:29:52.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  2月 21 2014
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/kvm/">kvm</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/libvirt编译安装/" itemprop="url">
+            libvirt编译安装</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <h5 id="-libvirt">编译安装libvirt</h5>
+<p>具体操作见官方文档：</p>
+<p><strong>安装环境Fedora18 </strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>wget http://libvirt<span class="preprocessor">.org</span>/sources/libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+tar xvf libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+cd libvirt-<span class="number">1.2</span><span class="number">.1</span>
+./autogen<span class="preprocessor">.sh</span>
+make
+make install
+</pre></td></tr></table></figure>
+
+<p>记录下我编译时所需安装包。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>yum install yajl<span class="attribute">-deve</span> autoconf automake libtool xz<span class="attribute">-devel</span> libxml2<span class="attribute">-devel</span> systemd<span class="attribute">-devel</span> libsepol<span class="attribute">-devel</span> libselinux<span class="attribute">-devel</span> device<span class="attribute">-mapper</span><span class="attribute">-devel</span> libpciaccess<span class="attribute">-devel</span> libnl<span class="attribute">-devel</span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>[root<span class="variable">@localhost</span> ~]<span class="comment"># libvirtd --version</span>
+libvirtd (libvirt) <span class="number">1.2</span>.<span class="number">1</span>
+</pre></td></tr></table></figure>
+
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -164,7 +409,7 @@
 	</div>
         <h1 class="title" itemprop="name">
           <a href="/svn/" itemprop="url">
-            svn</a>
+            ubuntu下安装subversion客户端</a>
         </h1>
         <div class="entry-content" itemprop="articleBody">
           
@@ -176,19 +421,13 @@
 <p>详细请看<a href="http://www.subversion.org.cn/svnbook/1.1/index.html" target="_blank"> <a href="http://www.subversion.org.cn/svnbook/1.1/index.html">http://www.subversion.org.cn/svnbook/1.1/index.html</a></a> svn子命令</p>
 <p>1、<strong>检出</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
 </pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  checkout  <span class="keyword">http</span>://路径(目录或文件的全路径)　[本地目录全路径] <span class="comment">--username　用户名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  checkout  svn:<span class="comment">//路径(目录或文件的全路径)　[本地目录全路径]  --username　用户名</span>
+<span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
+<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
+<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
 </pre></td></tr></table></figure>
 
 <p><em>注：如果不带--password 参数传输密码的话，会提示输入密码，建议不要用明文的--password 选项
@@ -199,36 +438,26 @@
 2
 3
 4
-5
-6
-7
 </pre></td><td class="code"><pre>svn co svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-
 svn co <span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
-
 svn checkout svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-
 svn checkouthttp://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
 </pre></td></tr></table></figure>
 
 <p><strong>2、导出(导出一个干净的不带.svn文件夹的目录树)</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  http:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
+svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
+svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
-</pre></td></tr></table></figure>
-
-<p>*注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的</p>
-<p>版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL</p>
-<p>的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目</p>
-<p>录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没</p>
-<p>有与之相关的信息记录)的文件不会拷贝。*</p>
+<p><em>注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的
+版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL
+的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目
+录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没
+有与之相关的信息记录)的文件不会拷贝。</em></p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
@@ -257,17 +486,12 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 
 <p><strong>4、提交</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
+2
+</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名
+svn　ci　-m　“提交备注信息文本“　</span><span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　ci　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>必须带上<span class="attribute">-m</span>参数，参数可以为空，但是必须写上<span class="attribute">-m</span>
-</pre></td></tr></table></figure>
-
+<p><code>必须带上-m参数，参数可以为空，但是必须写上-m</code></p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
@@ -275,21 +499,11 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 4
 5
 6
-7
-8
-9
-10
-11
 </pre></td><td class="code"><pre>svn commit <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-
 svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-
 svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
-
 svn ci <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-
 svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-
 svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
 </pre></td></tr></table></figure>
 
@@ -306,12 +520,8 @@ svn　<span class="keyword">update</span>　文件名</span>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-4
-5
 </pre></td><td class="code"><pre>svn <span class="operator"><span class="keyword">update</span> ＜－ 后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本
-
 svn <span class="keyword">update</span> -r <span class="number">200</span> test.cpp ＜－ 将版本库中的文件 test.cpp 还原到修正版本（revision）<span class="number">200</span>
-
 svn <span class="keyword">update</span> test.php ＜－ 更新与版本库同步。</span>
 </pre></td></tr></table></figure>
 
@@ -336,14 +546,10 @@ svn　ci　-m　“删除备注信息文本”
 3
 4
 5
-6
-7
 </pre></td><td class="code"><pre>svn delete svn://<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>/testapp/test<span class="preprocessor">.php</span> -m “删除测试文件test<span class="preprocessor">.php</span>”
 
 推荐如下操作：
-
 svn delete test<span class="preprocessor">.php</span> 
-
 svn ci -m “删除测试文件test<span class="preprocessor">.php</span>”
 </pre></td></tr></table></figure>
 
@@ -374,13 +580,13 @@ svn diff -r 200:201 test.php＜－ 对 修正版本号200 和 修正版本号201
 <p><strong>9、查看文件或者目录状态</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>svn <span class="keyword">st</span> 目录路径/名
-svn status 目录路径/名＜－ 目录下的文件和子目录的状态，正常状态不显示
-</pre></td></tr></table></figure>
+3
+4
+5
+</pre></td><td class="code"><pre>svn st 目录路径<span class="subst">/</span>名
+svn status 目录路径<span class="subst">/</span>名＜－ 目录下的文件和子目录的状态，正常状态不显示
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
+svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
 svn status <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名＜－ 显示文件和子目录状态
 </pre></td></tr></table></figure>
 
@@ -428,12 +634,8 @@ svn　ls　svn:<span class="comment">//路径(目录或文件的全路径)</span
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-4
-5
 </pre></td><td class="code"><pre>例子：
-
 svn list <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>
-
 svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span> ＜－ 显示<span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>目录下的所有属于版本库的文件和目录
 </pre></td></tr></table></figure>
 
@@ -444,10 +646,7 @@ svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</
 svn　<span class="keyword">mkdir</span>　-<span class="keyword">m</span>　<span class="string">"新增目录备注文本"</span>　http:<span class="regexp">//</span>目录全路径
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>例子：
-</pre></td></tr></table></figure>
-
+<p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 </pre></td><td class="code"><pre>svn <span class="keyword">mkdir</span> newdir
 </pre></td></tr></table></figure>
@@ -476,18 +675,12 @@ svn <span class="operator"><span class="keyword">update</span></span>
 13
 14
 15
-16
-17
-18
 </pre></td><td class="code"><pre>注：如果手工在checkout出来的目录里创建了一个新文件夹newsubdir，再用svn mkdir newsubdir命
 令后
 
 ，SVN会提示：
-
 svn: 尝试用 “svn <span class="built_in">add</span>”或 “svn <span class="built_in">add</span> <span class="comment">--non-recursive”代替？</span>
-
 svn: 无法创建目录“hello”: 文件已经存在此时，用如下命令解决：
-
 svn <span class="built_in">add</span> <span class="comment">--non-recursive newsubdir</span>
 
 在进入这个newsubdir文件夹，用ls -<span class="operator">a</span>查看它下面的全部目录与文件，会发现多了：.svn目录再用 svn
@@ -501,45 +694,35 @@ svn: File already exists: filesystem <span class="string">'/data/svnroot/test/db
 
 <p><strong>15、恢复本地修改 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
 4
 5
-6
-7
-</pre></td><td class="code"><pre>
+</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
 <span class="comment">注意:</span> <span class="comment">本子命令不会存取网络，并且会解除冲突的状况。但是它不会恢复被删除的目录。</span>
-
 <span class="comment">例子：</span>
-
 <span class="comment">svn</span> <span class="comment">revert</span> <span class="comment">foo</span><span class="string">.</span><span class="comment">c</span> <span class="comment">＜－</span> <span class="comment">丢弃对一个文件的修改</span>
 <span class="comment">svn</span> <span class="comment">revert</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span> <span class="string">.</span> <span class="comment">＜－恢复一整个目录的文件，</span><span class="string">.</span> <span class="comment">为当前目录</span>
 </pre></td></tr></table></figure>
 
 <p><strong>16、把工作拷贝更新到别的URL </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn　<span class="keyword">switch</span>　http:<span class="comment">//目录全路径　本地目录全路径</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
+例子：
+svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
 </pre></td></tr></table></figure>
 
 <p><strong>17、解决冲突 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="tag">svn</span>　<span class="tag">resolved</span>　<span class="attr_selector">[本地目录全路径]</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-</pre></td><td class="code"><pre>$ svn <span class="operator"><span class="keyword">update</span>
+4
+5
+</pre></td><td class="code"><pre>svn　resolved　[本地目录全路径]
+例子：
+$ svn <span class="operator"><span class="keyword">update</span>
 C foo.c
 Updated <span class="keyword">to</span> revision <span class="number">31.</span></span>
 </pre></td></tr></table></figure>
@@ -557,457 +740,17 @@ foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>30
 foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>31
 </pre></td></tr></table></figure>
 
-<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。</p>
-<p>你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
+<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。
+你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
 <p><strong>18、不checkout而查看输出特定文件或URL的内容 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn　cat　http:<span class="comment">//文件全路径</span>
+例子：
+svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
 </pre></td></tr></table></figure>
 
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
-</pre></td></tr></table></figure>
-
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2014-01-23T11:15:18.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  1月 23 2014
-</time>
-
-
-
-
-
-</div>
-
-          
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/shell脚本编程大全笔记/" itemprop="url">
-            SHELL脚本编程大全笔记</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <h6 id="shell-">SHELL脚本编程大全笔记</h6>
-<hr>
-<ul>
-<li>A=$[  $1 * $2 ] 直接运算。</li>
-<li>total=$[ ${10} * ${11} ]</li>
-</ul>
-<p>各种i++</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="comment">$((i=i</span><span class="literal">+</span><span class="comment">1))</span>
-<span class="comment">$((i</span><span class="literal">+</span><span class="literal">+</span><span class="comment">))</span>
-<span class="comment">$</span><span class="title">[</span> <span class="comment">i</span><span class="literal">+</span><span class="literal">+</span> <span class="title">]</span>
-<span class="comment">let</span> <span class="comment">"i</span><span class="literal">+</span><span class="literal">+</span><span class="comment">"</span>
-<span class="comment">((i</span><span class="literal">+</span><span class="literal">+</span><span class="comment">))</span>
-</pre></td></tr></table></figure>
-
-<p><strong><strong>使用双尖括号</strong></strong></p>
-<p><strong>(( expression  ))</strong></p>
-<p>比如：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
-a=<span class="number">10</span>
-<span class="keyword">if</span> (( <span class="variable">$a</span> ** <span class="number">2</span> &gt;<span class="number">90</span>  )) ;<span class="keyword">then</span>
-        <span class="built_in">echo</span> <span class="string">"<span class="variable">$a</span>"</span>
-        (( b = <span class="variable">$a</span> ** <span class="number">2</span> ))
-        <span class="built_in">echo</span> <span class="variable">$b</span>
-<span class="keyword">fi</span>
-</pre></td></tr></table></figure>
-
-<p>还有其他表达式：</p>
-<h2 id="-http-localhost-8080-png-"><img src="http://localhost:8080/双括号.png" alt=""></h2>
-<p><em>使用双方括号</em></p>
-<p><strong>[[ expression ]]</strong></p>
-<p>模式匹配，你可以自定义正则表达式。</p>
-<h6 id="for-c-">for循环语句 { 类C语言 }</h6>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre><span class="keyword">for</span>((<span class="operator">a</span>=<span class="number">1</span>;<span class="operator">a</span>&lt;<span class="number">5</span>;<span class="operator">a</span>++)){
-	echo <span class="string">"$a"</span>
-}
-</pre></td></tr></table></figure>
-
-<p><em>or</em></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre>Shell 格式：
-<span class="keyword">for</span>((a=<span class="number">1</span>;a&lt;<span class="number">5</span>;a++))
-<span class="keyword">do</span>
-	<span class="built_in">echo</span> <span class="string">"<span class="variable">$a</span>"</span>
-<span class="keyword">done</span>
-</pre></td></tr></table></figure>
-
-<hr>
-<p><strong>重定向</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td><td class="code"><pre>for(()){
-
-} &gt; /output.txt
-
-<span class="code">-----
-or
------</span>
-for(())
-do
-done | sort
-</pre></td></tr></table></figure>
-
-<p>${!#} 返回命令行的脚本名</p>
-<p>$*    保存单个单词</p>
-<p>$@  保存，类似数组</p>
-<hr>
-<p><strong>getopt</strong></p>
-<p>处理命令行选项和参数</p>
-<figure class="highlight `"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
-`<span class="keyword">set</span> --   getopt -q ab:c <span class="string">"<span class="variable">$@</span>"</span>` `
-<span class="keyword">while</span> [ -n <span class="variable">$1</span> ]
-<span class="keyword">do</span>
-	<span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span>
-    	<span class="operator">-a</span>) <span class="built_in">echo</span> <span class="string">"Found the -a option"</span> ;;
-        -b) param=<span class="string">"<span class="variable">$2</span>"</span>
-        	  <span class="built_in">echo</span> <span class="string">"Found the -b option.with parameter value <span class="variable">$param</span>"</span>
-              shift;;
-        -c)
-        	<span class="built_in">echo</span> <span class="string">"Found the -c option"</span> ;;
-        --) shift
-        	<span class="keyword">break</span>;;
-         *) <span class="built_in">echo</span> <span class="string">"<span class="variable">$1</span> is not an option"</span> ;;
-shift
-<span class="keyword">done</span>
-</pre></td></tr></table></figure>
-
-<h5 id="-getopts-"><strong>getopts</strong></h5>
-<p><del>page284</del></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
-<span class="comment">#</span>
-<span class="keyword">while</span> <span class="built_in">getopts</span> <span class="string">":ab:cd"</span> opt 
-<span class="keyword">do</span>
-<span class="keyword">case</span> <span class="string">"<span class="variable">$opt</span>"</span> <span class="keyword">in</span>
-        a) <span class="built_in">echo</span> <span class="string">"Option \"a\""</span>;;
-        b) <span class="built_in">echo</span> <span class="string">"Option \"b\" "</span><span class="variable">$OPTARG</span><span class="string">""</span>;;
-        c) <span class="built_in">echo</span> <span class="string">"Option \"c\""</span>;;
-        d) <span class="built_in">echo</span> <span class="string">"Option \"d\""</span>;;
-        <span class="keyword">esac</span>
-<span class="keyword">done</span>
-<span class="keyword">exit</span> <span class="number">0</span>
-```language
-</pre></td></tr></table></figure>
-
-<hr>
-<p><strong>永久重定向</strong></p>
-<p>--在脚本中添加下行</p>
-<p><code>exec 1&gt;outfile</code></p>
-<p>所有正常输出将重定向至outfile中。</p>
-<p><code>exec 2&gt;outfile</code></p>
-<p>错误输出</p>
-<h6 id="-shell-9-">在Shell中最多可以有9个打开的文件描述符</h6>
-<p>创建自定义文件描述符（3-8）</p>
-<p>比如：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
-<span class="keyword">exec</span> <span class="number">3</span>&gt;outfile3.out
-<span class="comment">#exec 3&gt;&gt;outfile3.out</span>
-<span class="comment">#顾名思义是追加</span>
-<span class="built_in">echo</span> <span class="string">"输出正常"</span> &gt;&<span class="number">3</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash
-</span>
-<span class="keyword">exec</span> <span class="number">6</span>&lt;&<span class="number">0</span>
-<span class="keyword">exec</span> <span class="number">0</span>&lt; testfile
-
-count=<span class="number">1</span>
-<span class="keyword">while</span> <span class="built_in">read</span> line
-<span class="keyword">do</span>
-        <span class="built_in">echo</span> <span class="string">"Line #<span class="variable">$count</span>: <span class="variable">$line</span>"</span>
-        ((count++))
-<span class="keyword">done</span>
-
-<span class="keyword">exec</span> <span class="number">0</span>&lt;&<span class="number">6</span>
-
-<span class="built_in">read</span> <span class="operator">-s</span> -p  <span class="string">"Are you done now?"</span> answer
-<span class="keyword">case</span> <span class="variable">$answer</span> <span class="keyword">in</span>
-        y|y)
-                <span class="built_in">echo</span> <span class="string">"Goodbye"</span>
-        ;;
-        N|n)
-                <span class="built_in">echo</span> <span class="string">"sorry. this is the end."</span>
-        ;;
-        *)
-                <span class="built_in">echo</span> <span class="string">"Doesn't Matter"</span>
-        ;;
-<span class="keyword">esac</span>
-</pre></td></tr></table></figure>
-
-<p>关闭文件描述符</p>
-<p><code>exec 3&gt;&amp;-</code></p>
-<p><code>mktemp -t test.XXXXXX</code></p>
-<p>在/tmp目录下创建临时文件</p>
-<p><code>mktemp -d dir.XXXXXX</code></p>
-<hr>
-<p>捕捉信号：</p>
-<p>trap command SIGINT SIGTERM</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-</pre></td><td class="code"><pre>1) SIGHUP	2) SIGINT	3) SIGQUIT	4) SIGILL	5) SIGTRAP
-6) SIGABRT	7) SIGBUS	8) SIGFPE	9) SIGKILL	10) SIGUSR1
-11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM
-16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP
-21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ
-26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR
-31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
-38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
-43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
-48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
-53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
-58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
-63) SIGRTMAX-1	64) SIGRTMAX
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
-trap <span class="string">"echo 'ByeBye'"</span> EXIT
-
-<span class="keyword">for</span>((a=<span class="number">1</span>;a&lt;<span class="number">10</span>;a++)){
-	<span class="built_in">echo</span> <span class="string">"Line <span class="variable">$a</span>"</span>
-    sleep <span class="number">1</span>
-}
-trap - EXIT
-<span class="built_in">echo</span> <span class="string">"移除退出信号"</span>
-</pre></td></tr></table></figure>
-
-<p><strong>crontab</strong></p>
-<p>每月最后一天</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre><span class="keyword">if</span> [ `<span class="built_in">date</span> +%d -d tomorrow` = <span class="number">01</span> ]; <span class="keyword">then</span>
-	<span class="command"><span class="keyword">command</span></span>
-fi
-</pre></td></tr></table></figure>
-
-<p><code>00 12 * * * if [ `date +%d -d tomorrow` = 01 ];then : command</code></p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2014-01-20T09:25:41.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  1月 20 2014
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/VMware/">VMware</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/vcap510/" itemprop="url">
-            VCAP510</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>VDCA510考试</p>
-<pre><code>未知总是很可怕的，特此记录下来。
-</code></pre><blockquote>
-<p>关于VDCA510考试， 总的来说题目很简答，全部来自<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>。 只是改改题型而已。要求是必须熟练，熟练，因为考试时间有限
-这里记录我考试相关的一些题目相关。</p>
-</blockquote>
-<p>服务方面，</p>
-<blockquote>
-<ol>
-<li>创建用户和组（ESXi和vMA）。创建多个用户和组，对用户赋予shell访问权限。将用户加到相应的组，其二就是角色控制。其中一个赋予普通用户，另一个则赋予管理原权限。</li>
-<li>配置syslog日志服务器，查看相应的文件中是否生成相应的文件。</li>
-<li>FT配置，要求某磁盘能开启FT，网络配置，开启FT  logging。</li>
-<li>应用主机配置文件，对配置文件做修改以达到兼容主机配置。比如配置SNMP。   </li>
-<li>集群方面的题目，要么是让某些虚拟机在重启的时候不启动、要么是不应有DRS规则、要么是确保某个特定的虚拟机都不应有相应的规则等，还有其他，如，存储swapfile配置、接入访问控制等。</li>
-<li>排错题，要求将StorageVM存储中的ISO文件拷贝到NFS中，但NFS却连不上。</li>
-<li>开启Update Manager插件，配置更新计划调度。   </li>
-<li>AutoDeploy有3-5道题目，创建image配置文件，导出ISO文件，基于配置文件的自动部署等 </li>
-<li>基于模板创建VM进行排错。</li>
-<li>根据性能分析，将Chart结果保存到配置中，或对相应的虚拟机进行调整，如资源池。 </li>
-<li>证书相关，将证书拷贝到主机。</li>
-</ol>
-</blockquote>
-<p>安全方面，</p>
-<blockquote>
-<p>配置防火墙，比如将某端口对外开放或者对内的，如3000端口。</p>
-</blockquote>
-<p>存储方面，</p>
-<blockquote>
-<ol>
-<li>添加存储集群，配置存储DRS，将特定存储进行维护，检查配置是否正确。</li>
-<li>当然存储配置文件就不说了，很简单。</li>
-<li>添加SATP、PSA相应的规则，并激活。</li>
-</ol>
-</blockquote>
-<p>脚本方面，</p>
-<blockquote>
-<ol>
-<li>powershell的改编题。要求你对ps1脚本进行排错。记得是查看所有VM光驱状态的脚本。</li>
-<li>在AutoDeploy中有体现。</li>
-</ol>
-</blockquote>
-<p>网络方面，</p>
-<blockquote>
-<ol>
-<li>配置分布式交换机，将特定的标准交换机迁移至DVS中，创建相应的端口组，对端口组做负载均衡相关配置。</li>
-<li>配置NetFlow对特定端口组进行监控。</li>
-<li>配置Pvlan，要求VLAN20中的机器能访问Internet却不能互访。但是VLAN100中的机器不光可以上Internet也可以访问VLAN20</li>
-<li>标准交换机上的配置，为交换机添加上行链路，此交换机专门用来配置FT，然后检查虚拟机开始FT是否正常。</li>
-</ol>
-</blockquote>
-<hr>
-<p>将<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>的实验完全掌握、熟练之后，VDCA510的考试就一点都不难了。</p>
 
           
         </div>

@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -132,6 +134,329 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-05-22T02:07:10.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  5月 22 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/VMware/">VMware</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/" itemprop="url">
+            Monitor VMware ESXi with your existing Nagios application</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>摘自:  <a href="http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766" target="_blank"><a href="http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766)_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920">http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766)_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920</a></a>_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920)</p>
+<p>Nagios is plug-in-oriented management software typically installed on a Linux server. Many corporate system administrators use Nagios to keep track of the current state of their servers and other vital devices in the network. This makes Nagios a good choice if you&#39;re looking for VMware monitoring tools. Here&#39;s a look at how to integrate VMware ESXi monitoring in an existing <a href="http://searchenterpriselinux.techtarget.com/tutorial/Nagios-Configuration-and-integration-advice" target="_blank">Nagios environment</a>.</p>
+<p>Any device with a <a href="http://searchenterpriselinux.techtarget.com/answer/Using-Nagios-with-custom-plugins" target="_blank">plug-in</a> -- even the software in your department&#39;s coffeemaker -- can be<a href="http://searchdatacenter.techtarget.com/tip/Is-Nagios-right-for-your-data-center" target="_blank">managed through Nagios</a>, which makes the open source network monitoring system popular and well-known. If you already <a href="http://searchdatacenter.techtarget.com/tip/Nagios-setup-Installing-and-configuring-the-network-monitoring-tool" target="_blank">have a Nagios monitoring environment</a> in place, you can use it to monitor VMware infrastructures by installing the VMware plug-in on the Linux server.</p>
+<p>The open source development company OP5 offers the most common <a href="http://searchvmware.techtarget.com/tip/Honing-your-VMware-monitoring-techniques" target="_blank">VMware monitoring</a>software plug-in: <a href="http://www.op5.org/community/plugin-inventory/op5-projects/check-esx-plugin" target="_blank">the OP5 Check ESX Plug-in</a>. Since it is written in Perl scripting language, you&#39;ll need Perl support on your Linux server and the free VMware vSphere Perl SDK software.</p>
+<p><a href="http://communities.vmware.com/community/vmtn/developer/forums/vsphere_sdk_perl" target="_blank">Download</a> the VMware vSphere Perl SDK to the Linux server that hosts Nagios and then extract it using <code>tar zxvf VMware-vSphere-Perl-SDK-&amp;lt;version-number&amp;gt;.tar.gz</code>. This will create the subdirectory called<code>vmware-vsphere-cli-distrib</code>. In this subdirectory, you&#39;ll find the installer script <code>vmware-install.pl</code>. Before running this script, use <code>yum install perl-Pod-Perldoc perl-CPAN openssl-devel</code> to ensure that all software requirements are met on your server.</p>
+<p>After installing the prerequisites, use the <code>./vmware-install.pl</code> command and follow the script&#39;s directions. Now, you can download the Nagios plug-in from OP5 or do an Internet search for <code>download check_esx3.pl</code> to find the plug-in script in text format. Download this script, save it to the directory <code>/usr/lib64/nagios/plugins and use chmod +x check_esx3.pl</code> to make it executable. Nagios can now begin monitoring ESXi.</p>
+<p>You can now define the commands for Nagios to use to monitor VMware ESXi hypervisors. Add the monitoring commands to the Nagios <code>/etc/nagios/objects/command.cfg</code> file. Put a user name and password in variables in the <code>/etc/nagios/resource.cfg</code> file. In this example, a variable ESXUSER is defined, as well as the user&#39;s password. Nagios can use these credentials to access the ESXi host. The file could have the following contents:</p>
+<p><code># cat /etc/nagios/resource.cfg $ESXUSER$=username $ESXPASSWORD$=password</code></p>
+<p>Based on this, you can add the ESXi monitoring commands to the<code>/etc/nagios/objects/command.cfg</code> file.</p>
+<p>If you want to monitor ESXi CPU usage, use this command:
+<code># check vmware ESXi CPU</code>define command
+<code>{    command_name   check_esx_cpu      command_line        $ESXUSER$/check_esx -H $HOSTADDRESS$ -u $ESXUSER$ -p $ESXPASSWORD$ -l cpu -s usage -w $ARG1$ -c $ARG2$ }</code></p>
+<p>Once you&#39;ve defined commands, create a configuration file for your ESXi host. If the ESXi host is called esxi01, you could put its configuration in a <code>/etc/nagios/hosts/esxi01.cfg</code>file containing the following:</p>
+<p><code># Host esx01</code></p>
+<p>define host
+<code>{   use   Linux-server   host_name   esxi01 address 192.168.1.10   }</code></p>
+<p>define service
+<code>{   use   generic-service   host_name   esxi01 service_description   ESXi CPU Load check_command   check_esx_cpu!80!90   }</code></p>
+<p>This is just a taste of what you can do with the ESXi monitoring plug-in for Nagios. Depending on what functions the plug-in defines, you can monitor other aspects of the ESXi host. Work with your Nagios administrator to define more commands for monitoring VMware.</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-04-26T03:10:58.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  4月 26 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Linux/">Linux</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/ethtool/" itemprop="url">
+            ethtool</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <h1 id="-span-style-font-size-13px-ethtool-is-the-standard-linux-utility-for-controlling-network-drivers-and-hardware-particularly-for-wired-ethernet-devices-span-"><span style="font-size: 13px;">ethtool is the standard Linux utility for controlling network drivers and hardware, particularly for wired Ethernet devices. </span></h1>
+<h1 id="-span-style-font-size-13px-it-can-be-used-to-span-"><span style="font-size: 13px;">It can be used to:</span></h1>
+<ul>
+<li>Get identification and diagnostic information</li>
+<li>Get extended device statistics</li>
+<li>Control speed, duplex, autonegotiation and flow control for Ethernet devices</li>
+<li>Control checksum offload and other hardware offload features</li>
+<li>Control DMA ring sizes and interrupt moderation</li>
+<li>Control receive queue selection for multiqueue devices</li>
+<li>Upgrade firmware in flash memory
+Most features are dependent on support in the specific driver. See the manual page for full information.</li>
+</ul>
+<h1 id="-"> </h1>
+<h1 id="-usage-"><strong>Usage：</strong></h1>
+<p>&nbsp;</p>
+<h2 id="name">NAME</h2>
+<pre>       ethtool - Display or change ethernet card settings</pre>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<pre>       **ethtool** _ethX_
+
+       **ethtool** **-h**
+
+       **ethtool** **-a** _ethX_
+
+       **ethtool** **-A** _ethX_ [**autoneg** **on**|**off**] [**rx** **on**|**off**] [**tx** **on**|**off**]
+
+       **ethtool** **-c** _ethX_
+
+       **ethtool**  **-C** _ethX_ [**adaptive-rx** **on**|**off**] [**adaptive-tx** **on**|**off**] [**rx-usecs** _N_]
+       [**rx-frames** _N_] [**rx-usecs-irq** _N_]  [**rx-frames-irq**  _N_]  [**tx-usecs**  _N_]  [**tx-**
+       **frames**  _N_]  [**tx-usecs-irq**  _N_]  [**tx-frames-irq**  _N_] [**stats-block-usecs** _N_]
+       [**pkt-rate-low** _N_] [**rx-usecs-low** _N_] [**rx-frames-low**  _N_]  [**tx-usecs-low**  _N_]
+       [**tx-frames-low**  _N_]  [**pkt-rate-high** _N_] [**rx-usecs-high** _N_] [**rx-frames-high**
+       _N_] [**tx-usecs-high** _N_] [**tx-frames-high** _N_] [**sample-interval** _N_]
+
+       **ethtool** **-g** _ethX_
+
+       **ethtool** **-G** _ethX_ [**rx** _N_] [**rx-mini** _N_] [**rx-jumbo** _N_] [**tx** _N_]
+
+       **ethtool** **-i** _ethX_
+
+       **ethtool** **-d** _ethX_ [**raw** **on**|**off**]
+
+       **ethtool** **-e** _ethX_ [**raw** **on**|**off**] [**offset** _N_] [**length** _N_]
+
+       **ethtool** **-E** _ethX_ [**magic** _N_] [**offset** _N_] [**value** _N_]
+
+       **ethtool** **-k** _ethX_
+
+       **ethtool** **-K** _ethX_ [**rx** **on**|**off**] [**tx** **on**|**off**] [**sg** **on**|**off**] [**tso** **on**|**off**]
+
+       **ethtool** **-p** _ethX_ _[_N_]_
+
+       **ethtool** **-r** _ethX_
+
+       **ethtool** **-S** _ethX_
+
+       **ethtool** **-t** _ethX_ [**offline**|**online**]
+
+       **ethtool**     **-s**     _ethX_     [**speed** **10**|**100**|**1000**]      [**duplex** **half**|**full**]
+       [**port** **tp**|**aui**|**bnc**|**mii**]  [**autoneg** **on**|**off**] [**phyad** _N_] [**xcvr** **internal**|**exter-**
+       **nal**] [**wol** **p**|**u**|**m**|**b**|**a**|**g**|**s**|**d**...]  [**sopass** _xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_] [**msglvl** _N_]</pre>
+
+<h2 id="description">DESCRIPTION</h2>
+<pre>       **ethtool** is used for querying settings of an ethernet device and  chang-
+       ing them.
+
+       _ethX_ is the name of the ethernet device to work on.</pre>
+
+<h2 id="options">OPTIONS</h2>
+<p><pre>       <strong>ethtool</strong>  with  a single argument specifying the device name prints cur-
+       rent setting of the specified device.</p>
+<pre><code>   **-h**     shows a short help message.
+
+   **-a**     queries the specified ethernet device for pause parameter infor-
+          mation.
+
+   **-A**     change the pause parameters of the specified ethernet device.
+
+   **autoneg** **on**|**off**
+          Specify if pause autonegotiation is enabled.
+
+   **rx** **on**|**off**
+          Specify if RX pause is enabled.
+
+   **tx** **on**|**off**
+          Specify if TX pause is enabled.
+
+   **-c**     queries  the  specified  ethernet device for coalescing informa-
+          tion.
+
+   **-C**     change the coalescing settings of the specified ethernet device.
+
+   **-g**     queries  the  specified ethernet device for rx/tx ring parameter
+          information.
+
+   **-G**     change the rx/tx  ring  parameters  of  the  specified  ethernet
+          device.
+
+   **rx** _N_   Change number of ring entries for the Rx ring.
+
+   **rx-mini** _N_
+          Change number of ring entries for the Rx Mini ring.
+
+   **rx-jumbo** _N_
+          Change number of ring entries for the Rx Jumbo ring.
+
+   **tx** _N_   Change number of ring entries for the Tx ring.
+
+   **-i**     queries  the  specified  ethernet  device  for associated driver
+          information.
+
+   **-d**     retrieves and prints a register dump for the specified  ethernet
+          device.   When  raw  is  enabled, then it dumps the raw register
+          data to stdout.
+
+   **-e**     retrieves and prints an EEPROM dump for the  specified  ethernet
+          device.   When raw is enabled, then it dumps the raw EEPROM data
+          to stdout. The length and offset parameters allow  dumping  cer-
+          tain portions of the EEPROM.  Default is to dump the entire EEP-
+          ROM.
+
+   **-E**     Changes EEPROM byte for the specified ethernet  device.   offset
+          and value specify which byte and it’s new value.  Because of the
+          persistent nature of writing to the  EEPROM,  a  device-specific
+          magic key must be specified to prevent the accidental writing to
+          the EEPROM.
+
+   **-k**     queries the specified ethernet device for offload information.
+
+   **-K**     change the offload parameters of the specified ethernet  device.
+
+   **rx** **on**|**off**
+          Specify if RX checksumming is enabled.
+
+   **tx** **on**|**off**
+          Specify if TX checksumming is enabled.
+
+   **sg** **on**|**off**
+          Specify if scatter-gather is enabled.
+
+   **tso** **on**|**off**
+          Specify if tcp segmentation offload is enabled.
+
+   **-p**     initiates adapter-specific action intended to enable an operator
+          to  easily  identify  the  adapter  by  sight.   typically  this
+          involves  blinking  one  or  more  LEDs on the specific ethernet
+          port.
+
+   **N**      Length of time to perform phys-id, in seconds.
+
+   **-r**     restarts auto-negotiation on the specified ethernet  device,  if
+          auto-negotiation is enabled.
+
+   **-S**     queries  the  specified ethernet device for NIC- and driver-spe-
+          cific statistics.
+
+   **-t**     executes adapter selftest on the specified ethernet device. Pos-
+          sible test modes are:
+
+   **offline**|**online**
+          defines  test  type: **offline** (default) means to perform full set
+          of tests possibly causing normal operation  interruption  during
+          the  tests,  **online** means to perform limited set of tests do not
+          interrupting normal adapter operation.
+
+   **-s**     option allows changing some or all  settings  of  the  specified
+          ethernet  device.   All  following  options only apply if **-s** was
+          specified.
+
+   **speed** **10**|**100**|**1000**
+          Set speed in Mb/s.  **ethtool** with single argument will  show  you
+          the supported device speeds.
+
+   **duplex** **half**|**full**
+          Set full or half duplex mode.
+
+   **port** **tp**|**aui**|**bnc**|**mii**
+          Select device port.
+
+   **autoneg** **on**|**off**
+          Specify  if autonegotiation is enabled. In the usual case it is,
+          but might cause some problems with some network devices, so  you
+          can turn it off.
+
+   **phyad** _N_
+          PHY address.
+
+   **xcvr** **internal**|**external**
+          Select  transceiver  type.  Currently only internal and external
+          can be specified, in the future further types might be added.
+
+   **wol** **p**|**u**|**m**|**b**|**a**|**g**|**s**|**d**...
+          Set Wake-on-LAN options.  Not all  devices  support  this.   The
+          argument  to  this  option  is a string of characters specifying
+          which options to enable.
+          **p**  Wake on phy activity
+          **u**  Wake on unicast messages
+          **m**  Wake on multicast messages
+          **b**  Wake on broadcast messages
+          **a**  Wake on ARP
+          **g**  Wake on MagicPacket(tm)
+          **s**  Enable SecureOn(tm) password for MagicPacket(tm)
+          **d**  Disable (wake on nothing).  This option clears  all  previous
+             options.
+
+   **sopass** _xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_
+          Set the SecureOn(tm) password.  The argument to this option must
+          be 6 bytes in ethernet MAC hex format (_xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_).
+
+   **msglvl** _N_
+          Set the driver message level. Meanings differ per driver.&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -182,134 +507,6 @@ On a VM with a <a href="http://searchnetworking.techtarget.com/definition/burst"
 <p>High packet loss on a Windows VM calls for a change to network settings on the VMXNET3 driver. From Device Manager, right click the VMXNET3 driver and select Properties. The Advanced tab has two parameters: Small RX Buffers and RX Ring #1 Size. Increase the value of these parameters a bit and test whether this yields any improvement. Incrementally increase the value until you resolve the loss.</p>
 <p>In most cases, these fixes will decrease the number of packets dropped in virtual machines. If adjusting the network settings fails, you&#39;re probably facing another problem caused by other performance-related factors in the VM, not the VMware network settings between the VM and ESXi platform. Consult an expert in the guest operating system, as there are many parameters that you can tune for performance. Beware of tuning the wrong parameters, which could have a strong negative impact on the VM.</p>
 <p>摘自：<a href="http://searchvmware.techtarget.com/" target="_blank"><a href="http://searchvmware.techtarget.com">http://searchvmware.techtarget.com</a></a></p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-04-26T02:47:40.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  4月 26 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/VMware/">VMware</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/vmware-capacity-planner-vcp/" itemprop="url">
-            VMware Capacity Planner (VCP)</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>VMware Capacity Planner is a tool that collects information on an IT infrastructure&#39;s resource usage and compares it to industry-average data.</p>
-<p>VMware and its partners offer the Capacity Planner as a service to help IT departments plan virtualization deployments and optimize hardware resources such as <a href="http://whatis.techtarget.com/definition/server" target="_blank">servers</a> and <a href="http://searchstorage.techtarget.com/definition/storage" target="_blank">storage</a>. VMware Capacity Planner can help an organization determine what server consolidation rates it will achieve with <a href="http://searchservervirtualization.techtarget.com/definition/virtualization" target="_blank">virtualization</a>, and discover ways to standardize and reduce the hardware footprint in a <a href="http://searchdatacenter.techtarget.com/definition/data-center" target="_blank">data center</a>. The tool also discovers capacity utilization trends and can help set benchmarks.</p>
-<p>VMware trains partners on VMware Capacity Planner, and the product is free to these authorized users. Main competitors to the tool include VKernel&#39;s Capacity Analyzer and Tek-Tools&#39; Profiler Suite. IT shops that want to avoid partnering on their capacity assessment can use a less-powerful tool from VMware: vCenter Guided Consolidation.</p>
-<p>摘自：<a href="http://searchvmware.techtarget.com/" target="_blank"><a href="http://searchvmware.techtarget.com">http://searchvmware.techtarget.com</a></a></p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-04-24T04:26:15.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  4月 24 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/VMware/">VMware</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/选型：vmware认证-哪一种最适合你？/" itemprop="url">
-            选型：VMware认证 哪一种最适合你？</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>来源：TechTarget中国</p>
-<p><table width="100%" border="0" cellspacing="0" cellpadding="6" align="center"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td>摘要：过去，VMware只有一种认证：VMware 认证资格(VCP)。成为VCP是很基础的；你不得不参加被认可的培训班，之后通过考试。假如你以足够高的分数通过VCP考试，将会有资格成为VMware Certified Instructor (VCI)。</td>
-</tr>
-</tbody>
-</table>
-现在有更多的VMware认证，因此你可能怀疑，哪一种VMware认证对于我来说是最适合的，为了帮助你做决定，本文中覆盖了各种的认证和需求，并且它们会完善你的<a href="http://www.jifang360.com/news/greenIT/" target="_blank">IT</a>职业生涯。</p>
-<p>该VMware认证证明了你具有操作vSphere的基本技能和知识。为了成为VCP，你一定要参加一个具有权威性和前沿讲师的培训班（在线的培训班一般不被认可）</p>
-<p>这里有三种类型的课程：</p>
-<p>VMwarevSphere：安装，配置，管理</p>
-<p>VMwarevSphere：快速跟踪</p>
-<p>VMwarevSphere：故障诊断排除</p>
-<p>完成课程学习之后，你可以参加VCP测试，是一种不集中于特殊领域的一般性考试，它的目标是使用vSphere的群体，例如顾问，用户或者合作伙伴。假如你没有通过，再一次参加考试之前还有七天的时间。</p>
-<p>下一个VMware认证的水平，是VMware认证的高级资格，主要有两个方向的分支：<a href="http://www.jifang360.com/news/sjzx/" target="_blank">数据中心</a>的管理和基础结构的设计。</p>
-<p><strong>VCAP–数据中心设计(VCAP-DCD)</strong></p>
-<p>获得VCAP-DCD的认证，证明具有vSphere基本结构设计的知识，这种认证能集中地满足vSphere所有基础设施体系结构的设计需求，包括<a href="http://www.jifang360.com/news/cunchu/" target="_blank">存储</a>和网络互联以及和其他组件的整合--包括内部和外部的虚拟设备。</p>
-<p>和VCAP-DCA一样，参加VCAP-DCD考试只需要VCP认证。推荐vSphere的设计进修课程，但不是必需的，申请10天后可再次参加考试。</p>
-<p>通过VCAP的这两个考试之后，将会有资格参加VMware最后的认证，最高端的VMware认证设计专家(VCDX)。</p>
-<p><strong>　VCAP:数据中心管理(VCAP-DCA)</strong></p>
-<p>VCAP-DCA认证集中于vSphere的管理和可支持的技能，它超越了VCP的基础知识，并且面向处理较大规模和更复杂的vSphere基础机构。VCAP-DCA集中于实施、管理、保持和管理vSphere，用scripting tools进行故障排除和自动化设置，例如PowerCLI。</p>
-<p>在参加VCAP-DCA考试之前，你需要VCP认证。培训班不是必须的，但是VMware推荐对VCPs感兴趣才能更好的为考试准备。假如你没有通过考试，可以10天后再参加。</p>
-<p><strong>VMware认证设计专家</strong></p>
-<p>为了获得这个认证，需要对vSphere基本结构设计有最佳的技能。VCDX-认证专家们是vSphere的精通者。通过VCAP-DCA和VCAP-DCD的考试是学习VCDX的前提，但是这种认证不重在基本考试，而是必须应用VMware。</p>
-<p>假如VMware接受你的申请，你需要提交你选择方案的设计和实施计划——不管是真实的还是假设的。该设计文档需要包括体系结构图表和可支持的文档。假如你的设计被认可，你必须在审查委员会前辩护。假如委员会成员对你的设计和辩护满意，之后就会得到VCDX的认证。</p>
-<p><strong>选择正确的VMware认证
-</strong>
-VCP是一种必需的认证，因为它是其他VMware认证的基础，成为VCP证明你具有操作vSphere的基础能力，并且一般是那些想从事与vSphere相关好工作人们的必需条件。</p>
-<p>许多公司，特别是咨询公司，对没有VCP认证的申请人不予考虑。但VCPs不仅仅是管理员和体系结构设计者，技术销售人员。还有在其他工作岗位会用到vSphere的支持人员也需要获得VCP认证。</p>
-<p>其他的VMware认证适合于那些想在VCP领域内有卓越突出的人们。因为VCAP是一种高级资格的认可，有一个或者两个这样的VMware认证，高新职位将会敞开大门。VCAP认证对于咨询公司想证明他们具有高水平的员工是有帮助的。</p>
-<p>这两个VCAP认证有所不同，依据你的工作角色而选择，假如你渴望VCDX认证，那么两个都需要，假如你不想尝试获得VCDX，获得这两个VCAP认证仍能证明你已经掌握了这两个领域，因此你可以加入精英的行列。</p>
-<p>极少人能获得VCDX认证。该过程需要难以估量的工作和计划，它不是简单的考试，而是真正的项目，会得到该领域内尖端人员的评断。但努力后的回报是值得的，你将被看成顶端的vSphere专家。</p>
-<p>VMware认证需要付出。在每一个连续阶段中，当获得VMware认证越来越困难的时候，走的越远，更多工作机会的大门将会敞开。</p>
 
           
         </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>svn | Succw Blog :)</title>
+  <title>ubuntu下安装subversion客户端 | Succw Blog :)</title>
   <meta name="author" content="獨菰、瑉">
   
   <meta name="description" content="运成功者的谦词，命失败者的借口">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="svn"/>
+  <meta property="og:title" content="ubuntu下安装subversion客户端"/>
   <meta property="og:site_name" content="Succw Blog :)"/>
 
   
@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -156,7 +158,7 @@
 
           
 	</div>
-        <h1 class="title" itemprop="name">svn</h1>
+        <h1 class="title" itemprop="name">ubuntu下安装subversion客户端</h1>
       	<div class="entry-content" itemprop="articleBody"><h5 id="ubuntu-subversion-">ubuntu下安装subversion客户端:</h5>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 </pre></td><td class="code"><pre>sudo apt<span class="attribute">-get</span> install subversion subversion<span class="attribute">-tools</span>
@@ -165,19 +167,13 @@
 <p>详细请看<a href="http://www.subversion.org.cn/svnbook/1.1/index.html" target="_blank"> <a href="http://www.subversion.org.cn/svnbook/1.1/index.html">http://www.subversion.org.cn/svnbook/1.1/index.html</a></a> svn子命令</p>
 <p>1、<strong>检出</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
 </pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  checkout  <span class="keyword">http</span>://路径(目录或文件的全路径)　[本地目录全路径] <span class="comment">--username　用户名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  checkout  svn:<span class="comment">//路径(目录或文件的全路径)　[本地目录全路径]  --username　用户名</span>
+<span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
+<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
+<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
 </pre></td></tr></table></figure>
 
 <p><em>注：如果不带--password 参数传输密码的话，会提示输入密码，建议不要用明文的--password 选项
@@ -188,36 +184,26 @@
 2
 3
 4
-5
-6
-7
 </pre></td><td class="code"><pre>svn co svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-
 svn co <span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
-
 svn checkout svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-
 svn checkouthttp://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
 </pre></td></tr></table></figure>
 
 <p><strong>2、导出(导出一个干净的不带.svn文件夹的目录树)</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  http:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
+svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
+svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
-</pre></td></tr></table></figure>
-
-<p>*注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的</p>
-<p>版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL</p>
-<p>的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目</p>
-<p>录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没</p>
-<p>有与之相关的信息记录)的文件不会拷贝。*</p>
+<p><em>注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的
+版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL
+的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目
+录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没
+有与之相关的信息记录)的文件不会拷贝。</em></p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
@@ -246,17 +232,12 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 
 <p><strong>4、提交</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
+2
+</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名
+svn　ci　-m　“提交备注信息文本“　</span><span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　ci　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>必须带上<span class="attribute">-m</span>参数，参数可以为空，但是必须写上<span class="attribute">-m</span>
-</pre></td></tr></table></figure>
-
+<p><code>必须带上-m参数，参数可以为空，但是必须写上-m</code></p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
@@ -264,21 +245,11 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 4
 5
 6
-7
-8
-9
-10
-11
 </pre></td><td class="code"><pre>svn commit <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-
 svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-
 svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
-
 svn ci <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-
 svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-
 svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
 </pre></td></tr></table></figure>
 
@@ -295,12 +266,8 @@ svn　<span class="keyword">update</span>　文件名</span>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-4
-5
 </pre></td><td class="code"><pre>svn <span class="operator"><span class="keyword">update</span> ＜－ 后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本
-
 svn <span class="keyword">update</span> -r <span class="number">200</span> test.cpp ＜－ 将版本库中的文件 test.cpp 还原到修正版本（revision）<span class="number">200</span>
-
 svn <span class="keyword">update</span> test.php ＜－ 更新与版本库同步。</span>
 </pre></td></tr></table></figure>
 
@@ -325,14 +292,10 @@ svn　ci　-m　“删除备注信息文本”
 3
 4
 5
-6
-7
 </pre></td><td class="code"><pre>svn delete svn://<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>/testapp/test<span class="preprocessor">.php</span> -m “删除测试文件test<span class="preprocessor">.php</span>”
 
 推荐如下操作：
-
 svn delete test<span class="preprocessor">.php</span> 
-
 svn ci -m “删除测试文件test<span class="preprocessor">.php</span>”
 </pre></td></tr></table></figure>
 
@@ -363,13 +326,13 @@ svn diff -r 200:201 test.php＜－ 对 修正版本号200 和 修正版本号201
 <p><strong>9、查看文件或者目录状态</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>svn <span class="keyword">st</span> 目录路径/名
-svn status 目录路径/名＜－ 目录下的文件和子目录的状态，正常状态不显示
-</pre></td></tr></table></figure>
+3
+4
+5
+</pre></td><td class="code"><pre>svn st 目录路径<span class="subst">/</span>名
+svn status 目录路径<span class="subst">/</span>名＜－ 目录下的文件和子目录的状态，正常状态不显示
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
+svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
 svn status <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名＜－ 显示文件和子目录状态
 </pre></td></tr></table></figure>
 
@@ -417,12 +380,8 @@ svn　ls　svn:<span class="comment">//路径(目录或文件的全路径)</span
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-4
-5
 </pre></td><td class="code"><pre>例子：
-
 svn list <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>
-
 svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span> ＜－ 显示<span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>目录下的所有属于版本库的文件和目录
 </pre></td></tr></table></figure>
 
@@ -433,10 +392,7 @@ svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</
 svn　<span class="keyword">mkdir</span>　-<span class="keyword">m</span>　<span class="string">"新增目录备注文本"</span>　http:<span class="regexp">//</span>目录全路径
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>例子：
-</pre></td></tr></table></figure>
-
+<p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 </pre></td><td class="code"><pre>svn <span class="keyword">mkdir</span> newdir
 </pre></td></tr></table></figure>
@@ -465,18 +421,12 @@ svn <span class="operator"><span class="keyword">update</span></span>
 13
 14
 15
-16
-17
-18
 </pre></td><td class="code"><pre>注：如果手工在checkout出来的目录里创建了一个新文件夹newsubdir，再用svn mkdir newsubdir命
 令后
 
 ，SVN会提示：
-
 svn: 尝试用 “svn <span class="built_in">add</span>”或 “svn <span class="built_in">add</span> <span class="comment">--non-recursive”代替？</span>
-
 svn: 无法创建目录“hello”: 文件已经存在此时，用如下命令解决：
-
 svn <span class="built_in">add</span> <span class="comment">--non-recursive newsubdir</span>
 
 在进入这个newsubdir文件夹，用ls -<span class="operator">a</span>查看它下面的全部目录与文件，会发现多了：.svn目录再用 svn
@@ -490,45 +440,35 @@ svn: File already exists: filesystem <span class="string">'/data/svnroot/test/db
 
 <p><strong>15、恢复本地修改 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
 4
 5
-6
-7
-</pre></td><td class="code"><pre>
+</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
 <span class="comment">注意:</span> <span class="comment">本子命令不会存取网络，并且会解除冲突的状况。但是它不会恢复被删除的目录。</span>
-
 <span class="comment">例子：</span>
-
 <span class="comment">svn</span> <span class="comment">revert</span> <span class="comment">foo</span><span class="string">.</span><span class="comment">c</span> <span class="comment">＜－</span> <span class="comment">丢弃对一个文件的修改</span>
 <span class="comment">svn</span> <span class="comment">revert</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span> <span class="string">.</span> <span class="comment">＜－恢复一整个目录的文件，</span><span class="string">.</span> <span class="comment">为当前目录</span>
 </pre></td></tr></table></figure>
 
 <p><strong>16、把工作拷贝更新到别的URL </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn　<span class="keyword">switch</span>　http:<span class="comment">//目录全路径　本地目录全路径</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
+例子：
+svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
 </pre></td></tr></table></figure>
 
 <p><strong>17、解决冲突 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="tag">svn</span>　<span class="tag">resolved</span>　<span class="attr_selector">[本地目录全路径]</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-</pre></td><td class="code"><pre>$ svn <span class="operator"><span class="keyword">update</span>
+4
+5
+</pre></td><td class="code"><pre>svn　resolved　[本地目录全路径]
+例子：
+$ svn <span class="operator"><span class="keyword">update</span>
 C foo.c
 Updated <span class="keyword">to</span> revision <span class="number">31.</span></span>
 </pre></td></tr></table></figure>
@@ -546,16 +486,15 @@ foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>30
 foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>31
 </pre></td></tr></table></figure>
 
-<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。</p>
-<p>你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
+<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。
+你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
 <p><strong>18、不checkout而查看输出特定文件或URL的内容 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn　cat　http:<span class="comment">//文件全路径</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
+例子：
+svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
 </pre></td></tr></table></figure>
 
 </div>

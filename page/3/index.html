@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -132,6 +134,142 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-08-07T10:25:55.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  8月 7 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/VMware/">VMware</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/removing-unwanted-plug-ins-from-vcenter-server/" itemprop="url">
+            从vCenter Server中删除不必要的插件</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>做完</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>实验后，直接把</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>虚拟机删除掉了，在</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>vCenter Server</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>的插件中显示以下错误：</span></span></span></p>
+<p><span style="color: #333333;">“<span style="font-family: 'DejaVu Serif', serif;"><span>从</span></span><span style="font-family: 'DejaVu Serif', serif;"><span><a href="https://192.168.3.185:6501/vmw/rbd/-extension.xml" target="_blank">https://192.168.3.185:6501/vmw/rbd/-extension.xml</a></span></span><span style="font-family: 'DejaVu Serif', serif;"><span>下载脚本插件时出现了以下错误</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>:</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>由于连接故障，请求失败。</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>(</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>无法连接到远程服务器</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>)”</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>这也导致不能注册新的</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy (</span></span></span><span style="color: #222222;">“<span style="font-family: Tahoma, 'Century gothic', Arial, Tahoma, sans-serif;">已经向指定</span><span style="font-family: inherit;"><span style="font-size: medium;">center Server</span></span><span style="font-family: Tahoma, 'Century gothic', Arial, Tahoma, sans-serif;">注册了服务”</span></span><span><span style="font-family: 'DejaVu Serif', serif;">)</span></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>解决办法如下：</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>1</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、在浏览器中，输入</span></span><span style="font-family: 'DejaVu Serif', serif;"><span><a href="http://vcenter" target="_blank">http://vcenter</a> server name or IP/mob</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>2</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Content.</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>3</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>ExtensionManager.</span></span></span><span><span style="font-family: 'DejaVu Serif', serif;">会显示</span><span style="font-family: 'DejaVu Serif', serif;">extensionList</span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>extensionList[&quot;com.vmware.rbd&quot;] </span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>这是</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>&quot;Auto Deploy&quot;</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>扩展，</span></span></span><span><span style="font-family: 'DejaVu Serif', serif;">可点击查看</span><span style="font-family: 'DejaVu Serif', serif;">description</span></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>4</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>UnregisterExtension. </span></span><span style="font-family: 'DejaVu Serif', serif;"><span>会出现一个新窗口</span></span></span></p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>在窗口中输入</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>com.vmware.rbd</span></span></span></p>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>其他插件卸载见官方</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>kb</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>：</span></span></span></p>
+<h3 id="-span-style-color-333333-span-style-font-family-dejavu-serif-serif-span-removing-unwanted-plug-ins-from-vcenter-server-1025360-http-kb-vmware-com-selfservice-microsites-search-do-language-en_us-amp-cmd-displaykc-amp-externalid-1025360-span-span-span-"><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1025360" target="_blank">Removing unwanted plug-ins from vCenter Server (1025360)</a></span></span></span></h3>
+<h3 id="-"> </h3>
+<p>&nbsp;</p>
+<p><span style="color: #333333;"> </span></p>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-06-14T09:29:58.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  6月 14 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Linux/">Linux</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/linux下cdrecord刻录光盘/" itemprop="url">
+            linux下cdrecord刻录光盘</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>linux下一般都带有cdrecord软件，可以用来刻录光盘</p>
+<p>cdrecord -scanbus 查看系统所有 CD-R(W) 设备。</p>
+<p>[root@localhost Material]# cdrecord -scanbus
+Cdrecord-Clone 2.01 (cpu-pc-linux-gnu) Copyright (C) 1995-2004 JSchilling
+Note: This version is an unofficial (modified) version with DVD support
+Note: and therefore may have bugs that are not present in the original.
+Note: Please send bug reports or support requests to <a href="http://bugzilla.redhat.com/bugzilla" target="_blank">http://bugzilla.redhat.com/bugzilla</a>
+Note: The author of cdrecord should not be bothered with problems in this version.
+Linux sg driver version: 3.5.27
+Using libscg version &#39;schily-0.8&#39;.
+cdrecord: Warning: using inofficial libscg transport code version (schily - Red Hat-scsi-linux-sg.c-1.83-RH &#39;@(#)scsi-linux-sg.c 1.83 04/05/20 Copyright 1997 J. Schilling&#39;).
+scsibus4:
+4,0,0 400) &#39;TEAC &#39; &#39;DVD-ROM DV-28SW &#39; &#39;R.2A&#39; Removable CD-ROM
+4,1,0 401) <em>
+4,2,0 402) </em>
+4,3,0 403) <em>
+4,4,0 404) </em>
+4,5,0 405) <em>
+4,6,0 406) </em>
+4,7,0 407) *</p>
+<p>刻录iso文件</p>
+<p>cdrecord -v -eject speed=4 dev=4,0,0 backup.iso</p>
+<p>-v verbose</p>
+<p>-eject 刻完自动弹出光盘</p>
+<p>speed=4 dev=4,0,0 :四速刻录到dev=4,0,0上</p>
+<p>cdrecord --dev=4,0,0 --blank=fast   擦写光驱</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -201,329 +339,6 @@ pClient，</p>
 5 重新启动 W32time 服务，使更改生效。</p>
 </li>
 </ul>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-05-22T02:07:10.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  5月 22 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/VMware/">VMware</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/monitor-vmware-esxi-with-your-existing-nagios-application/" itemprop="url">
-            Monitor VMware ESXi with your existing Nagios application</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>摘自:  <a href="http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766" target="_blank"><a href="http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766)_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920">http://searchvmware.techtarget.com/tip/Monitor-VMware-ESXi-with-your-existing-Nagios-application?utm_medium=EM&amp;asrc=EM_ERU_21757763&amp;utm_campaign=20130521_ERU%20Transmission%20for%2005/21/2013%20(UserUniverse:%20621766)_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920</a></a>_myka-reports@techtarget.com&amp;utm_source=ERU&amp;src=5129920)</p>
-<p>Nagios is plug-in-oriented management software typically installed on a Linux server. Many corporate system administrators use Nagios to keep track of the current state of their servers and other vital devices in the network. This makes Nagios a good choice if you&#39;re looking for VMware monitoring tools. Here&#39;s a look at how to integrate VMware ESXi monitoring in an existing <a href="http://searchenterpriselinux.techtarget.com/tutorial/Nagios-Configuration-and-integration-advice" target="_blank">Nagios environment</a>.</p>
-<p>Any device with a <a href="http://searchenterpriselinux.techtarget.com/answer/Using-Nagios-with-custom-plugins" target="_blank">plug-in</a> -- even the software in your department&#39;s coffeemaker -- can be<a href="http://searchdatacenter.techtarget.com/tip/Is-Nagios-right-for-your-data-center" target="_blank">managed through Nagios</a>, which makes the open source network monitoring system popular and well-known. If you already <a href="http://searchdatacenter.techtarget.com/tip/Nagios-setup-Installing-and-configuring-the-network-monitoring-tool" target="_blank">have a Nagios monitoring environment</a> in place, you can use it to monitor VMware infrastructures by installing the VMware plug-in on the Linux server.</p>
-<p>The open source development company OP5 offers the most common <a href="http://searchvmware.techtarget.com/tip/Honing-your-VMware-monitoring-techniques" target="_blank">VMware monitoring</a>software plug-in: <a href="http://www.op5.org/community/plugin-inventory/op5-projects/check-esx-plugin" target="_blank">the OP5 Check ESX Plug-in</a>. Since it is written in Perl scripting language, you&#39;ll need Perl support on your Linux server and the free VMware vSphere Perl SDK software.</p>
-<p><a href="http://communities.vmware.com/community/vmtn/developer/forums/vsphere_sdk_perl" target="_blank">Download</a> the VMware vSphere Perl SDK to the Linux server that hosts Nagios and then extract it using <code>tar zxvf VMware-vSphere-Perl-SDK-&amp;lt;version-number&amp;gt;.tar.gz</code>. This will create the subdirectory called<code>vmware-vsphere-cli-distrib</code>. In this subdirectory, you&#39;ll find the installer script <code>vmware-install.pl</code>. Before running this script, use <code>yum install perl-Pod-Perldoc perl-CPAN openssl-devel</code> to ensure that all software requirements are met on your server.</p>
-<p>After installing the prerequisites, use the <code>./vmware-install.pl</code> command and follow the script&#39;s directions. Now, you can download the Nagios plug-in from OP5 or do an Internet search for <code>download check_esx3.pl</code> to find the plug-in script in text format. Download this script, save it to the directory <code>/usr/lib64/nagios/plugins and use chmod +x check_esx3.pl</code> to make it executable. Nagios can now begin monitoring ESXi.</p>
-<p>You can now define the commands for Nagios to use to monitor VMware ESXi hypervisors. Add the monitoring commands to the Nagios <code>/etc/nagios/objects/command.cfg</code> file. Put a user name and password in variables in the <code>/etc/nagios/resource.cfg</code> file. In this example, a variable ESXUSER is defined, as well as the user&#39;s password. Nagios can use these credentials to access the ESXi host. The file could have the following contents:</p>
-<p><code># cat /etc/nagios/resource.cfg $ESXUSER$=username $ESXPASSWORD$=password</code></p>
-<p>Based on this, you can add the ESXi monitoring commands to the<code>/etc/nagios/objects/command.cfg</code> file.</p>
-<p>If you want to monitor ESXi CPU usage, use this command:
-<code># check vmware ESXi CPU</code>define command
-<code>{    command_name   check_esx_cpu      command_line        $ESXUSER$/check_esx -H $HOSTADDRESS$ -u $ESXUSER$ -p $ESXPASSWORD$ -l cpu -s usage -w $ARG1$ -c $ARG2$ }</code></p>
-<p>Once you&#39;ve defined commands, create a configuration file for your ESXi host. If the ESXi host is called esxi01, you could put its configuration in a <code>/etc/nagios/hosts/esxi01.cfg</code>file containing the following:</p>
-<p><code># Host esx01</code></p>
-<p>define host
-<code>{   use   Linux-server   host_name   esxi01 address 192.168.1.10   }</code></p>
-<p>define service
-<code>{   use   generic-service   host_name   esxi01 service_description   ESXi CPU Load check_command   check_esx_cpu!80!90   }</code></p>
-<p>This is just a taste of what you can do with the ESXi monitoring plug-in for Nagios. Depending on what functions the plug-in defines, you can monitor other aspects of the ESXi host. Work with your Nagios administrator to define more commands for monitoring VMware.</p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-04-26T03:10:58.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  4月 26 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/Linux/">Linux</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/ethtool/" itemprop="url">
-            ethtool</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <h1 id="-span-style-font-size-13px-ethtool-is-the-standard-linux-utility-for-controlling-network-drivers-and-hardware-particularly-for-wired-ethernet-devices-span-"><span style="font-size: 13px;">ethtool is the standard Linux utility for controlling network drivers and hardware, particularly for wired Ethernet devices. </span></h1>
-<h1 id="-span-style-font-size-13px-it-can-be-used-to-span-"><span style="font-size: 13px;">It can be used to:</span></h1>
-<ul>
-<li>Get identification and diagnostic information</li>
-<li>Get extended device statistics</li>
-<li>Control speed, duplex, autonegotiation and flow control for Ethernet devices</li>
-<li>Control checksum offload and other hardware offload features</li>
-<li>Control DMA ring sizes and interrupt moderation</li>
-<li>Control receive queue selection for multiqueue devices</li>
-<li>Upgrade firmware in flash memory
-Most features are dependent on support in the specific driver. See the manual page for full information.</li>
-</ul>
-<h1 id="-"> </h1>
-<h1 id="-usage-"><strong>Usage：</strong></h1>
-<p>&nbsp;</p>
-<h2 id="name">NAME</h2>
-<pre>       ethtool - Display or change ethernet card settings</pre>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<pre>       **ethtool** _ethX_
-
-       **ethtool** **-h**
-
-       **ethtool** **-a** _ethX_
-
-       **ethtool** **-A** _ethX_ [**autoneg** **on**|**off**] [**rx** **on**|**off**] [**tx** **on**|**off**]
-
-       **ethtool** **-c** _ethX_
-
-       **ethtool**  **-C** _ethX_ [**adaptive-rx** **on**|**off**] [**adaptive-tx** **on**|**off**] [**rx-usecs** _N_]
-       [**rx-frames** _N_] [**rx-usecs-irq** _N_]  [**rx-frames-irq**  _N_]  [**tx-usecs**  _N_]  [**tx-**
-       **frames**  _N_]  [**tx-usecs-irq**  _N_]  [**tx-frames-irq**  _N_] [**stats-block-usecs** _N_]
-       [**pkt-rate-low** _N_] [**rx-usecs-low** _N_] [**rx-frames-low**  _N_]  [**tx-usecs-low**  _N_]
-       [**tx-frames-low**  _N_]  [**pkt-rate-high** _N_] [**rx-usecs-high** _N_] [**rx-frames-high**
-       _N_] [**tx-usecs-high** _N_] [**tx-frames-high** _N_] [**sample-interval** _N_]
-
-       **ethtool** **-g** _ethX_
-
-       **ethtool** **-G** _ethX_ [**rx** _N_] [**rx-mini** _N_] [**rx-jumbo** _N_] [**tx** _N_]
-
-       **ethtool** **-i** _ethX_
-
-       **ethtool** **-d** _ethX_ [**raw** **on**|**off**]
-
-       **ethtool** **-e** _ethX_ [**raw** **on**|**off**] [**offset** _N_] [**length** _N_]
-
-       **ethtool** **-E** _ethX_ [**magic** _N_] [**offset** _N_] [**value** _N_]
-
-       **ethtool** **-k** _ethX_
-
-       **ethtool** **-K** _ethX_ [**rx** **on**|**off**] [**tx** **on**|**off**] [**sg** **on**|**off**] [**tso** **on**|**off**]
-
-       **ethtool** **-p** _ethX_ _[_N_]_
-
-       **ethtool** **-r** _ethX_
-
-       **ethtool** **-S** _ethX_
-
-       **ethtool** **-t** _ethX_ [**offline**|**online**]
-
-       **ethtool**     **-s**     _ethX_     [**speed** **10**|**100**|**1000**]      [**duplex** **half**|**full**]
-       [**port** **tp**|**aui**|**bnc**|**mii**]  [**autoneg** **on**|**off**] [**phyad** _N_] [**xcvr** **internal**|**exter-**
-       **nal**] [**wol** **p**|**u**|**m**|**b**|**a**|**g**|**s**|**d**...]  [**sopass** _xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_] [**msglvl** _N_]</pre>
-
-<h2 id="description">DESCRIPTION</h2>
-<pre>       **ethtool** is used for querying settings of an ethernet device and  chang-
-       ing them.
-
-       _ethX_ is the name of the ethernet device to work on.</pre>
-
-<h2 id="options">OPTIONS</h2>
-<p><pre>       <strong>ethtool</strong>  with  a single argument specifying the device name prints cur-
-       rent setting of the specified device.</p>
-<pre><code>   **-h**     shows a short help message.
-
-   **-a**     queries the specified ethernet device for pause parameter infor-
-          mation.
-
-   **-A**     change the pause parameters of the specified ethernet device.
-
-   **autoneg** **on**|**off**
-          Specify if pause autonegotiation is enabled.
-
-   **rx** **on**|**off**
-          Specify if RX pause is enabled.
-
-   **tx** **on**|**off**
-          Specify if TX pause is enabled.
-
-   **-c**     queries  the  specified  ethernet device for coalescing informa-
-          tion.
-
-   **-C**     change the coalescing settings of the specified ethernet device.
-
-   **-g**     queries  the  specified ethernet device for rx/tx ring parameter
-          information.
-
-   **-G**     change the rx/tx  ring  parameters  of  the  specified  ethernet
-          device.
-
-   **rx** _N_   Change number of ring entries for the Rx ring.
-
-   **rx-mini** _N_
-          Change number of ring entries for the Rx Mini ring.
-
-   **rx-jumbo** _N_
-          Change number of ring entries for the Rx Jumbo ring.
-
-   **tx** _N_   Change number of ring entries for the Tx ring.
-
-   **-i**     queries  the  specified  ethernet  device  for associated driver
-          information.
-
-   **-d**     retrieves and prints a register dump for the specified  ethernet
-          device.   When  raw  is  enabled, then it dumps the raw register
-          data to stdout.
-
-   **-e**     retrieves and prints an EEPROM dump for the  specified  ethernet
-          device.   When raw is enabled, then it dumps the raw EEPROM data
-          to stdout. The length and offset parameters allow  dumping  cer-
-          tain portions of the EEPROM.  Default is to dump the entire EEP-
-          ROM.
-
-   **-E**     Changes EEPROM byte for the specified ethernet  device.   offset
-          and value specify which byte and it’s new value.  Because of the
-          persistent nature of writing to the  EEPROM,  a  device-specific
-          magic key must be specified to prevent the accidental writing to
-          the EEPROM.
-
-   **-k**     queries the specified ethernet device for offload information.
-
-   **-K**     change the offload parameters of the specified ethernet  device.
-
-   **rx** **on**|**off**
-          Specify if RX checksumming is enabled.
-
-   **tx** **on**|**off**
-          Specify if TX checksumming is enabled.
-
-   **sg** **on**|**off**
-          Specify if scatter-gather is enabled.
-
-   **tso** **on**|**off**
-          Specify if tcp segmentation offload is enabled.
-
-   **-p**     initiates adapter-specific action intended to enable an operator
-          to  easily  identify  the  adapter  by  sight.   typically  this
-          involves  blinking  one  or  more  LEDs on the specific ethernet
-          port.
-
-   **N**      Length of time to perform phys-id, in seconds.
-
-   **-r**     restarts auto-negotiation on the specified ethernet  device,  if
-          auto-negotiation is enabled.
-
-   **-S**     queries  the  specified ethernet device for NIC- and driver-spe-
-          cific statistics.
-
-   **-t**     executes adapter selftest on the specified ethernet device. Pos-
-          sible test modes are:
-
-   **offline**|**online**
-          defines  test  type: **offline** (default) means to perform full set
-          of tests possibly causing normal operation  interruption  during
-          the  tests,  **online** means to perform limited set of tests do not
-          interrupting normal adapter operation.
-
-   **-s**     option allows changing some or all  settings  of  the  specified
-          ethernet  device.   All  following  options only apply if **-s** was
-          specified.
-
-   **speed** **10**|**100**|**1000**
-          Set speed in Mb/s.  **ethtool** with single argument will  show  you
-          the supported device speeds.
-
-   **duplex** **half**|**full**
-          Set full or half duplex mode.
-
-   **port** **tp**|**aui**|**bnc**|**mii**
-          Select device port.
-
-   **autoneg** **on**|**off**
-          Specify  if autonegotiation is enabled. In the usual case it is,
-          but might cause some problems with some network devices, so  you
-          can turn it off.
-
-   **phyad** _N_
-          PHY address.
-
-   **xcvr** **internal**|**external**
-          Select  transceiver  type.  Currently only internal and external
-          can be specified, in the future further types might be added.
-
-   **wol** **p**|**u**|**m**|**b**|**a**|**g**|**s**|**d**...
-          Set Wake-on-LAN options.  Not all  devices  support  this.   The
-          argument  to  this  option  is a string of characters specifying
-          which options to enable.
-          **p**  Wake on phy activity
-          **u**  Wake on unicast messages
-          **m**  Wake on multicast messages
-          **b**  Wake on broadcast messages
-          **a**  Wake on ARP
-          **g**  Wake on MagicPacket(tm)
-          **s**  Enable SecureOn(tm) password for MagicPacket(tm)
-          **d**  Disable (wake on nothing).  This option clears  all  previous
-             options.
-
-   **sopass** _xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_
-          Set the SecureOn(tm) password.  The argument to this option must
-          be 6 bytes in ethernet MAC hex format (_xx_**:**_yy_**:**_zz_**:**_aa_**:**_bb_**:**_cc_).
-
-   **msglvl** _N_
-          Set the driver message level. Meanings differ per driver.&lt;/pre&gt;
-</code></pre><p>&nbsp;</p>
 
           
         </div>

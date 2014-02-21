@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -132,6 +134,151 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-11-22T02:16:21.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  11月 22 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Linux/">Linux</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/linux-系统运维及工具/" itemprop="url">
+             Linux 系统运维及工具</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <blockquote>
+<div>许多实用程序可以对事项进行报告。例如，who、finger、ls、ps 以及其它实用程序可以生成简单的最终用户报告。在某些情况下，这些报告有助于系统管理。本节介绍的实用程序可以产生更多的详细报告，可以为系统管理任务提供更多的帮助。Linux 还有许多其它报告实用程序，比如 sysstat 包中的 sar（系统活动报告）、iostat（输入 / 输出和 CPU 统计）和 mpstat（处理器统计），netstat（网络报告，位于 net-tools 包）和 nfsstat（NFS 统计，位于 nfs-utils 包）。</div>
+<div></div>
+<div><strong>使用 vmstat 掌握虚拟内存统计信息</strong></div>
+<div>vmstat 实用程序（虚拟内存统计，位于 procps 包）生成包含磁盘和 CPU 活动数据的虚拟内存信息。以下示例显示了每隔 1 秒的 2个迭代（参数 1 2）的虚拟内存统计信息。第一行包括自系统启动以来的时间，后续每行包括自上一行以来的时间间隔。</div>
+<div>$ vmstat 1 2</div>
+<div>procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----</div>
+<div>r b swpd free buff cache si so bi bo in cs us sy id wa</div>
+<div>0 2 0 684328 33924 219916 0 0 430 105 1052 134 2 4 86 8</div>
+<div>0 2 0 654632 34160 248840 0 0 4897 7683 1142 237 0 5 0 95</div>
+<div></div>
+<div>以下列表解释了由 vmstat 显示的字段：</div>
+<div>procs 进程信息</div>
+<div>r 等待中可运行的进程数</div>
+<div>b 阻塞的进程数 ( 不间断睡眠中 )</div>
+<div>memory内存信息（以千字节为单位）</div>
+<div>swpd 使用的虚拟内存</div>
+<div>free 空闲内存</div>
+<div>buff 用作缓冲区的内存</div>
+<div>cache用作高速缓存的内存</div>
+<div>swap系统分页活动（每秒千字节）</div>
+<div>si 从磁盘交换到内存</div>
+<div>so 使内存换出到磁盘</div>
+<div>io 系统 I/O 活动（每秒块）</div>
+<div>bi 从块设备接收的块</div>
+<div>bo 发送到块设备的块</div>
+<div>system（单位是每秒）</div>
+<div>in 中断（包括时钟）</div>
+<div>cs 上下文开关</div>
+<div>cpu每个状态所耗费的总 CPU 时间的百分比</div>
+<div>us 用户 ( 非内核 )</div>
+<div>sy 系统（内核）</div>
+<div>id 空闲</div>
+<div>wa 等待 I/O</div>
+<div>st 从虚拟机提取（仅在虚拟机上）</div>
+<div></div>
+<div><strong>使用 top 列出使用资源最多的进程</strong></div>
+<div></div>
+<div>top 实用程序是 ps 的有益补充。最起码，top 显示的系统信息包括使用 CPU 密集的进程。 top 实用程序可以定期自我更新，输入 q 即可退出。虽然可以使用命令行选项，但使用交互式命令往往更有帮助。</div>
+<div>命令  功能</div>
+<div>hor ? 显示帮助画面。</div>
+<div>k (kill) 提示 PID 号和信号类型，并发送 signal.Defaults 进程到信号 15(SIGTERM)，只有当 15 不起作用时才指定 9 (SIGKILL)。</div>
+<div>F  显示一个页面，允许指定一个排序字段。</div>
+<div>f   显示一个页面，允许指定 top 显示的字段。</div>
+<div>o  显示一个页面，允许指定字段的显示顺序。</div>
+<div>q  退出 top。</div>
+<div>s  以秒为单位提示更新间隔时间。使用 0（零）表示持续更新。</div>
+<div>SPACE. 立即更新显示。</div>
+<div>W  编写名为 ~/.toprc的启动文件，以便在下一次启动 top，它使用与当前相同的参数。</div>
+<div></div>
+</blockquote>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-11-21T09:44:25.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  11月 21 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/音乐/">音乐</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/《红楼梦》音乐/" itemprop="url">
+            《红楼梦》中的音乐</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>标记于此：</p>
+<embed src="http://www.xiami.com/widget/6255775_1770579228,1770579229,1770579230,1770579231,1770579232,1770579233,1770579234,1770579235,1770579236,1770579237,1770579238,_235_360_008080_c0c0c0_1/multiPlayer.swf" type="application/x-shockwave-flash" width="235" height="360" wmode="opaque"></embed>
+
+<p>红楼梦中的音乐，真是极好听...</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -197,153 +344,6 @@
 试看春残花渐落，便是红颜老死时；
 一朝春尽红颜老，花落人亡两不知</p>
 </blockquote>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2012-10-12T06:58:36.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  10月 12 2012
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/Linux/">Linux</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/jboss-web-installing-jboss-web/" itemprop="url">
-            Installing JBoss Web</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <h2 id="installation-on-linux-and-unix-based-systems">Installation on Linux and Unix based systems</h2>
-<h1 id="downloading-jboss-web">Downloading JBoss Web</h1>
-<p>JBoss Web is distributed as a standalone webserver. The distribution can be downloaded directly from the <a href="http://www.jboss.org/jbossweb/downloads/jboss-web.html" target="_blank">JBossWeb downloads page</a>. JBoss Web is not pure Java. It contains native code, compiled and optimized for each operating operating system. Download the package appropriate for your platform, paying particular attention to whether or not you are running on the 64-bit system.</p>
-<p>Uncompress the distribution wherever you would like JBoss Web installed.</p>
-<p>Then download the native part from the <a href="http://www.jboss.org/jbossweb/downloads/jboss-native-2-0-8.html" target="_blank">JBossNative downloads page</a>. And uncompress it in the JBossWeb direction (named like jboss-web-2.1.0.GA/). The files will be installed in the bin subdirectory.</p>
-<h1 id="adjusting-setenv-sh">Adjusting setenv.sh</h1>
-<p>On some system you may have to do an extra step. Edit/Create the $CATALINA_HOME/bin/setenv.sh (CATALINA_HOME should be something like jbossweb-1.0.0.GA) add the LD_LIBRARY_PATH variable and modify/add:</p>
-<p><em>LD_LIBRARY_PATH=LD_LIBRARY_PATH:$CATALINA_HOME/bin/native
-export LD_LIBRARY_PATH</em></p>
-<p>Note that since JBoss Native 2.0.4 the location of the files has changed and they are located in something like: bin/META-INF/lib/&lt;os.name/&amp;gtlt;os.arch /&gt; For example:
-<strong>bin/META-INF/lib/linux2/x64/libtcnative-1.so</strong> so the setenv.sh should be something like the following:</p>
-<p><em>LD_LIBRARY_PATH=LD_LIBRARY_PATH:$CATALINA_HOME/bin/META-INF/lib/linux2/x64/
-export LD_LIBRARY_PATH</em></p>
-<h1 id="runnning-jboss-web">Runnning JBoss Web</h1>
-<p>Before starting, make sure that your JAVA_HOME environment variable is set to your Java install directory. From the bin directory, run the startup.bat or startup.sh script, as is appropriate for your platform. If you run this from a shell, you will see the JBoss Web console log scroll by. If JBoss Web started correctly, the last few lines of output should contain something like the following:</p>
-<p><strong>Feb 15, 2008 10:45:10 AM org.apache.coyote.http11.Http11AprProtocol start INFO: Starting Coyote HTTP/1.1 on http-8080
-Feb 15, 2008 10:45:10 AM org.apache.coyote.ajp.AjpAprProtocol start INFO: Starting Coyote AJP/1.3 on ajp-8009
-Feb 15, 2008 10:45:10 AM org.apache.catalina.startup.Catalina start INFO: Server startup in 888 ms</strong></p>
-<p>The last line is the message JBoss Web sends when all services are up and running, letting you know that everything is good. However, the two lines before it are important for JBoss Web. They tell you that JBoss Web is listening on two ports, 8080 and 8009. More importantly, you can see from the output that JBoss Web is using the APR(Apache portable runtime) libraries. This means that you are using the optimized native libraries. Without the APR libraries, you would see output more like the following, with no reference to the APR code.</p>
-<p><strong>INFO: Starting Servlet Engine: JBoss Web/2.1.0.0
-Feb 15, 2008 9:31:10 AM org.apache.coyote.http11.Http11Protocol start INFO: Starting Coyote HTTP/1.1 on http-8080
-Feb 15, 2008 9:31:10 AM org.apache.coyote.ajp.AjpProtocol start INFO: Starting Coyote AJP/1.3 on ajp-8009
-Feb 15, 2008 9:31:10 AM org.apache.catalina.startup.Catalina start INFO: Server startup in 1192 ms</strong></p>
-<p>In worse cases, like using the wrong version of the libraries for your platform, JBoss Web may completely fail to start. If there is an error, check the console log (the output in your terminal window) or the server log in logs/catalina.out for more information about the problem.</p>
-<p>Setting trace in the AprLifecycleListener may help to find what goes wrong. To do this add in conf/logging.properties the following:<strong>org.apache.catalina.core.AprLifecycleListener.level=FINE</strong></p>
-<p>To access your JBoss Web instance, go to <a href="http://localhost:8080/" target="_blank"><a href="http://localhost:8080/">http://localhost:8080/</a></a> in your web browser. If everything went well, you will see the JBoss Web start welcome screen. Congratulations, your JBoss Web instance is ready to go.</p>
-<h1 id="deploying-web-applications">Deploying Web Applications</h1>
-<p>Developing web applications on JBoss Web is easy. To deploy a web application, copy the WAR file to the webapps directory. After a few seconds, JBoss Web will deploy the web application automatically. The following output shows the log messages after deploying an application named myapp.war.</p>
-<p><strong>Feb 15, 2008 10:56:11 AM org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive myapp.war</strong></p>
-<p>The ctxPath value is /myapp, which means the application would immediately be accessible at <a href="http://localhost:8080/myapp" target="_blank">http://localhost:8080/myapp</a>.</p>
-<p>Changes to the application can be made by copying a newer version of the WAR file into the deploy directory. If you need to remove an application, remove the WAR file from the deploy directory. JBoss Web will undeploy the application, noting the fact in the log.</p>
-<p><strong>Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig checkResources INFO: Undeploying context [/myapp]
-Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive myapp.war</strong></p>
-<h1 id="more-information">More Information</h1>
-<p>We&#39;ve only shown the bare minimum to get you going with JBoss Web. Further Configuration of JBoss Web is discussed in the rest of the JBoss Web documentation.</p>
-<p><a href="http://www.jboss.org/jbossweb/install.html" target="_blank"><a href="http://www.jboss.org/jbossweb/install.html">http://www.jboss.org/jbossweb/install.html</a></a></p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2012-09-25T06:01:35.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  9月 25 2012
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/Linux/">Linux</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/设置core-dump文件/" itemprop="url">
-            设置core dump文件</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>linux可以在程序出现段错误后将进程的内存空间保存在一个core格式的文件中，开发人员可用gdb读取这个文件，以了解程序挂掉时的进程空间状态</p>
-<p>linux默认配置生成core文件大小是0，也就是不生成。ulimit命令可以设置core的大小</p>
-<p>ulimit -c  1024 //core大小为1024字节</p>
-<p>ulimit -c unlimited //大小无限</p>
-<p>由于linux默认是不生成core文件，在命令行这样打了之后，只对本身的终端有效，也就是只能在该终端运行的程序挂掉了才生成core</p>
-<hr>
-<p>如果要系统启动就启动这个功能，运行下面的命令</p>
-<p>echo &quot;ulimit -S -c unlimited &gt; /dev/null 2&gt;&amp;1&quot;&gt;&gt;/etc/profile</p>
-<p>sysctl -p
-如果要统一设定core的路径和文件名格式，可在/etc/sysctl.conf</p>
-<p>kernel.core_pattern=/var/core/%h-%e-%t.core</p>
-<p>生成的/var/core/下</p>
-<p>%%　　%字符本身</p>
-<p>%p　　生成core文件的进程号</p>
-<p>%u　　生成core文件的用户id</p>
-<p>%g　　组ID号</p>
-<p>%s　　触发core文件的信号编号，也就是程序收到什么型号死的</p>
-<p>%t　　core文件生成的时刻</p>
-<p>%h　　主机名</p>
-<p>%e　　可执行程序名字</p>
-<p>%c　　core大小上线</p>
 
           
         </div>

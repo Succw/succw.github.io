@@ -4,7 +4,7 @@
   <subtitle><![CDATA[运成功者的谦词，命失败者的借口。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.succw.com/"/>
-  <updated>2014-01-27T05:29:29.198Z</updated>
+  <updated>2014-02-21T03:40:53.437Z</updated>
   <id>http://www.succw.com/</id>
   
   <author>
@@ -15,11 +15,190 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[svn]]></title>
+    <title><![CDATA[KVM虚拟化技术笔记]]></title>
+    <link href="http://www.succw.com/kvm%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.succw.com/kvm虚拟化技术笔记/</id>
+    <published>2014-02-21T03:33:08.000Z</published>
+    <updated>2014-02-21T03:35:16.000Z</updated>
+    <content type="html"><![CDATA[<h5 id="kvm-">KVM虚拟化技术笔记</h5>
+<p>记录《KVM虚拟化技术：实战与原理解析》书中相关知识点。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>taskset
+cpu亲和力设置。
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>查看kvm是否开启内存硬件技术
+cat /sys/<span class="class"><span class="keyword">module</span>/<span class="title">kvm_intel</span>/<span class="title">parameters</span>/<span class="title">ept</span></span>
+cat /sys/<span class="class"><span class="keyword">module</span>/<span class="title">kvm_intel</span>/<span class="title">parameters</span>/<span class="title">vpid</span></span>
+
+modprobe kvm_intel ept=<span class="number">0</span>,vpid=<span class="number">0</span>
+rmmod kvm_intel
+modprobe kvm_inter ept=<span class="number">1</span>,vpid=<span class="number">1</span>
+不要关闭，否则内存访问性能会下降
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>内存HUGEPAGE配置
+getconf PAGESIZE
+cat /proc/meminfo<span class="subst">|</span>grep  Hugepagesize
+mount <span class="attribute">-t</span> hugetlbfs hugetlbfs /dev/hugepages
+sysctl vm<span class="built_in">.</span>nr_hugepages<span class="subst">=</span>num
+
+qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> <span class="attribute">-smp</span> <span class="number">2</span> fedora<span class="built_in">.</span>img <span class="attribute">-mem</span><span class="attribute">-path</span> /dev/hugepages
+
+对于内存密集性内存来说，使用hugepage会带来性能提升。
+hugepage缺点，内存不能被swap out，也不能使用ballooning。
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> fedora<span class="built_in">.</span>img <span class="attribute">-enable</span><span class="attribute">-kvm</span> <span class="attribute">-vnc</span> :<span class="number">1</span>,password <span class="attribute">-monitor</span> stdio
+修改vnc密码
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>vncviewer <span class="attribute">-listen</span> :<span class="number">2</span>
+qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> fedora<span class="built_in">.</span>img <span class="attribute">-enable</span><span class="attribute">-kvm</span> <span class="attribute">-vnc</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.2</span>:<span class="number">5500</span>,reverse
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>vnc鼠标偏移问题
+<span class="attribute">-usb</span> <span class="attribute">-usbdevice</span> tablet
+<span class="literal">or</span>
+<span class="attribute">-device</span> piix3<span class="attribute">-usb</span><span class="attribute">-uhci</span> <span class="attribute">-device</span> usb<span class="attribute">-tablet</span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>Redhat文档介绍，单纯使用virtio_net驱动得到的性能依然不佳，可以检查宿主机系统中对GSO和TSO特性的设置，关闭GSO和TSO可以使性能更加优化
+ethtool <span class="attribute">-K</span> em1 gso off
+ethtool <span class="attribute">-K</span> em1 tso off
+ethtool <span class="attribute">-k</span> em1
+</pre></td></tr></table></figure>
+
+<p>vhost_net后端处理程序（内核空间）</p>
+<p><code>-net tap,[,vnet_hdr=on|off][,vhost=on|off][,vhostfd=h][,vhostforce=on|off]</code></p>
+<p>查看硬盘UUID</p>
+<p><code>blkid /dev/vda1</code></p>
+<p>or</p>
+<p><code>tune2fs -l /dev/vda1</code></p>
+<p>在修改磁盘驱动时，可能会导致swap失效。</p>
+<p>kvm-clock : <code>-cpu host</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>IOMMU,如果内核默认没有打开。
+在kernel行，inter_iommu=<span class="command"><span class="keyword">on</span></span>
+</pre></td></tr></table></figure>
+
+
+
+<h6 id="-cgroup-">通过cgroup控制客户机的资源使用</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>yum install libcgroup*
+mkdir -p /cgroup/blkio
+mount -t cgroup -o blkio blkio /cgroup/blkio
+mkdir /cgroup/blkio/high_prio
+mkdir /cgroup/blkio/low_prio
+
+mount -t cgroup -o cpu,cpuset,memorycpu_mem /cgroup/cpu_mem
+
+echo <span class="variable">$pid</span> &gt;&gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/high_prio/tasks</span>
+echo <span class="variable">$pid</span> &gt;&gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/low_prio/tasks</span>
+
+echo <span class="number">1000</span> &gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/high_prio/blkio</span>.weight
+echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/low_prio/blkio</span>.weight
+</pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="kvm" scheme="http://www.succw.com/tags/kvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[libvirt编译安装]]></title>
+    <link href="http://www.succw.com/libvirt%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"/>
+    <id>http://www.succw.com/libvirt编译安装/</id>
+    <published>2014-02-21T03:29:52.000Z</published>
+    <updated>2014-02-21T03:35:38.000Z</updated>
+    <content type="html"><![CDATA[<h5 id="-libvirt">编译安装libvirt</h5>
+<p>具体操作见官方文档：</p>
+<p><strong>安装环境Fedora18 </strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>wget http://libvirt<span class="preprocessor">.org</span>/sources/libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+tar xvf libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+cd libvirt-<span class="number">1.2</span><span class="number">.1</span>
+./autogen<span class="preprocessor">.sh</span>
+make
+make install
+</pre></td></tr></table></figure>
+
+<p>记录下我编译时所需安装包。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>yum install yajl<span class="attribute">-deve</span> autoconf automake libtool xz<span class="attribute">-devel</span> libxml2<span class="attribute">-devel</span> systemd<span class="attribute">-devel</span> libsepol<span class="attribute">-devel</span> libselinux<span class="attribute">-devel</span> device<span class="attribute">-mapper</span><span class="attribute">-devel</span> libpciaccess<span class="attribute">-devel</span> libnl<span class="attribute">-devel</span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>[root<span class="variable">@localhost</span> ~]<span class="comment"># libvirtd --version</span>
+libvirtd (libvirt) <span class="number">1.2</span>.<span class="number">1</span>
+</pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="kvm" scheme="http://www.succw.com/tags/kvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ubuntu下安装subversion客户端]]></title>
     <link href="http://www.succw.com/svn/"/>
     <id>http://www.succw.com/svn/</id>
     <published>2014-01-26T11:18:19.000Z</published>
-    <updated>2014-01-27T03:15:09.000Z</updated>
+    <updated>2014-02-21T03:40:41.000Z</updated>
     <content type="html"><![CDATA[<h5 id="ubuntu-subversion-">ubuntu下安装subversion客户端:</h5>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 </pre></td><td class="code"><pre>sudo apt<span class="attribute">-get</span> install subversion subversion<span class="attribute">-tools</span>
@@ -28,19 +207,13 @@
 <p>详细请看<a href="http://www.subversion.org.cn/svnbook/1.1/index.html" target="_blank"> <a href="http://www.subversion.org.cn/svnbook/1.1/index.html">http://www.subversion.org.cn/svnbook/1.1/index.html</a></a> svn子命令</p>
 <p>1、<strong>检出</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
 </pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  checkout  <span class="keyword">http</span>://路径(目录或文件的全路径)　[本地目录全路径] <span class="comment">--username　用户名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  checkout  svn:<span class="comment">//路径(目录或文件的全路径)　[本地目录全路径]  --username　用户名</span>
+<span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
+<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
+<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
 </pre></td></tr></table></figure>
 
 <p><em>注：如果不带--password 参数传输密码的话，会提示输入密码，建议不要用明文的--password 选项
@@ -51,36 +224,26 @@
 2
 3
 4
-5
-6
-7
 </pre></td><td class="code"><pre>svn co svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-
 svn co <span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
-
 svn checkout svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-
 svn checkouthttp://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
 </pre></td></tr></table></figure>
 
 <p><strong>2、导出(导出一个干净的不带.svn文件夹的目录树)</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  http:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
+svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
+svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
-</pre></td></tr></table></figure>
-
-<p>*注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的</p>
-<p>版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL</p>
-<p>的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目</p>
-<p>录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没</p>
-<p>有与之相关的信息记录)的文件不会拷贝。*</p>
+<p><em>注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的
+版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL
+的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目
+录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没
+有与之相关的信息记录)的文件不会拷贝。</em></p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
@@ -109,17 +272,12 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 
 <p><strong>4、提交</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
+2
+</pre></td><td class="code"><pre>svn　commit　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名
+svn　ci　-m　“提交备注信息文本“　</span><span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn　ci　<span class="attribute">-m</span>　“提交备注信息文本“　<span class="preprocessor">[</span><span class="attribute">-N</span><span class="preprocessor">]</span><span class="markup">　</span><span class="preprocessor">[</span><span class="subst">--</span>no<span class="attribute">-unlock</span><span class="preprocessor">]</span><span class="markup">　文件名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>必须带上<span class="attribute">-m</span>参数，参数可以为空，但是必须写上<span class="attribute">-m</span>
-</pre></td></tr></table></figure>
-
+<p><code>必须带上-m参数，参数可以为空，但是必须写上-m</code></p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
@@ -127,21 +285,11 @@ svn commit -m “添加我的测试用全部php文件“ *<span class="preproces
 4
 5
 6
-7
-8
-9
-10
-11
 </pre></td><td class="code"><pre>svn commit <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-
 svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-
 svn commit <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
-
 svn ci <span class="attribute">-m</span> “提交当前目录下的全部在版本控制下的文件“ <span class="subst">*</span> ＜－ 注意这个<span class="subst">*</span>表示全部文件
-
 svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ test<span class="built_in">.</span>php
-
 svn ci <span class="attribute">-m</span> “提交我的测试用test<span class="built_in">.</span>php“ <span class="attribute">-N</span> <span class="subst">--</span>no<span class="attribute">-unlock</span> test<span class="built_in">.</span>php ＜－ 保持锁就用–no<span class="attribute">-unlock</span>开关
 </pre></td></tr></table></figure>
 
@@ -158,12 +306,8 @@ svn　<span class="keyword">update</span>　文件名</span>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-4
-5
 </pre></td><td class="code"><pre>svn <span class="operator"><span class="keyword">update</span> ＜－ 后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本
-
 svn <span class="keyword">update</span> -r <span class="number">200</span> test.cpp ＜－ 将版本库中的文件 test.cpp 还原到修正版本（revision）<span class="number">200</span>
-
 svn <span class="keyword">update</span> test.php ＜－ 更新与版本库同步。</span>
 </pre></td></tr></table></figure>
 
@@ -188,14 +332,10 @@ svn　ci　-m　“删除备注信息文本”
 3
 4
 5
-6
-7
 </pre></td><td class="code"><pre>svn delete svn://<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>/testapp/test<span class="preprocessor">.php</span> -m “删除测试文件test<span class="preprocessor">.php</span>”
 
 推荐如下操作：
-
 svn delete test<span class="preprocessor">.php</span> 
-
 svn ci -m “删除测试文件test<span class="preprocessor">.php</span>”
 </pre></td></tr></table></figure>
 
@@ -226,13 +366,13 @@ svn diff -r 200:201 test.php＜－ 对 修正版本号200 和 修正版本号201
 <p><strong>9、查看文件或者目录状态</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>svn <span class="keyword">st</span> 目录路径/名
-svn status 目录路径/名＜－ 目录下的文件和子目录的状态，正常状态不显示
-</pre></td></tr></table></figure>
+3
+4
+5
+</pre></td><td class="code"><pre>svn st 目录路径<span class="subst">/</span>名
+svn status 目录路径<span class="subst">/</span>名＜－ 目录下的文件和子目录的状态，正常状态不显示
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
+svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
 svn status <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名＜－ 显示文件和子目录状态
 </pre></td></tr></table></figure>
 
@@ -280,12 +420,8 @@ svn　ls　svn:<span class="comment">//路径(目录或文件的全路径)</span
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-4
-5
 </pre></td><td class="code"><pre>例子：
-
 svn list <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>
-
 svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span> ＜－ 显示<span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</span>目录下的所有属于版本库的文件和目录
 </pre></td></tr></table></figure>
 
@@ -296,10 +432,7 @@ svn ls <span class="symbol">svn:</span>/<span class="regexp">/192.168.0.3/test</
 svn　<span class="keyword">mkdir</span>　-<span class="keyword">m</span>　<span class="string">"新增目录备注文本"</span>　http:<span class="regexp">//</span>目录全路径
 </pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>例子：
-</pre></td></tr></table></figure>
-
+<p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 </pre></td><td class="code"><pre>svn <span class="keyword">mkdir</span> newdir
 </pre></td></tr></table></figure>
@@ -328,18 +461,12 @@ svn <span class="operator"><span class="keyword">update</span></span>
 13
 14
 15
-16
-17
-18
 </pre></td><td class="code"><pre>注：如果手工在checkout出来的目录里创建了一个新文件夹newsubdir，再用svn mkdir newsubdir命
 令后
 
 ，SVN会提示：
-
 svn: 尝试用 “svn <span class="built_in">add</span>”或 “svn <span class="built_in">add</span> <span class="comment">--non-recursive”代替？</span>
-
 svn: 无法创建目录“hello”: 文件已经存在此时，用如下命令解决：
-
 svn <span class="built_in">add</span> <span class="comment">--non-recursive newsubdir</span>
 
 在进入这个newsubdir文件夹，用ls -<span class="operator">a</span>查看它下面的全部目录与文件，会发现多了：.svn目录再用 svn
@@ -353,45 +480,35 @@ svn: File already exists: filesystem <span class="string">'/data/svnroot/test/db
 
 <p><strong>15、恢复本地修改 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
-</pre></td></tr></table></figure>
-
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
 4
 5
-6
-7
-</pre></td><td class="code"><pre>
+</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
 <span class="comment">注意:</span> <span class="comment">本子命令不会存取网络，并且会解除冲突的状况。但是它不会恢复被删除的目录。</span>
-
 <span class="comment">例子：</span>
-
 <span class="comment">svn</span> <span class="comment">revert</span> <span class="comment">foo</span><span class="string">.</span><span class="comment">c</span> <span class="comment">＜－</span> <span class="comment">丢弃对一个文件的修改</span>
 <span class="comment">svn</span> <span class="comment">revert</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span> <span class="string">.</span> <span class="comment">＜－恢复一整个目录的文件，</span><span class="string">.</span> <span class="comment">为当前目录</span>
 </pre></td></tr></table></figure>
 
 <p><strong>16、把工作拷贝更新到别的URL </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn　<span class="keyword">switch</span>　http:<span class="comment">//目录全路径　本地目录全路径</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
+例子：
+svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
 </pre></td></tr></table></figure>
 
 <p><strong>17、解决冲突 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="tag">svn</span>　<span class="tag">resolved</span>　<span class="attr_selector">[本地目录全路径]</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
-</pre></td><td class="code"><pre>$ svn <span class="operator"><span class="keyword">update</span>
+4
+5
+</pre></td><td class="code"><pre>svn　resolved　[本地目录全路径]
+例子：
+$ svn <span class="operator"><span class="keyword">update</span>
 C foo.c
 Updated <span class="keyword">to</span> revision <span class="number">31.</span></span>
 </pre></td></tr></table></figure>
@@ -409,16 +526,15 @@ foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>30
 foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>31
 </pre></td></tr></table></figure>
 
-<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。</p>
-<p>你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
+<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。
+你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
 <p><strong>18、不checkout而查看输出特定文件或URL的内容 </strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
 </pre></td><td class="code"><pre>svn　cat　http:<span class="comment">//文件全路径</span>
-</pre></td></tr></table></figure>
-
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
+例子：
+svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
 </pre></td></tr></table></figure>
 
 ]]></content>
@@ -1487,101 +1603,6 @@ location / {</p>
       <category term="音乐" scheme="http://www.succw.com/tags/%E9%9F%B3%E4%B9%90/"/>
     
       <category term="Life" scheme="http://www.succw.com/categories/Life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[葬花吟]]></title>
-    <link href="http://www.succw.com/%E8%91%AC%E8%8A%B1%E5%90%9F/"/>
-    <id>http://www.succw.com/葬花吟/</id>
-    <published>2012-11-20T15:17:53.000Z</published>
-    <updated>2014-01-15T03:18:43.000Z</updated>
-    <content type="html"><![CDATA[<p><object width="257" height="33" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="http://www.xiami.com/widget/6255775_1770579238/singlePlayer.swf" /><param name="wmode" value="transparent" /><embed width="257" height="33" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/6255775_1770579238/singlePlayer.swf" wmode="transparent" /></object></p>
-<blockquote>
-<p>花谢花飞花满天，红消香断有谁怜？
-游丝软系飘春榭，落絮轻沾扑绣帘。
-闺中女儿惜春暮，愁绪满怀无释处、
-手把花锄出绣闺，忍踏落花来复去。
-柳丝榆荚自芳菲，不管桃飘与李飞；
-桃李明年能再发，明年闺中知有谁？
-三月香巢已垒成，梁间燕子太无情！
-明年花发虽可啄，却不道人去梁空巢也倾。
-一年三百六十日，风刀霜剑严相逼；
-明媚鲜妍能几时，一朝漂泊难寻觅。
-花开易见落难寻，阶前愁杀葬花人，
-独倚花锄泪暗洒，洒上空枝见血痕。
-杜鹃无语正黄昏，荷（hè）锄归去掩重门；
-青灯照壁人初睡，冷雨敲窗被未温。
-怪奴底事倍伤神？半为怜春半恼春。
-怜春忽至恼忽去，至又无言去不闻。
-昨宵庭外悲歌发，知是花魂与鸟魂？
-花魂鸟魂总难留，鸟自无言花自羞；
-愿奴胁下生双翼，随花飞到天尽头。
-天尽头，何处有香丘？ 黛玉葬花
-未若锦囊收艳骨，一抔净土掩风流。
-质本洁来还洁去，强于污淖陷渠沟。
-尔今死去侬收葬，未卜侬身何日丧？
-侬今葬花人笑痴，他年葬侬知是谁？
-试看春残花渐落，便是红颜老死时；
-一朝春尽红颜老，花落人亡两不知</p>
-</blockquote>
-]]></content>
-    
-    
-      <category term="音乐" scheme="http://www.succw.com/tags/%E9%9F%B3%E4%B9%90/"/>
-    
-      <category term="Life" scheme="http://www.succw.com/categories/Life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Installing JBoss Web]]></title>
-    <link href="http://www.succw.com/jboss-web-installing-jboss-web/"/>
-    <id>http://www.succw.com/jboss-web-installing-jboss-web/</id>
-    <published>2012-10-12T06:58:36.000Z</published>
-    <updated>2014-01-15T03:23:08.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="installation-on-linux-and-unix-based-systems">Installation on Linux and Unix based systems</h2>
-<h1 id="downloading-jboss-web">Downloading JBoss Web</h1>
-<p>JBoss Web is distributed as a standalone webserver. The distribution can be downloaded directly from the <a href="http://www.jboss.org/jbossweb/downloads/jboss-web.html" target="_blank">JBossWeb downloads page</a>. JBoss Web is not pure Java. It contains native code, compiled and optimized for each operating operating system. Download the package appropriate for your platform, paying particular attention to whether or not you are running on the 64-bit system.</p>
-<p>Uncompress the distribution wherever you would like JBoss Web installed.</p>
-<p>Then download the native part from the <a href="http://www.jboss.org/jbossweb/downloads/jboss-native-2-0-8.html" target="_blank">JBossNative downloads page</a>. And uncompress it in the JBossWeb direction (named like jboss-web-2.1.0.GA/). The files will be installed in the bin subdirectory.</p>
-<h1 id="adjusting-setenv-sh">Adjusting setenv.sh</h1>
-<p>On some system you may have to do an extra step. Edit/Create the $CATALINA_HOME/bin/setenv.sh (CATALINA_HOME should be something like jbossweb-1.0.0.GA) add the LD_LIBRARY_PATH variable and modify/add:</p>
-<p><em>LD_LIBRARY_PATH=LD_LIBRARY_PATH:$CATALINA_HOME/bin/native
-export LD_LIBRARY_PATH</em></p>
-<p>Note that since JBoss Native 2.0.4 the location of the files has changed and they are located in something like: bin/META-INF/lib/&lt;os.name/&amp;gtlt;os.arch /&gt; For example:
-<strong>bin/META-INF/lib/linux2/x64/libtcnative-1.so</strong> so the setenv.sh should be something like the following:</p>
-<p><em>LD_LIBRARY_PATH=LD_LIBRARY_PATH:$CATALINA_HOME/bin/META-INF/lib/linux2/x64/
-export LD_LIBRARY_PATH</em></p>
-<h1 id="runnning-jboss-web">Runnning JBoss Web</h1>
-<p>Before starting, make sure that your JAVA_HOME environment variable is set to your Java install directory. From the bin directory, run the startup.bat or startup.sh script, as is appropriate for your platform. If you run this from a shell, you will see the JBoss Web console log scroll by. If JBoss Web started correctly, the last few lines of output should contain something like the following:</p>
-<p><strong>Feb 15, 2008 10:45:10 AM org.apache.coyote.http11.Http11AprProtocol start INFO: Starting Coyote HTTP/1.1 on http-8080
-Feb 15, 2008 10:45:10 AM org.apache.coyote.ajp.AjpAprProtocol start INFO: Starting Coyote AJP/1.3 on ajp-8009
-Feb 15, 2008 10:45:10 AM org.apache.catalina.startup.Catalina start INFO: Server startup in 888 ms</strong></p>
-<p>The last line is the message JBoss Web sends when all services are up and running, letting you know that everything is good. However, the two lines before it are important for JBoss Web. They tell you that JBoss Web is listening on two ports, 8080 and 8009. More importantly, you can see from the output that JBoss Web is using the APR(Apache portable runtime) libraries. This means that you are using the optimized native libraries. Without the APR libraries, you would see output more like the following, with no reference to the APR code.</p>
-<p><strong>INFO: Starting Servlet Engine: JBoss Web/2.1.0.0
-Feb 15, 2008 9:31:10 AM org.apache.coyote.http11.Http11Protocol start INFO: Starting Coyote HTTP/1.1 on http-8080
-Feb 15, 2008 9:31:10 AM org.apache.coyote.ajp.AjpProtocol start INFO: Starting Coyote AJP/1.3 on ajp-8009
-Feb 15, 2008 9:31:10 AM org.apache.catalina.startup.Catalina start INFO: Server startup in 1192 ms</strong></p>
-<p>In worse cases, like using the wrong version of the libraries for your platform, JBoss Web may completely fail to start. If there is an error, check the console log (the output in your terminal window) or the server log in logs/catalina.out for more information about the problem.</p>
-<p>Setting trace in the AprLifecycleListener may help to find what goes wrong. To do this add in conf/logging.properties the following:<strong>org.apache.catalina.core.AprLifecycleListener.level=FINE</strong></p>
-<p>To access your JBoss Web instance, go to <a href="http://localhost:8080/" target="_blank"><a href="http://localhost:8080/">http://localhost:8080/</a></a> in your web browser. If everything went well, you will see the JBoss Web start welcome screen. Congratulations, your JBoss Web instance is ready to go.</p>
-<h1 id="deploying-web-applications">Deploying Web Applications</h1>
-<p>Developing web applications on JBoss Web is easy. To deploy a web application, copy the WAR file to the webapps directory. After a few seconds, JBoss Web will deploy the web application automatically. The following output shows the log messages after deploying an application named myapp.war.</p>
-<p><strong>Feb 15, 2008 10:56:11 AM org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive myapp.war</strong></p>
-<p>The ctxPath value is /myapp, which means the application would immediately be accessible at <a href="http://localhost:8080/myapp" target="_blank">http://localhost:8080/myapp</a>.</p>
-<p>Changes to the application can be made by copying a newer version of the WAR file into the deploy directory. If you need to remove an application, remove the WAR file from the deploy directory. JBoss Web will undeploy the application, noting the fact in the log.</p>
-<p><strong>Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig checkResources INFO: Undeploying context [/myapp]
-Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig deployWAR INFO: Deploying web application archive myapp.war</strong></p>
-<h1 id="more-information">More Information</h1>
-<p>We&#39;ve only shown the bare minimum to get you going with JBoss Web. Further Configuration of JBoss Web is discussed in the rest of the JBoss Web documentation.</p>
-<p><a href="http://www.jboss.org/jbossweb/install.html" target="_blank"><a href="http://www.jboss.org/jbossweb/install.html">http://www.jboss.org/jbossweb/install.html</a></a></p>
-]]></content>
-    
-    
-      <category term="Linux" scheme="http://www.succw.com/tags/Linux/"/>
-    
-      <category term="运维" scheme="http://www.succw.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   

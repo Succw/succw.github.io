@@ -114,6 +114,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
     <li><a href="/tags/svn/">svn</a><small>1</small></li>
   
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
@@ -132,6 +134,445 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2014-01-23T11:15:18.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  1月 23 2014
+</time>
+
+
+
+
+
+</div>
+
+          
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/shell脚本编程大全笔记/" itemprop="url">
+            SHELL脚本编程大全笔记</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <h6 id="shell-">SHELL脚本编程大全笔记</h6>
+<hr>
+<ul>
+<li>A=$[  $1 * $2 ] 直接运算。</li>
+<li>total=$[ ${10} * ${11} ]</li>
+</ul>
+<p>各种i++</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="comment">$((i=i</span><span class="literal">+</span><span class="comment">1))</span>
+<span class="comment">$((i</span><span class="literal">+</span><span class="literal">+</span><span class="comment">))</span>
+<span class="comment">$</span><span class="title">[</span> <span class="comment">i</span><span class="literal">+</span><span class="literal">+</span> <span class="title">]</span>
+<span class="comment">let</span> <span class="comment">"i</span><span class="literal">+</span><span class="literal">+</span><span class="comment">"</span>
+<span class="comment">((i</span><span class="literal">+</span><span class="literal">+</span><span class="comment">))</span>
+</pre></td></tr></table></figure>
+
+<p><strong><strong>使用双尖括号</strong></strong></p>
+<p><strong>(( expression  ))</strong></p>
+<p>比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
+a=<span class="number">10</span>
+<span class="keyword">if</span> (( <span class="variable">$a</span> ** <span class="number">2</span> &gt;<span class="number">90</span>  )) ;<span class="keyword">then</span>
+        <span class="built_in">echo</span> <span class="string">"<span class="variable">$a</span>"</span>
+        (( b = <span class="variable">$a</span> ** <span class="number">2</span> ))
+        <span class="built_in">echo</span> <span class="variable">$b</span>
+<span class="keyword">fi</span>
+</pre></td></tr></table></figure>
+
+<p>还有其他表达式：</p>
+<h2 id="-http-localhost-8080-png-"><img src="http://localhost:8080/双括号.png" alt=""></h2>
+<p><em>使用双方括号</em></p>
+<p><strong>[[ expression ]]</strong></p>
+<p>模式匹配，你可以自定义正则表达式。</p>
+<h6 id="for-c-">for循环语句 { 类C语言 }</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">for</span>((<span class="operator">a</span>=<span class="number">1</span>;<span class="operator">a</span>&lt;<span class="number">5</span>;<span class="operator">a</span>++)){
+	echo <span class="string">"$a"</span>
+}
+</pre></td></tr></table></figure>
+
+<p><em>or</em></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>Shell 格式：
+<span class="keyword">for</span>((a=<span class="number">1</span>;a&lt;<span class="number">5</span>;a++))
+<span class="keyword">do</span>
+	<span class="built_in">echo</span> <span class="string">"<span class="variable">$a</span>"</span>
+<span class="keyword">done</span>
+</pre></td></tr></table></figure>
+
+<hr>
+<p><strong>重定向</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>for(()){
+
+} &gt; /output.txt
+
+<span class="code">-----
+or
+-----</span>
+for(())
+do
+done | sort
+</pre></td></tr></table></figure>
+
+<p>${!#} 返回命令行的脚本名</p>
+<p>$*    保存单个单词</p>
+<p>$@  保存，类似数组</p>
+<hr>
+<p><strong>getopt</strong></p>
+<p>处理命令行选项和参数</p>
+<figure class="highlight `"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
+`<span class="keyword">set</span> --   getopt -q ab:c <span class="string">"<span class="variable">$@</span>"</span>` `
+<span class="keyword">while</span> [ -n <span class="variable">$1</span> ]
+<span class="keyword">do</span>
+	<span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span>
+    	<span class="operator">-a</span>) <span class="built_in">echo</span> <span class="string">"Found the -a option"</span> ;;
+        -b) param=<span class="string">"<span class="variable">$2</span>"</span>
+        	  <span class="built_in">echo</span> <span class="string">"Found the -b option.with parameter value <span class="variable">$param</span>"</span>
+              shift;;
+        -c)
+        	<span class="built_in">echo</span> <span class="string">"Found the -c option"</span> ;;
+        --) shift
+        	<span class="keyword">break</span>;;
+         *) <span class="built_in">echo</span> <span class="string">"<span class="variable">$1</span> is not an option"</span> ;;
+shift
+<span class="keyword">done</span>
+</pre></td></tr></table></figure>
+
+<h5 id="-getopts-"><strong>getopts</strong></h5>
+<p><del>page284</del></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
+<span class="comment">#</span>
+<span class="keyword">while</span> <span class="built_in">getopts</span> <span class="string">":ab:cd"</span> opt 
+<span class="keyword">do</span>
+<span class="keyword">case</span> <span class="string">"<span class="variable">$opt</span>"</span> <span class="keyword">in</span>
+        a) <span class="built_in">echo</span> <span class="string">"Option \"a\""</span>;;
+        b) <span class="built_in">echo</span> <span class="string">"Option \"b\" "</span><span class="variable">$OPTARG</span><span class="string">""</span>;;
+        c) <span class="built_in">echo</span> <span class="string">"Option \"c\""</span>;;
+        d) <span class="built_in">echo</span> <span class="string">"Option \"d\""</span>;;
+        <span class="keyword">esac</span>
+<span class="keyword">done</span>
+<span class="keyword">exit</span> <span class="number">0</span>
+```language
+</pre></td></tr></table></figure>
+
+<hr>
+<p><strong>永久重定向</strong></p>
+<p>--在脚本中添加下行</p>
+<p><code>exec 1&gt;outfile</code></p>
+<p>所有正常输出将重定向至outfile中。</p>
+<p><code>exec 2&gt;outfile</code></p>
+<p>错误输出</p>
+<h6 id="-shell-9-">在Shell中最多可以有9个打开的文件描述符</h6>
+<p>创建自定义文件描述符（3-8）</p>
+<p>比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
+<span class="keyword">exec</span> <span class="number">3</span>&gt;outfile3.out
+<span class="comment">#exec 3&gt;&gt;outfile3.out</span>
+<span class="comment">#顾名思义是追加</span>
+<span class="built_in">echo</span> <span class="string">"输出正常"</span> &gt;&<span class="number">3</span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash
+</span>
+<span class="keyword">exec</span> <span class="number">6</span>&lt;&<span class="number">0</span>
+<span class="keyword">exec</span> <span class="number">0</span>&lt; testfile
+
+count=<span class="number">1</span>
+<span class="keyword">while</span> <span class="built_in">read</span> line
+<span class="keyword">do</span>
+        <span class="built_in">echo</span> <span class="string">"Line #<span class="variable">$count</span>: <span class="variable">$line</span>"</span>
+        ((count++))
+<span class="keyword">done</span>
+
+<span class="keyword">exec</span> <span class="number">0</span>&lt;&<span class="number">6</span>
+
+<span class="built_in">read</span> <span class="operator">-s</span> -p  <span class="string">"Are you done now?"</span> answer
+<span class="keyword">case</span> <span class="variable">$answer</span> <span class="keyword">in</span>
+        y|y)
+                <span class="built_in">echo</span> <span class="string">"Goodbye"</span>
+        ;;
+        N|n)
+                <span class="built_in">echo</span> <span class="string">"sorry. this is the end."</span>
+        ;;
+        *)
+                <span class="built_in">echo</span> <span class="string">"Doesn't Matter"</span>
+        ;;
+<span class="keyword">esac</span>
+</pre></td></tr></table></figure>
+
+<p>关闭文件描述符</p>
+<p><code>exec 3&gt;&amp;-</code></p>
+<p><code>mktemp -t test.XXXXXX</code></p>
+<p>在/tmp目录下创建临时文件</p>
+<p><code>mktemp -d dir.XXXXXX</code></p>
+<hr>
+<p>捕捉信号：</p>
+<p>trap command SIGINT SIGTERM</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>1) SIGHUP	2) SIGINT	3) SIGQUIT	4) SIGILL	5) SIGTRAP
+6) SIGABRT	7) SIGBUS	8) SIGFPE	9) SIGKILL	10) SIGUSR1
+11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM
+16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP
+21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ
+26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR
+31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
+38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
+43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
+48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
+53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
+58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
+63) SIGRTMAX-1	64) SIGRTMAX
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="shebang">#!/bin/bash</span>
+trap <span class="string">"echo 'ByeBye'"</span> EXIT
+
+<span class="keyword">for</span>((a=<span class="number">1</span>;a&lt;<span class="number">10</span>;a++)){
+	<span class="built_in">echo</span> <span class="string">"Line <span class="variable">$a</span>"</span>
+    sleep <span class="number">1</span>
+}
+trap - EXIT
+<span class="built_in">echo</span> <span class="string">"移除退出信号"</span>
+</pre></td></tr></table></figure>
+
+<p><strong>crontab</strong></p>
+<p>每月最后一天</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">if</span> [ `<span class="built_in">date</span> +%d -d tomorrow` = <span class="number">01</span> ]; <span class="keyword">then</span>
+	<span class="command"><span class="keyword">command</span></span>
+fi
+</pre></td></tr></table></figure>
+
+<p><code>00 12 * * * if [ `date +%d -d tomorrow` = 01 ];then : command</code></p>
+
+          
+        </div>
+
+
+</article>
+
+
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2014-01-20T09:25:41.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  1月 20 2014
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/VMware/">VMware</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/vcap510/" itemprop="url">
+            VCAP510</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>VDCA510考试</p>
+<pre><code>未知总是很可怕的，特此记录下来。
+</code></pre><blockquote>
+<p>关于VDCA510考试， 总的来说题目很简答，全部来自<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>。 只是改改题型而已。要求是必须熟练，熟练，因为考试时间有限
+这里记录我考试相关的一些题目相关。</p>
+</blockquote>
+<p>服务方面，</p>
+<blockquote>
+<ol>
+<li>创建用户和组（ESXi和vMA）。创建多个用户和组，对用户赋予shell访问权限。将用户加到相应的组，其二就是角色控制。其中一个赋予普通用户，另一个则赋予管理原权限。</li>
+<li>配置syslog日志服务器，查看相应的文件中是否生成相应的文件。</li>
+<li>FT配置，要求某磁盘能开启FT，网络配置，开启FT  logging。</li>
+<li>应用主机配置文件，对配置文件做修改以达到兼容主机配置。比如配置SNMP。   </li>
+<li>集群方面的题目，要么是让某些虚拟机在重启的时候不启动、要么是不应有DRS规则、要么是确保某个特定的虚拟机都不应有相应的规则等，还有其他，如，存储swapfile配置、接入访问控制等。</li>
+<li>排错题，要求将StorageVM存储中的ISO文件拷贝到NFS中，但NFS却连不上。</li>
+<li>开启Update Manager插件，配置更新计划调度。   </li>
+<li>AutoDeploy有3-5道题目，创建image配置文件，导出ISO文件，基于配置文件的自动部署等 </li>
+<li>基于模板创建VM进行排错。</li>
+<li>根据性能分析，将Chart结果保存到配置中，或对相应的虚拟机进行调整，如资源池。 </li>
+<li>证书相关，将证书拷贝到主机。</li>
+</ol>
+</blockquote>
+<p>安全方面，</p>
+<blockquote>
+<p>配置防火墙，比如将某端口对外开放或者对内的，如3000端口。</p>
+</blockquote>
+<p>存储方面，</p>
+<blockquote>
+<ol>
+<li>添加存储集群，配置存储DRS，将特定存储进行维护，检查配置是否正确。</li>
+<li>当然存储配置文件就不说了，很简单。</li>
+<li>添加SATP、PSA相应的规则，并激活。</li>
+</ol>
+</blockquote>
+<p>脚本方面，</p>
+<blockquote>
+<ol>
+<li>powershell的改编题。要求你对ps1脚本进行排错。记得是查看所有VM光驱状态的脚本。</li>
+<li>在AutoDeploy中有体现。</li>
+</ol>
+</blockquote>
+<p>网络方面，</p>
+<blockquote>
+<ol>
+<li>配置分布式交换机，将特定的标准交换机迁移至DVS中，创建相应的端口组，对端口组做负载均衡相关配置。</li>
+<li>配置NetFlow对特定端口组进行监控。</li>
+<li>配置Pvlan，要求VLAN20中的机器能访问Internet却不能互访。但是VLAN100中的机器不光可以上Internet也可以访问VLAN20</li>
+<li>标准交换机上的配置，为交换机添加上行链路，此交换机专门用来配置FT，然后检查虚拟机开始FT是否正常。</li>
+</ol>
+</blockquote>
+<hr>
+<p>将<a href="http://www.virtuallanger.com/vcap-dca-5/" target="_blank">VCAP-DCA指南</a>的实验完全掌握、熟练之后，VDCA510的考试就一点都不难了。</p>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -179,142 +620,6 @@
 <p><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1015647" target="_blank"><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1015647">http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1015647</a></a></p>
 <p>参考：</p>
 <p><a href="http://techhead.co/fix-vmware-vsphere-client-error-1406-could-not-write-value/" target="_blank"><a href="http://techhead.co/fix-vmware-vsphere-client-error-1406-could-not-write-value/">http://techhead.co/fix-vmware-vsphere-client-error-1406-could-not-write-value/</a></a></p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-08-07T10:25:55.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  8月 7 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/VMware/">VMware</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/removing-unwanted-plug-ins-from-vcenter-server/" itemprop="url">
-            从vCenter Server中删除不必要的插件</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>做完</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>实验后，直接把</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>虚拟机删除掉了，在</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>vCenter Server</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>的插件中显示以下错误：</span></span></span></p>
-<p><span style="color: #333333;">“<span style="font-family: 'DejaVu Serif', serif;"><span>从</span></span><span style="font-family: 'DejaVu Serif', serif;"><span><a href="https://192.168.3.185:6501/vmw/rbd/-extension.xml" target="_blank">https://192.168.3.185:6501/vmw/rbd/-extension.xml</a></span></span><span style="font-family: 'DejaVu Serif', serif;"><span>下载脚本插件时出现了以下错误</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>:</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>由于连接故障，请求失败。</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>(</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>无法连接到远程服务器</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>)”</span></span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>这也导致不能注册新的</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Auto deploy (</span></span></span><span style="color: #222222;">“<span style="font-family: Tahoma, 'Century gothic', Arial, Tahoma, sans-serif;">已经向指定</span><span style="font-family: inherit;"><span style="font-size: medium;">center Server</span></span><span style="font-family: Tahoma, 'Century gothic', Arial, Tahoma, sans-serif;">注册了服务”</span></span><span><span style="font-family: 'DejaVu Serif', serif;">)</span></span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>解决办法如下：</span></span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>1</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、在浏览器中，输入</span></span><span style="font-family: 'DejaVu Serif', serif;"><span><a href="http://vcenter" target="_blank">http://vcenter</a> server name or IP/mob</span></span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>2</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>Content.</span></span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>3</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>ExtensionManager.</span></span></span><span><span style="font-family: 'DejaVu Serif', serif;">会显示</span><span style="font-family: 'DejaVu Serif', serif;">extensionList</span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>extensionList[&quot;com.vmware.rbd&quot;] </span></span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>这是</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>&quot;Auto Deploy&quot;</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>扩展，</span></span></span><span><span style="font-family: 'DejaVu Serif', serif;">可点击查看</span><span style="font-family: 'DejaVu Serif', serif;">description</span></span></p>
-<p>&nbsp;</p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>4</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>、点击</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>UnregisterExtension. </span></span><span style="font-family: 'DejaVu Serif', serif;"><span>会出现一个新窗口</span></span></span></p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>在窗口中输入</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>com.vmware.rbd</span></span></span></p>
-<p>&nbsp;</p>
-<p><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span>其他插件卸载见官方</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>kb</span></span><span style="font-family: 'DejaVu Serif', serif;"><span>：</span></span></span></p>
-<h3 id="-span-style-color-333333-span-style-font-family-dejavu-serif-serif-span-removing-unwanted-plug-ins-from-vcenter-server-1025360-http-kb-vmware-com-selfservice-microsites-search-do-language-en_us-amp-cmd-displaykc-amp-externalid-1025360-span-span-span-"><span style="color: #333333;"><span style="font-family: 'DejaVu Serif', serif;"><span><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1025360" target="_blank">Removing unwanted plug-ins from vCenter Server (1025360)</a></span></span></span></h3>
-<h3 id="-"> </h3>
-<p>&nbsp;</p>
-<p><span style="color: #333333;"> </span></p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-06-14T09:29:58.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  6月 14 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/Linux/">Linux</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/linux下cdrecord刻录光盘/" itemprop="url">
-            linux下cdrecord刻录光盘</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>linux下一般都带有cdrecord软件，可以用来刻录光盘</p>
-<p>cdrecord -scanbus 查看系统所有 CD-R(W) 设备。</p>
-<p>[root@localhost Material]# cdrecord -scanbus
-Cdrecord-Clone 2.01 (cpu-pc-linux-gnu) Copyright (C) 1995-2004 JSchilling
-Note: This version is an unofficial (modified) version with DVD support
-Note: and therefore may have bugs that are not present in the original.
-Note: Please send bug reports or support requests to <a href="http://bugzilla.redhat.com/bugzilla" target="_blank">http://bugzilla.redhat.com/bugzilla</a>
-Note: The author of cdrecord should not be bothered with problems in this version.
-Linux sg driver version: 3.5.27
-Using libscg version &#39;schily-0.8&#39;.
-cdrecord: Warning: using inofficial libscg transport code version (schily - Red Hat-scsi-linux-sg.c-1.83-RH &#39;@(#)scsi-linux-sg.c 1.83 04/05/20 Copyright 1997 J. Schilling&#39;).
-scsibus4:
-4,0,0 400) &#39;TEAC &#39; &#39;DVD-ROM DV-28SW &#39; &#39;R.2A&#39; Removable CD-ROM
-4,1,0 401) <em>
-4,2,0 402) </em>
-4,3,0 403) <em>
-4,4,0 404) </em>
-4,5,0 405) <em>
-4,6,0 406) </em>
-4,7,0 407) *</p>
-<p>刻录iso文件</p>
-<p>cdrecord -v -eject speed=4 dev=4,0,0 backup.iso</p>
-<p>-v verbose</p>
-<p>-eject 刻完自动弹出光盘</p>
-<p>speed=4 dev=4,0,0 :四速刻录到dev=4,0,0上</p>
-<p>cdrecord --dev=4,0,0 --blank=fast   擦写光驱</p>
 
           
         </div>

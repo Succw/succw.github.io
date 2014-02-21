@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>KVM虚拟化技术笔记 | Succw Blog :)</title>
+  <meta name="author" content="獨菰、瑉">
+  
+  <meta name="description" content="运成功者的谦词，命失败者的借口">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="KVM虚拟化技术笔记"/>
+  <meta property="og:site_name" content="Succw Blog :)"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+
+  <link rel="alternate" href="/atom.xml" title="Succw Blog :)" type="application/atom+xml">
+
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/print.css" media="print" type="text/css">
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
+  <script src="/js/scripts.js"></script>
+
+  
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config(
+    {
+      tex2jax: {inlineMath: [['$','$'], ['\(','\)']]},
+      TeX: {equationNumbers: {autoNumber: ["AMS"], useLabelIds: true}},
+    }
+  );
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+</head>
+
+
+<body>
+    <div class="container">
+      <div class="left-col">
+        <div class="intrude-less">
+          <header id="header" class="inner">
+            <div class="profilepic">
+  <script src="/js/md5.js"></script>
+  <script type="text/javascript">
+    $(function(){
+	$('.profilepic').append(
+          "<img src='http://www.gravatar.com/avatar/"
+          + MD5("tivon.su@gmail.com")
+          + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+    });
+  </script>
+</div><!-- profilepic -->
+<h1><a href="/">獨菰、瑉</a></h1>
+<nav id="main-nav">
+  <ul class="main">
+    
+      <li>
+      <a href="/about">About</a>
+      </li>
+    
+  </ul>
+  
+  <section class="aboutme">
+    <p>
+      运成功者的谦词，命失败者的借口
+    </p>
+  </section>
+  
+</nav><!-- main-nav -->
+<nav id="sub-nav">
+  <div class="social">
+    
+      <a class="google" href="http://plus.google.com/"
+         title="Google+">Google+</a>
+    
+    
+      <a class="twitter" href="http://twitter.com/"
+         title="Twitter">Twitter</a>
+    
+    
+      <a class="github" href="http://github.com/"
+         title="Github">Github</a>
+    
+    
+        <a class="rss" href="/atom.xml" title="RSS">RSS</a>
+    
+  </div>
+</nav><!-- sub-nav -->
+<nav id="widget-nav">
+  <div class="widgets">
+    
+      
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Linux/">Linux</a><small>8</small></li>
+  
+    <li><a href="/tags/VMware/">VMware</a><small>9</small></li>
+  
+    <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
+  
+    <li><a href="/tags/kvm/">kvm</a><small>2</small></li>
+  
+    <li><a href="/tags/svn/">svn</a><small>1</small></li>
+  
+    <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+    
+  </div>
+</nav><!-- widget-nav -->
+
+          <header>
+        </div><!-- intrude-less -->
+      </div><!-- left-col -->
+      <div class="mid-col">
+        <div class="mid-col-container">
+	    <div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2014-02-21T03:33:08.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  2月 21 2014
+</time>
+
+
+
+
+
+</div>
+
+          
+          
+<div class="print">打印</div>
+
+          
+	</div>
+        <h1 class="title" itemprop="name">KVM虚拟化技术笔记</h1>
+      	<div class="entry-content" itemprop="articleBody"><h5 id="kvm-">KVM虚拟化技术笔记</h5>
+<p>记录《KVM虚拟化技术：实战与原理解析》书中相关知识点。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>taskset
+cpu亲和力设置。
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>查看kvm是否开启内存硬件技术
+cat /sys/<span class="class"><span class="keyword">module</span>/<span class="title">kvm_intel</span>/<span class="title">parameters</span>/<span class="title">ept</span></span>
+cat /sys/<span class="class"><span class="keyword">module</span>/<span class="title">kvm_intel</span>/<span class="title">parameters</span>/<span class="title">vpid</span></span>
+
+modprobe kvm_intel ept=<span class="number">0</span>,vpid=<span class="number">0</span>
+rmmod kvm_intel
+modprobe kvm_inter ept=<span class="number">1</span>,vpid=<span class="number">1</span>
+不要关闭，否则内存访问性能会下降
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>内存HUGEPAGE配置
+getconf PAGESIZE
+cat /proc/meminfo<span class="subst">|</span>grep  Hugepagesize
+mount <span class="attribute">-t</span> hugetlbfs hugetlbfs /dev/hugepages
+sysctl vm<span class="built_in">.</span>nr_hugepages<span class="subst">=</span>num
+
+qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> <span class="attribute">-smp</span> <span class="number">2</span> fedora<span class="built_in">.</span>img <span class="attribute">-mem</span><span class="attribute">-path</span> /dev/hugepages
+
+对于内存密集性内存来说，使用hugepage会带来性能提升。
+hugepage缺点，内存不能被swap out，也不能使用ballooning。
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> fedora<span class="built_in">.</span>img <span class="attribute">-enable</span><span class="attribute">-kvm</span> <span class="attribute">-vnc</span> :<span class="number">1</span>,password <span class="attribute">-monitor</span> stdio
+修改vnc密码
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>vncviewer <span class="attribute">-listen</span> :<span class="number">2</span>
+qemu<span class="attribute">-system</span><span class="attribute">-x86_64</span> <span class="attribute">-m</span> <span class="number">1024</span> fedora<span class="built_in">.</span>img <span class="attribute">-enable</span><span class="attribute">-kvm</span> <span class="attribute">-vnc</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.2</span>:<span class="number">5500</span>,reverse
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>vnc鼠标偏移问题
+<span class="attribute">-usb</span> <span class="attribute">-usbdevice</span> tablet
+<span class="literal">or</span>
+<span class="attribute">-device</span> piix3<span class="attribute">-usb</span><span class="attribute">-uhci</span> <span class="attribute">-device</span> usb<span class="attribute">-tablet</span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>Redhat文档介绍，单纯使用virtio_net驱动得到的性能依然不佳，可以检查宿主机系统中对GSO和TSO特性的设置，关闭GSO和TSO可以使性能更加优化
+ethtool <span class="attribute">-K</span> em1 gso off
+ethtool <span class="attribute">-K</span> em1 tso off
+ethtool <span class="attribute">-k</span> em1
+</pre></td></tr></table></figure>
+
+<p>vhost_net后端处理程序（内核空间）</p>
+<p><code>-net tap,[,vnet_hdr=on|off][,vhost=on|off][,vhostfd=h][,vhostforce=on|off]</code></p>
+<p>查看硬盘UUID</p>
+<p><code>blkid /dev/vda1</code></p>
+<p>or</p>
+<p><code>tune2fs -l /dev/vda1</code></p>
+<p>在修改磁盘驱动时，可能会导致swap失效。</p>
+<p>kvm-clock : <code>-cpu host</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>IOMMU,如果内核默认没有打开。
+在kernel行，inter_iommu=<span class="command"><span class="keyword">on</span></span>
+</pre></td></tr></table></figure>
+
+
+
+<h6 id="-cgroup-">通过cgroup控制客户机的资源使用</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>yum install libcgroup*
+mkdir -p /cgroup/blkio
+mount -t cgroup -o blkio blkio /cgroup/blkio
+mkdir /cgroup/blkio/high_prio
+mkdir /cgroup/blkio/low_prio
+
+mount -t cgroup -o cpu,cpuset,memorycpu_mem /cgroup/cpu_mem
+
+echo <span class="variable">$pid</span> &gt;&gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/high_prio/tasks</span>
+echo <span class="variable">$pid</span> &gt;&gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/low_prio/tasks</span>
+
+echo <span class="number">1000</span> &gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/high_prio/blkio</span>.weight
+echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</span><span class="regexp">/low_prio/blkio</span>.weight
+</pre></td></tr></table></figure>
+
+</div>
+
+
+</article>
+
+  <div class="share">
+  <div class="addthis_toolbox addthis_default_style ">
+  
+  
+  <a class="addthis_button_tweet"></a>
+  
+  
+  <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+  
+  
+  </div>
+  <script type="text/javascript">
+    var addthis_config = {"data_track_addressbar":true};
+  </script>
+  <script type="text/javascript"
+          src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=null">
+  </script>
+</div>
+
+
+
+
+</div>
+	</div>
+        <footer id="footer" class="inner">
+          Copyright © 2013 - 獨菰、瑉 - Powered by <a href="https://github.com/tommy351/hexo">Hexo</a><br>
+- Ported theme <a href="https://github.com/nuklly/hexo-theme-greyshade">GreyShade</a> -
+        </footer>
+        
+<script src="/js/slash.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+      </div><!-- mid-col -->
+    </div><!-- container -->
+</body>
+</html>
