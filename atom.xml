@@ -4,7 +4,7 @@
   <subtitle><![CDATA[运成功者的谦词，命失败者的借口。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.succw.com/"/>
-  <updated>2014-02-21T03:53:20.839Z</updated>
+  <updated>2014-03-12T12:27:37.552Z</updated>
   <id>http://www.succw.com/</id>
   
   <author>
@@ -13,6 +13,169 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Windows Server 2003下安装PHP]]></title>
+    <link href="http://www.succw.com/windows-server-2003%E4%B8%8B%E5%AE%89%E8%A3%85php/"/>
+    <id>http://www.succw.com/windows-server-2003下安装php/</id>
+    <published>2014-03-12T12:26:20.000Z</published>
+    <updated>2014-03-12T12:27:14.000Z</updated>
+    <content type="html"><![CDATA[<h5 id="windows-server-2003-php-mssql2000-">Windows Server 2003下安装PHP （ +mssql2000 ）</h5>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>IIS6
+[<span class="link_label">PHP 5.2.17</span>](<span class="link_url">http://windows.php.net/downloads/releases/php-5.2.17-nts-Win32-VC6-x86.zip</span>)
+[<span class="link_label">FastCGI</span>](<span class="link_url">http://www.iis.net/downloads/microsoft/fastcgi-for-iis</span>)
+MSSQL 2000
+</pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>Windows PHP 各个版本：
+[<span class="link_label">http://windows.php.net/downloads/releases/</span>](<span class="link_url">http://windows.php.net/downloads/releases/</span>)
+
+FastCGI相关文件和路径 ：
+C:\WINDOWS\system32\inetsrv\fcgiext.dll
+C:\WINDOWS\system32\inetsrv\fcgiext.ini
+</pre></td></tr></table></figure>
+
+<h6 id="-php-ini">更改php.ini</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>PHP开启支持FastCGI
+cgi<span class="preprocessor">.force</span>_redirect = <span class="number">0</span>
+cgi<span class="preprocessor">.fix</span>_pathinfo = <span class="number">1</span>
+fastcgi<span class="preprocessor">.impersonate</span>=<span class="number">1</span>
+</pre></td></tr></table></figure>
+
+<h6 id="php-ini-">php.ini通用设置：</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="constant">short_open_tag</span> = On  
+<span class="constant">error_reporting</span> = E_ALL & ~E_NOTICE     
+<span class="constant">post_max_size</span> = 16M        
+<span class="constant">extension_dir</span> = "c:\php5\ext"      
+<span class="constant">upload_tmp_dir</span> = "D:\php_upload"        上传的临时目录，自己建立目录，权限设定为：Administrators（完全控制）、System（完全控制）、IIS_WPG（读取和写入和删除）、ISUR_你的机器名（读取和写入和删除）  
+<span class="constant">upload_max_filesize</span> = 20M        
+<span class="constant">max_file_uploads</span> = 40        
+<span class="constant">extension</span>=php_bz2.dll      
+<span class="constant">extension</span>=php_curl.dll  
+<span class="constant">extension</span>=php_gd2.dll  
+<span class="constant">extension</span>=php_mbstring.dll  
+<span class="constant">extension</span>=php_mcrypt.dll  
+<span class="constant">extension</span>=php_mssql.dll   #开启支持mssql
+<span class="constant">extension</span>=php_mysql.dll  
+<span class="constant">extension</span>=php_mysqli.dll  
+<span class="constant">extension</span>=php_zip.dll  
+date.timezone = Asia/Shanghai    
+session.save_path = "D:\php_session"
+</pre></td></tr></table></figure>
+
+<h6 id="-fcgiext-ini">更改fcgiext.ini</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>FastCGI开启支持php [ 追加下代码： ]
+[Types]
+php=[PHP]
+ExePath=c:\php5\php-cgi.exe
+<span class="preprocessor">#InstanceMaxRequests=10000</span>
+<span class="preprocessor">#ActivityTimeout=600</span>
+<span class="preprocessor">#RequestTimeout=600</span>
+<span class="preprocessor">#EnvironmentVars=PHP_FCGI_MAX_REQUESTS:10000,PHPRC:C:\php5\</span>
+</pre></td></tr></table></figure>
+
+<h6 id="iis6-">IIS6配置相关：</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>
+右键 -&gt; 属性 -&gt; 主目录 -&gt; 配置 -&gt; 添加 -&gt;可执行文件写上：
+<span class="constant">C</span><span class="symbol">:/WINDOWS/system32/inetsrv/fcgiext</span>.dll，扩展名写上：.php，动作限制为：<span class="constant">GET</span>,<span class="constant">HEAD</span>,<span class="constant">POST</span>,<span class="constant">TRACE</span>
+
+
+测试你的配置环境<span class="symbol">:</span>
+&lt;?php
+phpinfo();
+?&gt;
+</pre></td></tr></table></figure>
+
+<h5 id="php-5-4-26-mssql-2000-">php 5.4.26 + mssql 2000 方式与上有所不同。</h5>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>官方在5.3之前提供mssql驱动。之后则需要第三方驱动。
+
+<span class="strong">**微软官方 （sqlsrv_）：**</span>
+[<span class="link_label">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</span>](<span class="link_url">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</span>)
+
+<span class="strong">** FreeTDS (php_dblib.dll )**</span>
+详细安装下链接：
+[<span class="link_label">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</span>](<span class="link_url">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</span>)
+
+<span class="strong">** php**</span>
+google上还找到了一个php提供php5.4.26驱动:
+链接在此：[<span class="link_label">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip</span>](<span class="link_url">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip </span>)
+</pre></td></tr></table></figure>
+
+<hr>
+<p>参考链接：</p>
+<h6 id="connect-php-with-mssql-while-using-iis">connect php with mssql while using iis</h6>
+<p><a href="http://stackoverflow.com/questions/13859282/connect-php-with-mssql-while-using-iis" target="_blank">http://stackoverflow.com/questions/13859282/connect-php-with-mssql-while-using-iis</a>
+<a href="http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP" target="_blank">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</a></p>
+<h6 id="windows-php-">windows php编译配置：</h6>
+<p><a href="https://wiki.php.net/internals/windows/stepbystepbuild" target="_blank">https://wiki.php.net/internals/windows/stepbystepbuild</a></p>
+]]></content>
+    
+    
+      <category term="php" scheme="http://www.succw.com/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[KVM虚拟化技术笔记]]></title>
@@ -157,7 +320,7 @@ echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</sp
     <link href="http://www.succw.com/libvirt%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"/>
     <id>http://www.succw.com/libvirt编译安装/</id>
     <published>2014-02-21T03:29:52.000Z</published>
-    <updated>2014-02-21T03:51:58.000Z</updated>
+    <updated>2014-02-24T07:51:00.000Z</updated>
     <content type="html"><![CDATA[<h5 id="-libvirt">编译安装libvirt</h5>
 <p>具体操作见官方文档：</p>
 <p><strong>安装环境Fedora18 </strong></p>
@@ -167,25 +330,31 @@ echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</sp
 4
 5
 6
-</pre></td><td class="code"><pre>wget http://libvirt<span class="preprocessor">.org</span>/sources/libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-tar xvf libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-cd libvirt-<span class="number">1.2</span><span class="number">.1</span>
-./autogen<span class="preprocessor">.sh</span>
+</pre></td><td class="code"><pre>wget http:<span class="comment">//libvirt.org/sources/libvirt-1.2.1.tar.gz</span>
+tar xvf libvirt<span class="subst">-</span><span class="number">1.2</span><span class="number">.1</span><span class="built_in">.</span>tar<span class="built_in">.</span>gz
+cd libvirt<span class="subst">-</span><span class="number">1.2</span><span class="number">.1</span>
+<span class="built_in">.</span>/autogen<span class="built_in">.</span>sh <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-storage</span><span class="attribute">-gluster</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-storage</span><span class="attribute">-rbd</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-gnutls</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ssh2</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-glusterfs</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-numactl</span> 
 make
 make install
 </pre></td></tr></table></figure>
 
 <p>记录下我编译时所需安装包。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
 </pre></td><td class="code"><pre>yum install yajl<span class="attribute">-deve</span> autoconf automake libtool xz<span class="attribute">-devel</span> libxml2<span class="attribute">-devel</span> systemd<span class="attribute">-devel</span> libsepol<span class="attribute">-devel</span> libselinux<span class="attribute">-devel</span> device<span class="attribute">-mapper</span><span class="attribute">-devel</span> libpciaccess<span class="attribute">-devel</span> libnl<span class="attribute">-devel</span>
+yum install glusterfs<span class="attribute">-api</span><span class="attribute">-devel</span> glusterfs<span class="attribute">-api</span> glusterfs<span class="attribute">-devel</span> gnutls<span class="attribute">-devel</span> numactl<span class="attribute">-devel</span> libssh2<span class="attribute">-devel</span>
 </pre></td></tr></table></figure>
 
+<p>[root@localhost ~]# libvirtd --version
+libvirtd (libvirt) 1.2.1</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>[root<span class="variable">@localhost</span> ~]<span class="comment"># libvirtd --version</span>
-libvirtd (libvirt) <span class="number">1.2</span>.<span class="number">1</span>
+</pre></td><td class="code"><pre>
+启动libvirtd程序
 </pre></td></tr></table></figure>
 
+<p>[root@localhost ~]# /usr/local/sbin/libvirt -d -l</p>
+<p>```</p>
 ]]></content>
     
     
@@ -1584,25 +1753,6 @@ location / {</p>
       <category term="Linux" scheme="http://www.succw.com/tags/Linux/"/>
     
       <category term="运维" scheme="http://www.succw.com/categories/%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[《红楼梦》中的音乐]]></title>
-    <link href="http://www.succw.com/%E3%80%8A%E7%BA%A2%E6%A5%BC%E6%A2%A6%E3%80%8B%E9%9F%B3%E4%B9%90/"/>
-    <id>http://www.succw.com/《红楼梦》音乐/</id>
-    <published>2012-11-21T09:44:25.000Z</published>
-    <updated>2014-01-15T03:26:14.000Z</updated>
-    <content type="html"><![CDATA[<p>标记于此：</p>
-<embed src="http://www.xiami.com/widget/6255775_1770579228,1770579229,1770579230,1770579231,1770579232,1770579233,1770579234,1770579235,1770579236,1770579237,1770579238,_235_360_008080_c0c0c0_1/multiPlayer.swf" type="application/x-shockwave-flash" width="235" height="360" wmode="opaque"></embed>
-
-<p>红楼梦中的音乐，真是极好听...</p>
-]]></content>
-    
-    
-      <category term="音乐" scheme="http://www.succw.com/tags/%E9%9F%B3%E4%B9%90/"/>
-    
-      <category term="Life" scheme="http://www.succw.com/categories/Life/"/>
     
   </entry>
   

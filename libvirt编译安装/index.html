@@ -118,6 +118,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/php/">php</a><small>1</small></li>
+  
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
   
   </ul>
@@ -168,25 +170,31 @@
 4
 5
 6
-</pre></td><td class="code"><pre>wget http://libvirt<span class="preprocessor">.org</span>/sources/libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-tar xvf libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-cd libvirt-<span class="number">1.2</span><span class="number">.1</span>
-./autogen<span class="preprocessor">.sh</span>
+</pre></td><td class="code"><pre>wget http:<span class="comment">//libvirt.org/sources/libvirt-1.2.1.tar.gz</span>
+tar xvf libvirt<span class="subst">-</span><span class="number">1.2</span><span class="number">.1</span><span class="built_in">.</span>tar<span class="built_in">.</span>gz
+cd libvirt<span class="subst">-</span><span class="number">1.2</span><span class="number">.1</span>
+<span class="built_in">.</span>/autogen<span class="built_in">.</span>sh <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-storage</span><span class="attribute">-gluster</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-storage</span><span class="attribute">-rbd</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-gnutls</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ssh2</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-glusterfs</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-numactl</span> 
 make
 make install
 </pre></td></tr></table></figure>
 
 <p>记录下我编译时所需安装包。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
 </pre></td><td class="code"><pre>yum install yajl<span class="attribute">-deve</span> autoconf automake libtool xz<span class="attribute">-devel</span> libxml2<span class="attribute">-devel</span> systemd<span class="attribute">-devel</span> libsepol<span class="attribute">-devel</span> libselinux<span class="attribute">-devel</span> device<span class="attribute">-mapper</span><span class="attribute">-devel</span> libpciaccess<span class="attribute">-devel</span> libnl<span class="attribute">-devel</span>
+yum install glusterfs<span class="attribute">-api</span><span class="attribute">-devel</span> glusterfs<span class="attribute">-api</span> glusterfs<span class="attribute">-devel</span> gnutls<span class="attribute">-devel</span> numactl<span class="attribute">-devel</span> libssh2<span class="attribute">-devel</span>
 </pre></td></tr></table></figure>
 
+<p>[root@localhost ~]# libvirtd --version
+libvirtd (libvirt) 1.2.1</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>[root<span class="variable">@localhost</span> ~]<span class="comment"># libvirtd --version</span>
-libvirtd (libvirt) <span class="number">1.2</span>.<span class="number">1</span>
+</pre></td><td class="code"><pre>
+启动libvirtd程序
 </pre></td></tr></table></figure>
 
+<p>[root@localhost ~]# /usr/local/sbin/libvirt -d -l</p>
+<p>```</p>
 </div>
 
 

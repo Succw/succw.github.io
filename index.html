@@ -7,8 +7,7 @@
   <meta name="author" content="獨菰、瑉">
   
   <meta name="description" content="运成功者的谦词，命失败者的借口">
-
-  <meta property="qc:admins" content="16613221576353376375" /> 
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -119,6 +118,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/php/">php</a><small>1</small></li>
+  
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
   
   </ul>
@@ -135,6 +136,201 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2014-03-12T12:26:20.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  3月 12 2014
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/php/">php</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/windows-server-2003下安装php/" itemprop="url">
+            Windows Server 2003下安装PHP</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <h5 id="windows-server-2003-php-mssql2000-">Windows Server 2003下安装PHP （ +mssql2000 ）</h5>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>IIS6
+[<span class="link_label">PHP 5.2.17</span>](<span class="link_url">http://windows.php.net/downloads/releases/php-5.2.17-nts-Win32-VC6-x86.zip</span>)
+[<span class="link_label">FastCGI</span>](<span class="link_url">http://www.iis.net/downloads/microsoft/fastcgi-for-iis</span>)
+MSSQL 2000
+</pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>Windows PHP 各个版本：
+[<span class="link_label">http://windows.php.net/downloads/releases/</span>](<span class="link_url">http://windows.php.net/downloads/releases/</span>)
+
+FastCGI相关文件和路径 ：
+C:\WINDOWS\system32\inetsrv\fcgiext.dll
+C:\WINDOWS\system32\inetsrv\fcgiext.ini
+</pre></td></tr></table></figure>
+
+<h6 id="-php-ini">更改php.ini</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>PHP开启支持FastCGI
+cgi<span class="preprocessor">.force</span>_redirect = <span class="number">0</span>
+cgi<span class="preprocessor">.fix</span>_pathinfo = <span class="number">1</span>
+fastcgi<span class="preprocessor">.impersonate</span>=<span class="number">1</span>
+</pre></td></tr></table></figure>
+
+<h6 id="php-ini-">php.ini通用设置：</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="constant">short_open_tag</span> = On  
+<span class="constant">error_reporting</span> = E_ALL & ~E_NOTICE     
+<span class="constant">post_max_size</span> = 16M        
+<span class="constant">extension_dir</span> = "c:\php5\ext"      
+<span class="constant">upload_tmp_dir</span> = "D:\php_upload"        上传的临时目录，自己建立目录，权限设定为：Administrators（完全控制）、System（完全控制）、IIS_WPG（读取和写入和删除）、ISUR_你的机器名（读取和写入和删除）  
+<span class="constant">upload_max_filesize</span> = 20M        
+<span class="constant">max_file_uploads</span> = 40        
+<span class="constant">extension</span>=php_bz2.dll      
+<span class="constant">extension</span>=php_curl.dll  
+<span class="constant">extension</span>=php_gd2.dll  
+<span class="constant">extension</span>=php_mbstring.dll  
+<span class="constant">extension</span>=php_mcrypt.dll  
+<span class="constant">extension</span>=php_mssql.dll   #开启支持mssql
+<span class="constant">extension</span>=php_mysql.dll  
+<span class="constant">extension</span>=php_mysqli.dll  
+<span class="constant">extension</span>=php_zip.dll  
+date.timezone = Asia/Shanghai    
+session.save_path = "D:\php_session"
+</pre></td></tr></table></figure>
+
+<h6 id="-fcgiext-ini">更改fcgiext.ini</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>FastCGI开启支持php [ 追加下代码： ]
+[Types]
+php=[PHP]
+ExePath=c:\php5\php-cgi.exe
+<span class="preprocessor">#InstanceMaxRequests=10000</span>
+<span class="preprocessor">#ActivityTimeout=600</span>
+<span class="preprocessor">#RequestTimeout=600</span>
+<span class="preprocessor">#EnvironmentVars=PHP_FCGI_MAX_REQUESTS:10000,PHPRC:C:\php5\</span>
+</pre></td></tr></table></figure>
+
+<h6 id="iis6-">IIS6配置相关：</h6>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>
+右键 -&gt; 属性 -&gt; 主目录 -&gt; 配置 -&gt; 添加 -&gt;可执行文件写上：
+<span class="constant">C</span><span class="symbol">:/WINDOWS/system32/inetsrv/fcgiext</span>.dll，扩展名写上：.php，动作限制为：<span class="constant">GET</span>,<span class="constant">HEAD</span>,<span class="constant">POST</span>,<span class="constant">TRACE</span>
+
+
+测试你的配置环境<span class="symbol">:</span>
+&lt;?php
+phpinfo();
+?&gt;
+</pre></td></tr></table></figure>
+
+<h5 id="php-5-4-26-mssql-2000-">php 5.4.26 + mssql 2000 方式与上有所不同。</h5>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>官方在5.3之前提供mssql驱动。之后则需要第三方驱动。
+
+<span class="strong">**微软官方 （sqlsrv_）：**</span>
+[<span class="link_label">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</span>](<span class="link_url">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</span>)
+
+<span class="strong">** FreeTDS (php_dblib.dll )**</span>
+详细安装下链接：
+[<span class="link_label">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</span>](<span class="link_url">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</span>)
+
+<span class="strong">** php**</span>
+google上还找到了一个php提供php5.4.26驱动:
+链接在此：[<span class="link_label">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip</span>](<span class="link_url">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip </span>)
+</pre></td></tr></table></figure>
+
+<hr>
+<p>参考链接：</p>
+<h6 id="connect-php-with-mssql-while-using-iis">connect php with mssql while using iis</h6>
+<p><a href="http://stackoverflow.com/questions/13859282/connect-php-with-mssql-while-using-iis" target="_blank">http://stackoverflow.com/questions/13859282/connect-php-with-mssql-while-using-iis</a>
+<a href="http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP" target="_blank">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</a></p>
+<h6 id="windows-php-">windows php编译配置：</h6>
+<p><a href="https://wiki.php.net/internals/windows/stepbystepbuild" target="_blank">https://wiki.php.net/internals/windows/stepbystepbuild</a></p>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -350,408 +546,31 @@ echo <span class="number">100</span> &gt; <span class="regexp">/cgroup/blkio</sp
 4
 5
 6
-</pre></td><td class="code"><pre>wget http://libvirt<span class="preprocessor">.org</span>/sources/libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-tar xvf libvirt-<span class="number">1.2</span><span class="number">.1</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-cd libvirt-<span class="number">1.2</span><span class="number">.1</span>
-./autogen<span class="preprocessor">.sh</span>
+</pre></td><td class="code"><pre>wget http:<span class="comment">//libvirt.org/sources/libvirt-1.2.1.tar.gz</span>
+tar xvf libvirt<span class="subst">-</span><span class="number">1.2</span><span class="number">.1</span><span class="built_in">.</span>tar<span class="built_in">.</span>gz
+cd libvirt<span class="subst">-</span><span class="number">1.2</span><span class="number">.1</span>
+<span class="built_in">.</span>/autogen<span class="built_in">.</span>sh <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-storage</span><span class="attribute">-gluster</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-storage</span><span class="attribute">-rbd</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-gnutls</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ssh2</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-glusterfs</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-numactl</span> 
 make
 make install
 </pre></td></tr></table></figure>
 
 <p>记录下我编译时所需安装包。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
 </pre></td><td class="code"><pre>yum install yajl<span class="attribute">-deve</span> autoconf automake libtool xz<span class="attribute">-devel</span> libxml2<span class="attribute">-devel</span> systemd<span class="attribute">-devel</span> libsepol<span class="attribute">-devel</span> libselinux<span class="attribute">-devel</span> device<span class="attribute">-mapper</span><span class="attribute">-devel</span> libpciaccess<span class="attribute">-devel</span> libnl<span class="attribute">-devel</span>
+yum install glusterfs<span class="attribute">-api</span><span class="attribute">-devel</span> glusterfs<span class="attribute">-api</span> glusterfs<span class="attribute">-devel</span> gnutls<span class="attribute">-devel</span> numactl<span class="attribute">-devel</span> libssh2<span class="attribute">-devel</span>
 </pre></td></tr></table></figure>
 
+<p>[root@localhost ~]# libvirtd --version
+libvirtd (libvirt) 1.2.1</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-</pre></td><td class="code"><pre>[root<span class="variable">@localhost</span> ~]<span class="comment"># libvirtd --version</span>
-libvirtd (libvirt) <span class="number">1.2</span>.<span class="number">1</span>
+</pre></td><td class="code"><pre>
+启动libvirtd程序
 </pre></td></tr></table></figure>
 
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2014-01-26T11:18:19.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  1月 26 2014
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/SVN/">SVN</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/svn/" itemprop="url">
-            ubuntu下安装subversion客户端</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <h5 id="ubuntu-subversion-">ubuntu下安装subversion客户端:</h5>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre>sudo apt<span class="attribute">-get</span> install subversion subversion<span class="attribute">-tools</span>
-</pre></td></tr></table></figure>
-
-<p>详细请看<a href="http://www.subversion.org.cn/svnbook/1.1/index.html" target="_blank"> <a href="http://www.subversion.org.cn/svnbook/1.1/index.html">http://www.subversion.org.cn/svnbook/1.1/index.html</a></a> svn子命令</p>
-<p>1、<strong>检出</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre><span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-<span class="comment">svn</span>  <span class="comment">co</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">用户名</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">password</span> <span class="comment">密码</span>
-<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">http://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
-<span class="comment">svn</span>  <span class="comment">checkout</span>  <span class="comment">svn://路径(目录或文件的全路径)　</span><span class="title">[</span><span class="comment">本地目录全路径</span><span class="title">]</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">username　用户名</span>
-</pre></td></tr></table></figure>
-
-<p><em>注：如果不带--password 参数传输密码的话，会提示输入密码，建议不要用明文的--password 选项
-。其中 username 与 password前是两个短线，不是一个。不指定本地目录全路径，则检出到当前目
-录下</em>。</p>
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre>svn co svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-svn co <span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
-svn checkout svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/测试工具 /home/testtools <span class="comment">--username wzhnsc</span>
-svn checkouthttp://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/testapp <span class="comment">--username wzhnsc</span>
-</pre></td></tr></table></figure>
-
-<p><strong>2、导出(导出一个干净的不带.svn文件夹的目录树)</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>svn  <span class="keyword">export</span>  [-r 版本号]  http:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
-svn  <span class="keyword">export</span>  [-r 版本号]  svn:<span class="comment">//路径(目录或文件的全路径) [本地目录全路径]　--username　用户名</span>
-svn  <span class="keyword">export</span>  本地检出的(即带有.svn文件夹的)目录全路径  要导出的本地目录全路径
-</pre></td></tr></table></figure>
-
-<p><em>注：第一种从版本库导出干净工作目录树的形式是指定URL，如果指定了修订版本号，会导出相应的
-版本，如果没有指定修订版本，则会导出最新的，导出到指定位置。如果省略 本地目录全路径，URL
-的最后一部分会作为本地目录的名字。第二种形式是指定 本地检出的目录全路径 到 要导出的本地目
-录全路径，所有的本地修改将会保留，但是不在版本控制下(即没提交的新文件，因为.svn文件夹里没
-有与之相关的信息记录)的文件不会拷贝。</em></p>
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>svn exportsvn:<span class="comment">//192.168.0.3/测试工具 /home/testtools --username wzhnsc</span>
-svn exporthttp:<span class="comment">//192.168.0.3/test/testapp --username wzhnsc</span>
-svn <span class="keyword">export</span>/home/testapp /home/testtools
-</pre></td></tr></table></figure>
-
-<p>3、<strong>添加新文件 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="code"><pre>svn　<span class="keyword">add</span>　文件名
-*注：告诉SVN服务器要添加文件了，还要用svn commint -m真实的上传上去！
-
-例子：*
-svn <span class="keyword">add</span> test<span class="preprocessor">.php</span> ＜－ 添加test<span class="preprocessor">.php</span> 
-svn commit -m “添加我的测试用test<span class="preprocessor">.php</span>“ test<span class="preprocessor">.php</span>
-svn <span class="keyword">add</span> *<span class="preprocessor">.php</span> ＜－ 添加当前目录下所有的php文件
-svn commit -m “添加我的测试用全部php文件“ *<span class="preprocessor">.php</span>
-</pre></td></tr></table></figure>
-
-<p><strong>4、提交</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td><td class="code"><pre>svn　<span class="operator"><span class="keyword">commit</span>　-m　“提交备注信息文本“　[-N]　[--<span class="keyword">no</span>-unlock]　文件名
-svn　ci　-m　“提交备注信息文本“　[-N]　[--<span class="keyword">no</span>-unlock]　文件名
-
-<span class="string">`必须带上-m参数，参数可以为空，但是必须写上-m`</span>
-
-例子：
-svn <span class="keyword">commit</span> -m “提交当前目录下的全部在版本控制下的文件“ * ＜－ 注意这个*表示全部文件
-svn <span class="keyword">commit</span> -m “提交我的测试用test.php“ test.php
-svn <span class="keyword">commit</span> -m “提交我的测试用test.php“ -N --<span class="keyword">no</span>-unlock test.php ＜－ 保持锁就用–<span class="keyword">no</span>-unlock开关
-svn ci -m “提交当前目录下的全部在版本控制下的文件“ * ＜－ 注意这个*表示全部文件
-svn ci -m “提交我的测试用test.php“ test.php
-svn ci -m “提交我的测试用test.php“ -N --<span class="keyword">no</span>-unlock test.php ＜－ 保持锁就用–<span class="keyword">no</span>-unlock开关</span>
-</pre></td></tr></table></figure>
-
-<p><strong>5、更新文件</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="code"><pre>svn　<span class="operator"><span class="keyword">update</span>
-svn　<span class="keyword">update</span>　-r　修正版本　文件名
-svn　<span class="keyword">update</span>　文件名
-
-例子：
-svn <span class="keyword">update</span> ＜－ 后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本
-svn <span class="keyword">update</span> -r <span class="number">200</span> test.cpp ＜－ 将版本库中的文件 test.cpp 还原到修正版本（revision）<span class="number">200</span>
-svn <span class="keyword">update</span> test.php ＜－ 更新与版本库同步。</span>
-</pre></td></tr></table></figure>
-
-<p><em>
-提交的时候提示过期冲突，需要先 update 修改文件，</em>
-然后清除svn resolved，最后再提交commit。</p>
-<p><strong>6、删除文件</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td><td class="code"><pre>svn　<span class="keyword">delete</span>　svn:<span class="comment">//路径(目录或文件的全路径) -m “删除备注信息文本”</span>
-
-推荐如下操作：
-svn　<span class="keyword">delete</span>　文件名 
-svn　ci　-m　“删除备注信息文本”
-
-例子：
-svn <span class="keyword">delete</span> svn:<span class="comment">//192.168.1.1/testapp/test.php -m “删除测试文件test.php”</span>
-
-推荐如下操作：
-svn <span class="keyword">delete</span> test.php 
-svn ci -m “删除测试文件test.php”
-</pre></td></tr></table></figure>
-
-<p><strong>７、加锁/解锁 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-</pre></td><td class="code"><pre>svn　lock　-m　“加锁备注信息文本“　[--force]　文件名 
-svn　unlock　文件名
-
-例子：
-svn lock -m “锁信测试用test<span class="preprocessor">.php</span>文件“ test<span class="preprocessor">.php</span> 
-svn unlock test<span class="preprocessor">.php</span>
-</pre></td></tr></table></figure>
-
-<p><strong>8、比较差异 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn　diff　文件名 
-svn　diff　<span class="attribute">-r</span>　修正版本号m:修正版本号n　文件名
-</pre></td></tr></table></figure>
-
-<p>例子：
-svn diff test.php＜－ 将修改的文件与基础版本比较
-svn diff -r 200:201 test.php＜－ 对 修正版本号200 和 修正版本号201 比较差异</p>
-<p><strong>9、查看文件或者目录状态</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre>svn st 目录路径<span class="subst">/</span>名
-svn status 目录路径<span class="subst">/</span>名＜－ 目录下的文件和子目录的状态，正常状态不显示
-
-svn  <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名
-svn status <span class="attribute">-v</span> 目录路径<span class="subst">/</span>名＜－ 显示文件和子目录状态
-</pre></td></tr></table></figure>
-
-<p><em>
-注：svn status、svn diff和 svn revert这三条命令在没有网络的情况下也可以执行的，原因是svn在本地的.svn中保留了本地版本的原始拷贝
-</em></p>
-<p><strong>10、查看日志</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre>svn　<span class="keyword">log</span>　文件名
-
-例子：
-svn <span class="keyword">log</span> test.php＜－ 显示这个文件的所有修改记录，及其版本号的变化
-</pre></td></tr></table></figure>
-
-<p><strong>11、查看文件详细信息</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre><span class="title">svn</span>　<span class="built_in">info</span>　文件名
-
-例子：
-svn <span class="built_in">info</span> test.php
-</pre></td></tr></table></figure>
-
-<p><strong>12、SVN 帮助</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>svn　<span class="built_in">help</span> ＜－ 全部功能选项
-svn　<span class="built_in">help</span>　ci ＜－ 具体功能的说明
-</pre></td></tr></table></figure>
-
-<p><strong>13、查看版本库下的文件和目录列表 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-</pre></td><td class="code"><pre>svn　<span class="keyword">list</span>　svn:<span class="comment">//路径(目录或文件的全路径)</span>
-svn　ls　svn:<span class="comment">//路径(目录或文件的全路径)</span>
-
-例子：
-svn <span class="keyword">list</span> svn:<span class="comment">//192.168.0.3/test</span>
-svn ls svn:<span class="comment">//192.168.0.3/test ＜－ 显示svn://192.168.0.3/test目录下的所有属于版本库的文件和目录</span>
-</pre></td></tr></table></figure>
-
-<p><strong>14、创建纳入版本控制下的新目录</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="code"><pre>svn　mkdir　目录名
-svn　mkdir　-m　<span class="string">"新增目录备注文本"</span>　<span class="keyword">http</span>://目录全路径
-
-例子：
-svn mkdir newdir
-<span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/newdir
-
-注：添加完子目录后，一定要回到根目录更新一下，不然在该目录下提交文件会提示“提交失败”
-
-svn update
-注：如果手工在checkout出来的目录里创建了一个新文件夹newsubdir，再用svn mkdir newsubdir命
-令后，SVN会提示：
-svn: 尝试用 “svn <span class="built_in">add</span>”或 “svn <span class="built_in">add</span> <span class="comment">--non-recursive”代替？</span>
-svn: 无法创建目录“hello”: 文件已经存在此时，用如下命令解决：
-
-svn <span class="built_in">add</span> <span class="comment">--non-recursive newsubdir</span>
-在进入这个newsubdir文件夹，用ls -<span class="operator">a</span>查看它下面的全部目录与文件，会发现多了：.svn目录再用 svn
-mkdir -m <span class="string">"添hello功能模块文件"</span> svn://<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>/test/newdir/newsubdir 命令，
-
-SVN提示：
-svn: File already exists: filesystem <span class="string">'/data/svnroot/test/db'</span>, transaction <span class="string">'4541-1'</span>,path <span class="string">'/newdir/newsubdir '</span>
-</pre></td></tr></table></figure>
-
-<p><strong>15、恢复本地修改 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="comment">svn　revert　</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span><span class="title">]</span><span class="comment">　文件名</span>
-<span class="comment">注意:</span> <span class="comment">本子命令不会存取网络，并且会解除冲突的状况。但是它不会恢复被删除的目录。</span>
-<span class="comment">例子：</span>
-<span class="comment">svn</span> <span class="comment">revert</span> <span class="comment">foo</span><span class="string">.</span><span class="comment">c</span> <span class="comment">＜－</span> <span class="comment">丢弃对一个文件的修改</span>
-<span class="comment">svn</span> <span class="comment">revert</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span> <span class="string">.</span> <span class="comment">＜－恢复一整个目录的文件，</span><span class="string">.</span> <span class="comment">为当前目录</span>
-</pre></td></tr></table></figure>
-
-<p><strong>16、把工作拷贝更新到别的URL </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>svn　<span class="keyword">switch</span>　http:<span class="comment">//目录全路径　本地目录全路径</span>
-例子：
-svn <span class="keyword">switch</span> http:<span class="comment">//192.163.0.3/test/456 . ＜－ (原为123的分支)当前所在目录分支到192.163.0.3/test/456</span>
-</pre></td></tr></table></figure>
-
-<p><strong>17、解决冲突 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre>svn　resolved　[本地目录全路径]
-例子：
-$ svn <span class="operator"><span class="keyword">update</span>
-C foo.c
-Updated <span class="keyword">to</span> revision <span class="number">31.</span></span>
-</pre></td></tr></table></figure>
-
-<p>如果你在更新时得到冲突，你的工作拷贝会产生三个新的文件：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre>$ ls
-foo<span class="preprocessor">.c</span>
-foo<span class="preprocessor">.c</span><span class="preprocessor">.mine</span>
-foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>30
-foo<span class="preprocessor">.c</span><span class="preprocessor">.r</span>31
-</pre></td></tr></table></figure>
-
-<p>当你解决了foo.c的冲突，并且准备提交，运行svn resolved让你的工作拷贝知道你已经完成了所有事情。
-你可以仅仅删除冲突的文件并且提交，但是svn resolved除了删除冲突文件，还修正了一些记录在工作拷贝管理区域的记录数据，所以我们推荐你使用这个命令。</p>
-<p><strong>18、不checkout而查看输出特定文件或URL的内容 </strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre>svn　cat　http:<span class="comment">//文件全路径</span>
-例子：
-svn cat http:<span class="comment">//192.168.0.3/test/readme.txt</span>
-</pre></td></tr></table></figure>
-
+<p>[root@localhost ~]# /usr/local/sbin/libvirt -d -l</p>
+<p>```</p>
 
           
         </div>

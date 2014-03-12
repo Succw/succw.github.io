@@ -118,6 +118,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/php/">php</a><small>1</small></li>
+  
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
   
   </ul>
@@ -134,6 +136,80 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2012-11-20T15:17:53.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  11月 20 2012
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/音乐/">音乐</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/葬花吟/" itemprop="url">
+            葬花吟</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p><object width="257" height="33" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="src" value="http://www.xiami.com/widget/6255775_1770579238/singlePlayer.swf" /><param name="wmode" value="transparent" /><embed width="257" height="33" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/6255775_1770579238/singlePlayer.swf" wmode="transparent" /></object></p>
+<blockquote>
+<p>花谢花飞花满天，红消香断有谁怜？
+游丝软系飘春榭，落絮轻沾扑绣帘。
+闺中女儿惜春暮，愁绪满怀无释处、
+手把花锄出绣闺，忍踏落花来复去。
+柳丝榆荚自芳菲，不管桃飘与李飞；
+桃李明年能再发，明年闺中知有谁？
+三月香巢已垒成，梁间燕子太无情！
+明年花发虽可啄，却不道人去梁空巢也倾。
+一年三百六十日，风刀霜剑严相逼；
+明媚鲜妍能几时，一朝漂泊难寻觅。
+花开易见落难寻，阶前愁杀葬花人，
+独倚花锄泪暗洒，洒上空枝见血痕。
+杜鹃无语正黄昏，荷（hè）锄归去掩重门；
+青灯照壁人初睡，冷雨敲窗被未温。
+怪奴底事倍伤神？半为怜春半恼春。
+怜春忽至恼忽去，至又无言去不闻。
+昨宵庭外悲歌发，知是花魂与鸟魂？
+花魂鸟魂总难留，鸟自无言花自羞；
+愿奴胁下生双翼，随花飞到天尽头。
+天尽头，何处有香丘？ 黛玉葬花
+未若锦囊收艳骨，一抔净土掩风流。
+质本洁来还洁去，强于污淖陷渠沟。
+尔今死去侬收葬，未卜侬身何日丧？
+侬今葬花人笑痴，他年葬侬知是谁？
+试看春残花渐落，便是红颜老死时；
+一朝春尽红颜老，花落人亡两不知</p>
+</blockquote>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -272,122 +348,6 @@ Feb 15, 2008 10:57:31 AM org.apache.catalina.startup.HostConfig deployWAR INFO: 
 <p>%h　　主机名</p>
 <p>%e　　可执行程序名字</p>
 <p>%c　　core大小上线</p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2012-09-08T00:28:41.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  9月 8 2012
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/Linux/">Linux</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/user-parameters/" itemprop="url">
-            User Parameters</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>Functionality of Zabbix agents can be enhanced by defining user parameters (<strong>UserParameter</strong> configuration parameter) in agent&#39;s configuration file. Once user parameters are defined, they can be accessed in the same way as any other agent items by using the key, specified in the parameter definition.</p>
-<p>User parameters are commands executed by Zabbix agent. <strong>/bin/sh</strong> is used as a command line interpreter under UNIX operating systems.</p>
-<p>See a <a href="http://www.zabbix.com/documentation/1.8/manual/tutorials/extending_agent" title="1.8:manual:tutorials:extending_agent" target="_blank">step-by-step tutorial</a> on making use of user parameters.</p>
-<h4 id="-a-id-simple_user_parameters-name-simple_user_parameters-a-1-simple-user-parameters"><a id="simple_user_parameters" name="simple_user_parameters"></a>1 Simple user parameters</h4>
-<div>
-
-In order to define a new parameter for monitoring, one line has to be added to configuration file of Zabbix agent and the agent must be restarted.
-
-User parameter has the following syntax:
-<pre>UserParameter=key,command</pre><div><table><tbody><tr><th>Parameter</th><th>Description</th></tr><tr><td><strong>Key</strong></td><td>Unique item key.</td></tr><tr><td><strong>Command</strong></td><td>Command to be executed to evaluate value of the Key.</td></tr></tbody></table></div></div>
-
-<h5 id="-a-id-example_1-name-example_1-a-example-1"><a id="example_1" name="example_1"></a>Example 1</h5>
-<div>
-
-Simple command
-<pre>UserParameter=ping,echo 1</pre>
-
-The agent will always return &#39;1&#39; for item with key &#39;ping&#39;.
-</div>
-
-<h5 id="-a-id-example_2-name-example_2-a-example-2"><a id="example_2" name="example_2"></a>Example 2</h5>
-<div>
-
-More complex example
-<pre>UserParameter=mysql.ping,mysqladmin -uroot ping | grep -c alive</pre>
-
-The agent will return &#39;1&#39;, if MySQL server is alive, &#39;0&#39; - otherwise.
-</div>
-
-<h4 id="-a-id-flexible_user_parameters-name-flexible_user_parameters-a-2-flexible-user-parameters"><a id="flexible_user_parameters" name="flexible_user_parameters"></a>2 Flexible user parameters</h4>
-<div>
-
-Flexible user parameters can be used for more control and flexibility.
-
-For flexible user parameters,
-<pre>UserParameter=key[<em>],command</pre><div><table><tbody><tr><th>Parameter</th><th>Description</th></tr><tr><td><strong>Key</strong></td><td>Unique item key. The [</em>] defines that this key accepts parameters.</td></tr><tr><td><strong>Command</strong></td><td>
-
-Command to be executed to evaluate value of the Key.
-Zabbix parses content of [] and substitutes $1,…,$9 in the command.
-$0 will be substituted by the original command (prior to expansion of $0,…,$9) to be run.
-</td></tr></tbody></table></div><div> </div><div>To use positional references unaltered, specify double dollar sign - for example, awk &#39;{print $$2}&#39;.</div><div> </div><div>Unless <a href="http://www.zabbix.com/documentation/1.8/manual/processes/zabbix_agentd" title="1.8:manual:processes:zabbix_agentd" target="_blank">UnsafeUserParameters</a> agent daemon configuration option is enabled, it is not allowed to pass flexible parameters containing these symbols:  &#39; ” ` * ? [ ] { } ~ $ ! &amp; ; ( ) &lt; &gt; | # @</div><div> </div><div>Command used should always return a value that is not empty (and not a newline). If non-valid value is returned, ZBX_NOTSUPPORTED will be sent back by the agent.</div></div>
-
-<h5 id="-a-id-example_11-name-example_11-a-example-1"><a id="example_11" name="example_11"></a>Example 1</h5>
-<div>
-
-Something very simple
-<pre>UserParameter=ping[<em>],echo $1</pre>
-
-We may define unlimited number of items for monitoring all having format ping[something].
-
-</em>   <div>ping[0] - will always return &#39;0&#39;</div>
-*   <div>ping[aaa] - will always return &#39;aaa&#39;</div></div>
-
-<h5 id="-a-id-example_21-name-example_21-a-example-2"><a id="example_21" name="example_21"></a>Example 2</h5>
-<div>
-
-Let&#39;s add more sense!
-<pre>UserParameter=mysql.ping[*],mysqladmin -u$1 -p$2 ping | grep -c alive</pre>
-
-This parameter can be used for monitoring availability of MySQL database. We can pass user name and password:
-<pre>mysql.ping[zabbix,our_password]</pre></div>
-
-<h5 id="-a-id-example_3-name-example_3-a-example-3"><a id="example_3" name="example_3"></a>Example 3</h5>
-<div>
-
-How many lines matching a regular expression in a file?
-<pre>UserParameter=wc[<em>],grep -c &quot;$2&quot; $1</pre>
-
-This parameter can be used to calculate number of lines in a file.
-<pre>wc[/etc/passwd,root]
-wc[/etc/services,zabbix]</pre><div>Note that <a href="http://www.zabbix.com/documentation/1.8/manual/processes/zabbix_agentd" title="1.8:manual:processes:zabbix_agentd" target="_blank">Zabbix agent daemon</a> does not support user parameters with <strong>-t</strong> or <em>*-p</em></em> agent switches (used to test single item or print out a list of all supported items) until version 1.8.3. See <a href="http://www.zabbix.com/documentation/1.8/manpages/zabbix_agentd" title="1.8:manpages:zabbix_agentd" target="_blank">manpage</a> in earlier versions for more information.</div><div> </div><div><span style="text-decoration:underline;"><a href="http://www.youtube.com/watch?v=vfMQVOh0TQo&amp;feature=player_detailpage" target="_blank">http://www.youtube.com/watch?v=vfMQVOh0TQo&amp;feature=player_detailpage</a></span></div></div>
 
           
         </div>

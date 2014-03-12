@@ -118,6 +118,8 @@
   
     <li><a href="/tags/Windows/">Windows</a><small>2</small></li>
   
+    <li><a href="/tags/php/">php</a><small>1</small></li>
+  
     <li><a href="/tags/音乐/">音乐</a><small>2</small></li>
   
   </ul>
@@ -134,6 +136,84 @@
       <div class="mid-col">
         <div class="mid-col-container">
 	    <div id="content" class="inner"><div itemscope itemtype="http://schema.org/Blog">
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+	<div class="meta">
+          
+<div class="date">
+
+<time datetime="2013-06-04T03:19:47.000Z"
+      
+      data-updated="true"
+       itemprop="datePublished">
+  6月 4 2013
+</time>
+
+
+
+
+
+</div>
+
+          
+
+ 
+ <div class="tags">
+   <a href="/tags/Windows/">Windows</a>
+ </div>
+
+
+          
+	</div>
+        <h1 class="title" itemprop="name">
+          <a href="/配置-windows-ntp-客户端以实现网络时钟同步/" itemprop="url">
+            配置 Windows NTP 客户端以实现网络时钟同步</a>
+        </h1>
+        <div class="entry-content" itemprop="articleBody">
+          
+            <p>vSphere 网络上所有服务器的时钟都必须同步。您可以将 Windows NTP 客户端配置为 Windows 服务器上时
+钟同步的源。
+在 Windows 服务器上使用注册表编辑器进行配置更改。
+步骤
+1 启用 NTP 模式。</p>
+<ul>
+<li><p>a 转至注册表设置
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters</p>
+</li>
+<li><p>b 将“类型”值设置为 NTP。
+2 启用 NTP 客户端。</p>
+</li>
+<li><p>a 转至注册表设置
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Config</p>
+</li>
+<li><p>b 将“AnnounceFlags”值设置为 5。
+3 输入要与之同步的上游 NTP 服务器。</p>
+</li>
+<li><p>a 转至注册表设置
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders。</p>
+</li>
+<li><p>b 将 NtpServer 值设置为至少包含三台 NTP 服务器的列表。
+例如，您可以将值设置为 0x1 1.pool.ntp.org、0x1 2.pool.ntp.org、0x1 3.pool.ntp.org。
+4 指定 150 分钟的更新时间间隔。</p>
+</li>
+<li><p>a 转至注册表设置
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\Nt
+pClient，</p>
+</li>
+<li><p>b 将“SpecialPollInterval”值设置为 900。
+5 重新启动 W32time 服务，使更改生效。</p>
+</li>
+</ul>
+
+          
+        </div>
+
+
+</article>
+
+
+
 
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   
@@ -448,65 +528,6 @@ Most features are dependent on support in the specific driver. See the manual pa
    **msglvl** _N_
           Set the driver message level. Meanings differ per driver.&lt;/pre&gt;
 </code></pre><p>&nbsp;</p>
-
-          
-        </div>
-
-
-</article>
-
-
-
-
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-	<div class="meta">
-          
-<div class="date">
-
-<time datetime="2013-04-26T03:03:10.000Z"
-      
-      data-updated="true"
-       itemprop="datePublished">
-  4月 26 2013
-</time>
-
-
-
-
-
-</div>
-
-          
-
- 
- <div class="tags">
-   <a href="/tags/VMware/">VMware</a>
- </div>
-
-
-          
-	</div>
-        <h1 class="title" itemprop="name">
-          <a href="/which-vmware-network-settings-to-adjust-to-troubleshoot-vm-packet-loss/" itemprop="url">
-            Which VMware network settings to adjust to troubleshoot VM packet loss</a>
-        </h1>
-        <div class="entry-content" itemprop="articleBody">
-          
-            <p>Even well-designed <a href="http://searchnetworking.techtarget.com/tip/vSphere-networking-tools-Gaining-control-of-virtualization" target="_blank">VMware networking</a> will encounter virtualization-specific problems, like high packet loss in a virtual machine. Appropriate tweaks to the VMware network settings can resolve high packet loss without troubleshooting the guest operating system.</p>
-<p>A normal <a href="http://searchnetworking.techtarget.com/definition/Ethernet" target="_blank">Ethernet network connector</a> should rarely let numerous packets drop ?there should be no more than a few dropped packets for every 100,000 packets received or transmitted successfully (Figure 1). On a Linux virtual machine (<a href="http://searchservervirtualization.techtarget.com/definition/virtual-machine" target="_blank">VM</a>), this statistic is easily monitored with the ifconfig command.</p>
-<p><div><a href="http://cdn.ttgtmedia.com/rms/onlineImages/0413_svm_packetloss-1.png" target="_blank"><img src="http://cdn.ttgtmedia.com/rms/onlineImages/0413_svm_packetloss-1.png" alt=""></a></p>
-<div>
-
-<p>Figure 1. Normally, hardly any packets should drop on an Ethernet network card.</p>
-<p></div>
-</div>
-On a VM with a <a href="http://searchnetworking.techtarget.com/definition/burst" target="_blank">bursty network</a> traffic pattern, significant packet loss may occur, requiring a fix within the VM&#39;s network settings. First, verify that the VM uses the VMXNET3 driver for the virtual network card. If this is the case, on a Linux host, high packet loss occurs when large data files are sent over high-bandwidth networks, and in certain other situations. Remediate the situation by disabling receive and transmit checksums. You&#39;ll add risk, as these checksums normally close out erroneous packets. Since errors on a typical Ethernet network card are below one on a million, the risk level is low.</p>
-<p>Use the <a href="http://searchenterpriselinux.techtarget.com/Linux-tools" target="_blank">Linux ethtool utility</a> to switch off receive and transmit checksums in the VMware network settings, starting with ethtool as root from the command line. To switch these checksum features off for the network card eth0, for example, the command would readethtool --offload eth0 rx off tx off. If this works, open the configuration file for your network card -- /etc/sysconfig/network/ifcfg-eth0 on SUSE or /etc/sysconfig/network-scripts/ifcfg-eth0 on Red Hat -- and change the ETHTOOL_OPTIONS parameter to ETHTOOL_OPTIONS=&#39;--offload eth0 rx off tx off&#39;.</p>
-<p>If you&#39;re still troubleshooting packet loss, try increasing the receive ring buffer size via the ethtool utility. By default, this buffer is set to 256, but the maximum you can use is 4096. Reset the ring buffer size to 512, using ethtool -G eth0 512. If this doesn&#39;t give you the required result, try a higher value.</p>
-<p>High packet loss on a Windows VM calls for a change to network settings on the VMXNET3 driver. From Device Manager, right click the VMXNET3 driver and select Properties. The Advanced tab has two parameters: Small RX Buffers and RX Ring #1 Size. Increase the value of these parameters a bit and test whether this yields any improvement. Incrementally increase the value until you resolve the loss.</p>
-<p>In most cases, these fixes will decrease the number of packets dropped in virtual machines. If adjusting the network settings fails, you&#39;re probably facing another problem caused by other performance-related factors in the VM, not the VMware network settings between the VM and ESXi platform. Consult an expert in the guest operating system, as there are many parameters that you can tune for performance. Beware of tuning the wrong parameters, which could have a strong negative impact on the VM.</p>
-<p>摘自：<a href="http://searchvmware.techtarget.com/" target="_blank"><a href="http://searchvmware.techtarget.com">http://searchvmware.techtarget.com</a></a></p>
 
           
         </div>
