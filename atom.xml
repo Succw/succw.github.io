@@ -4,7 +4,7 @@
   <subtitle><![CDATA[运成功者的谦词，命失败者的借口。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.succw.com/"/>
-  <updated>2014-03-14T03:46:42.543Z</updated>
+  <updated>2014-03-14T04:00:46.547Z</updated>
   <id>http://www.succw.com/</id>
   
   <author>
@@ -15,41 +15,29 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Windows Server 2003下安装PHP ( +mssql2000 )]]></title>
+    <title><![CDATA[Windows Server 2003下安装PHP (+mssql2000)]]></title>
     <link href="http://www.succw.com/windows-server-2003%E4%B8%8B%E5%AE%89%E8%A3%85php/"/>
     <id>http://www.succw.com/windows-server-2003下安装php/</id>
     <published>2014-03-12T12:26:20.000Z</published>
-    <updated>2014-03-14T03:46:23.000Z</updated>
-    <content type="html"><![CDATA[<h5 id="windows-server-2003-php-mssql2000-">Windows Server 2003下安装PHP （ +mssql2000 ）</h5>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre>IIS6
-[<span class="link_label">PHP 5.2.17</span>](<span class="link_url">http://windows.php.net/downloads/releases/php-5.2.17-nts-Win32-VC6-x86.zip</span>)
-[<span class="link_label">FastCGI</span>](<span class="link_url">http://www.iis.net/downloads/microsoft/fastcgi-for-iis</span>)
-MSSQL 2000
-</pre></td></tr></table></figure>
-
-<h5 id="-">注意各种配置文件的权限</h5>
-<p>（php.ini,fcgiext.ini,php5目录等）</p>
-<hr>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-</pre></td><td class="code"><pre>Windows PHP 各个版本：
-[<span class="link_label">http://windows.php.net/downloads/releases/</span>](<span class="link_url">http://windows.php.net/downloads/releases/</span>)
-
-FastCGI相关文件和路径 ：
-C:\WINDOWS\system32\inetsrv\fcgiext.dll
-C:\WINDOWS\system32\inetsrv\fcgiext.ini
-</pre></td></tr></table></figure>
-
+    <updated>2014-03-14T04:00:36.000Z</updated>
+    <content type="html"><![CDATA[<h5 id="windows-server-2003-php-mssql2000-">Windows Server 2003下安装PHP (+mssql2000）</h5>
+<ul>
+<li>IIS6</li>
+<li><a href="http://windows.php.net/downloads/releases/php-5.2.17-nts-Win32-VC6-x86.zip" target="_blank">PHP 5.2.17</a></li>
+<li><a href="http://www.iis.net/downloads/microsoft/fastcgi-for-iis" target="_blank">FastCGI</a></li>
+<li>MSSQL 2000</li>
+</ul>
+<pre><code>#####注意各种配置文件的权限
+（php.ini,fcgiext.ini,php5目录等）
+</code></pre><p>Windows PHP 各个版本：
+<a href="http://windows.php.net/downloads/releases/" target="_blank">http://windows.php.net/downloads/releases/</a></p>
+<p>FastCGI相关文件和路径 ：</p>
+<ul>
+<li>C:\WINDOWS\system32\inetsrv\fcgiext.dll</li>
+<li>C:\WINDOWS\system32\inetsrv\fcgiext.ini</li>
+</ul>
 <h6 id="-php-ini">更改php.ini</h6>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
 2
 3
 4
@@ -60,7 +48,7 @@ fastcgi<span class="preprocessor">.impersonate</span>=<span class="number">1</sp
 </pre></td></tr></table></figure>
 
 <h6 id="php-ini-">php.ini通用设置：</h6>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
 2
 3
 4
@@ -120,51 +108,29 @@ ExePath=c:\php5\php-cgi.exe
 <h6 id="iis6-">IIS6配置相关：</h6>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="code"><pre>
-右键 -&gt; 属性 -&gt; 主目录 -&gt; 配置 -&gt; 添加 -&gt;可执行文件写上：
+</pre></td><td class="code"><pre>右键 -&gt; 属性 -&gt; 主目录 -&gt; 配置 -&gt; 添加 -&gt;可执行文件写上：
 <span class="constant">C</span><span class="symbol">:/WINDOWS/system32/inetsrv/fcgiext</span>.dll，扩展名写上：.php，动作限制为：<span class="constant">GET</span>,<span class="constant">HEAD</span>,<span class="constant">POST</span>,<span class="constant">TRACE</span>
+</pre></td></tr></table></figure>
 
-
-测试你的配置环境<span class="symbol">:</span>
-&lt;?php
+<p>测试你的配置环境:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="preprocessor">&lt;?php</span>
 phpinfo();
-?&gt;
+<span class="preprocessor">?&gt;</span>
 </pre></td></tr></table></figure>
 
 <h5 id="php-5-4-26-mssql-2000-">php 5.4.26 + mssql 2000 方式与上有所不同。</h5>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td><td class="code"><pre>官方在5.3之前提供mssql驱动。之后则需要第三方驱动。
-
-<span class="strong">**微软官方 （sqlsrv_）：**</span>
-[<span class="link_label">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</span>](<span class="link_url">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</span>)
-
-<span class="strong">** FreeTDS (php_dblib.dll )**</span>
+<p>官方在5.3之前提供mssql驱动。之后则需要第三方驱动。</p>
+<p><strong>微软官方 （sqlsrv_）：</strong>
+<a href="http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP" target="_blank">http://docs.moodle.org/20/en/Using_the_Microsoft_SQL_Server_Driver_for_PHP</a></p>
+<p><strong> FreeTDS (php_dblib.dll )</strong>
 详细安装下链接：
-[<span class="link_label">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</span>](<span class="link_url">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</span>)
-
-<span class="strong">** php**</span>
+<a href="http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP" target="_blank">http://docs.moodle.org/20/en/Installing_MSSQL_for_PHP</a></p>
+<p><strong> php</strong>
 google上还找到了一个php提供php5.4.26驱动:
-链接在此：[<span class="link_label">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip</span>](<span class="link_url">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip </span>)
-</pre></td></tr></table></figure>
-
+链接在此：<a href="http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip" target="_blank">http://downloads.php.net/pierre/sqlsrv-5.4-nts-snap.zip</a></p>
 <hr>
 <p>参考链接：</p>
 <h6 id="connect-php-with-mssql-while-using-iis">connect php with mssql while using iis</h6>
